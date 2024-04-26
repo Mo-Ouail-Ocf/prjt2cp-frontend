@@ -1,6 +1,6 @@
 header{
   position: absolute;
-  width: 1650px;
+  width: 1690px;
   height: 131px;
   left: 0px;
   top: 0px;
@@ -11,7 +11,7 @@ nav{
   position: absolute;
   width: 1360px;
   height: 78px;
-  left: 105px;
+  left: 155px;
   top: 26px;
   background: #FFFFFF;
   border-radius: 30px;
@@ -32,14 +32,14 @@ nav{
   position: absolute;
 width: 512px;
 height: 529.54px;
-left: 00px;
+left: 20px;
 top: 201.09px;
 }
 .cahier{
 position: absolute;
 width: 512px;
 height: 529.54px;
-left: 946px;
+left: 1146px;
 top: 202.09px;
 }
 .divfeatures{
@@ -185,7 +185,7 @@ color: #050505;
 position: absolute;
 width: 710px;
 height: 552.29px;
-left: 450px;
+left: 550px;
 top: 200px;
 border-radius: 30px;
 }
@@ -262,9 +262,9 @@ color: #FFFFFF;
 /*******************************************************************************************************/
 .content2{
   position: absolute;
-  width: 1650px;
+  width: 1680px;
   height: 829px;
-  left: 0px;
+  left: 00px;
   top: 765px;
   background: #4B0082;
 
@@ -272,8 +272,8 @@ color: #FFFFFF;
 .titrecontent2{
   /* Foster creativity through collective brainstorming,brainwriting. */
 
-
-  font-family: 'Roboto';
+position: absolute;
+font-family: 'Roboto';
 font-style: italic;
 font-weight: 900;
 font-size: 32px;
@@ -281,6 +281,8 @@ line-height: 38px;
 display: flex;
 align-items: center;
 text-align: center;
+align-content: center;
+left: 120px;
 margin-left: 320px;
 color:#FFFFFF;
 }
@@ -289,7 +291,9 @@ color:#FFFFFF;
   width: 440px;
 height: 29px;
 margin-left: 480px;
-
+top: 80px;
+position:absolute;
+left:120px;
 font-family: 'Roboto';
 font-style: italic;
 font-weight: 900;
@@ -309,7 +313,7 @@ color:#FFFFFF;
   position: absolute;
 width: 270px;
 height: 424px;
-left: 105px;
+left: 195px;
 top: 240.68px;
 background-color: #FFFFFF;
 border-radius: 15px;
@@ -366,7 +370,7 @@ line-height: 1;
   position: absolute;
 width: 270px;
 height: 424px;
-left: 450px;
+left: 540px;
 top: 240.68px;
 background-color: #FFFFFF;
 border-radius: 15px;
@@ -376,7 +380,7 @@ border-radius: 15px;
   position: absolute;
   width: 270px;
   height: 424px;
-  left: 795px;
+  left: 885px;
   top: 240.68px;
   background-color: #FFFFFF;
   border-radius: 15px;
@@ -385,7 +389,7 @@ border-radius: 15px;
   position: absolute;
   width: 270px;
   height: 424px;
-  left: 1140px;
+  left: 1230px;
   top: 240.68px;
   background-color: #FFFFFF;
   border-radius: 15px;
@@ -398,7 +402,7 @@ border-radius: 15px;
 /*****************************************************************************************************************/
 .content3{
   position: absolute;
-  width: 1650px;
+  width: 1680px;
   height: 578px;
   left: 0px;
   top: 1594px;
@@ -497,7 +501,7 @@ top:90px;
 /*************************************************************************************************************************/
 .content4{
   position: absolute;
-  width: 1650px;
+  width: 1680px;
   height: 606px;
   left: 0px;
   top: 2172px;
@@ -508,7 +512,7 @@ display: grid;
 }
 .container4{
   position: absolute;
-width: 630px;
+width: 660px;
 height: 428px;
 left: 90px;
 top: 70px;
@@ -593,7 +597,7 @@ color: #000000;
 .content5{
  
     position: absolute;
-    width: 1650px;
+    width: 1680px;
     height: 239px;
     left: 0px;
     top: 2778px;
@@ -743,7 +747,7 @@ line-height: 10px;
 .container66{
  background-color: #4B0082;
 
- width:1150px;
+ width:1170px;
   top:-50px;
   height:270px;
   left: 1000px;
