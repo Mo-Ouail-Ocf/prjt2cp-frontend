@@ -10,18 +10,23 @@ import {
   Route,
   Routes, // Utilisation de Routes au lieu de createRoutesFromElements
 } from "react-router-dom";
+import { getAccessToken} from "../apiClient/index.ts";
+import { useState, useEffect } from "react";
 
 const Homepage = () => {
+  const [loggedIn, setLoggedIn] = useState<bool>(true);
+  useEffect(() => {
+    if (getAccessToken() == null) {
+      setLoggedIn(false)
+    }
+  }, [])
   return (
     <Router>
-      {" "}
-      {/* <Home /> */}
       <Routes>
-        {" "}
-        <Route path="" element={<Home />} />{" "}
+        <Route path="" element={ loggedIn ? "hi, I'am logged in" : <Home /> } />{" "}
         <Route path="help" element={<Help />} />{" "}
         <Route path="about" element={<AboutUs />} />{" "}
-        <Route path="login" element={<Login />} />{" "}
+        { loggedIn ? null : <Route path="login" element={<Login />} /> }
         <Route path="Explication" element={<Explication />} />{" "}
         <Route path="ContactUs" element={<ContactUs />} />{" "}
       </Routes>
