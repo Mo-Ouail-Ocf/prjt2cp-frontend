@@ -1,4 +1,4 @@
-import styles from "../component/homecomponent/login.module.css";
+import styles from "../components/homecomponent/login.module.css";
 import LogoB from "../images/logoblanc.png";
 import React, { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";

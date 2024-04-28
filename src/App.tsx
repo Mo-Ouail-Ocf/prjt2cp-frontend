@@ -1,11 +1,20 @@
 import Homepage from "./pages/Homepage";
-import Login from "./pages/Login";
 import './App.css'
+import { getAccessToken} from "./apiClient/index.ts";
+import { useState, useEffect } from "react";
+import Worksapce from "./pages/Workspace.tsx";
+
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    if (getAccessToken() != null) {
+      setLoggedIn(true)
+    }
+  }, [])
   return (
     <>
-      <Homepage></Homepage>
+      {loggedIn ? <Worksapce/> : <Homepage/>}
     </>
   );
 }
