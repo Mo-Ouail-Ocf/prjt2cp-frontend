@@ -1,40 +1,52 @@
-import styles from "../component/homecomponent/login.module.css";
+import styles from "../components/homecomponent/login.module.css";
 import LogoB from "../images/logoblanc.png";
-import React, { useState, useEffect } from "react";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
-import FormData from "form-data";
+import React, { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { v1AuthClient } from "../apiClient/index.ts";
+import { useNavigate } from "react-router-dom";
 
 const login = () => {
-  const [user, setUser] = useState([]);
-  const [profile, setProfile] = useState([]);
+  const [email, setEmail] = useState([]);
+  const [password, setPassword] = useState([]);
+  const navigate = useNavigate();
 
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+  const auth = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      const authData = {
+        grant_type: "authorization_code",
+        code: codeResponse.code,
+        redirect_uri: "http://localhost:3000"
+      }
+
+      v1AuthClient.tokenV1AuthTokenPost(authData).then(response => {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        navigate("/");
+        navigate(0);
+      }).catch(error => {
+          console.log("Login Failed:", error);
+        })
+    },
     onError: (error) => console.log("Login Failed:", error),
     flow: "auth-code",
   });
 
-  useEffect(() => {
-    if (user) {
-      const formData = new FormData();
-      formData.append("code", user.code);
-      formData.append("redirect_uri", "http://localhost:3000");
+  const login = () => {
+      const loginData = {
+        username: email.match(/^([^@]*)@/)[1],
+        password: password,
+      }
 
-      axios
-        .post(`http://localhost:8000/token`, formData, {
-          headers: {
-            //'Content-Type': 'text/plain',
-            Authorization: `Bearer ${user.code}`,
-            Accept: "application/json",
-          },
+      v1AuthClient.loginV1AuthLoginPost(loginData).then(response => {
+        localStorage.setItem("access_token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        navigate("/");
+        navigate(0);
+      }).catch(error => {
+          console.log("Login Failed:", error);
         })
-        .then((res) => {
-          setProfile(res);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [user]);
+  }
+
   return (
     <>
       <div className={styles.complet}>
@@ -42,7 +54,7 @@ const login = () => {
           <img className={styles.image} src={LogoB} alt="Logo" />
         </div>
         <div className={styles.formulaire}>
-          <form action="">
+          <form action="" onSubmit={e => e.preventDefault()}>
             <legend className={styles.titre}>Sign in to Tikta</legend>
             <label htmlFor="email"></label>
             <input
@@ -51,6 +63,8 @@ const login = () => {
               id="email"
               name="email"
               placeholder="email"
+              value={email}
+              onChange={(e) => {setEmail(e.target.value)}}
             />
             <label htmlFor="mdp"></label>
             <input
@@ -59,9 +73,11 @@ const login = () => {
               id="password"
               name="password"
               placeholder="password"
+              value={password}
+              onChange={(e) => {setPassword(e.target.value)}}
             />
-            <button className={styles.login}>Login</button>
-            <button onClick={login} className={styles.google}>
+            <button type="submit" className={styles.login} onClick={login}>Login</button>
+            <button type="button" onClick={auth} className={styles.google}>
               Google
             </button>
           </form>

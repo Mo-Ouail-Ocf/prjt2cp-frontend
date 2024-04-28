@@ -1,0 +1,107 @@
+.complet{
+  background-color:  #4B0082;
+  width:1670px;
+  height:800px;
+}
+
+.imagecontainer{
+
+  position: absolute;
+  width: 465px;
+  height: 250px;
+  left: 540px;
+  top: 10px;
+  align-items: center;
+  
+  background: url(tikta-high-resolution-logo.png);
+}
+.image{
+  width:465px;
+  height:250px;
+}
+.formulaire{
+  position: absolute;
+width: 600px;
+height: 379px;
+left: 500px;
+top: 192px;
+
+background: #C3E1FE;
+border-radius: 20px;
+}
+.titre{
+  position: absolute;
+left: 38.42%;
+right: 35.28%;
+top: 17.06%;
+bottom: 67.15%;
+
+font-family: 'Roboto';
+font-style: bold;
+font-weight: 500;
+font-size: 20px;
+line-height: 28px;
+/* identical to box height */
+text-align: center;
+
+color: #000000;
+}
+.email{
+position: absolute;
+left: 27.43%;
+right: 37.57%;
+top: 35.4%;
+bottom: 57.27%;
+width: 50%;
+}
+.password{
+  position: absolute;
+  left: 27.43%;
+  right: 37.57%;
+  top: 45.31%;
+  bottom: 47.35%;
+  width:50%;
+
+}
+.login{
+  /* Background */
+
+position: absolute;
+left: 27.43%;
+right: 0%;
+top: 55.31%;
+bottom: 0%;
+width:50%;
+height: 7%;
+background: #000000;
+border-radius: 18px;
+color:#FFFFFF;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 21px;
+}
+.login:hover{
+  opacity: 0.6;
+}
+
+.google{
+  /* Background */
+
+position: absolute;
+left: 27.43%;
+right: 0%;
+top: 64.31%;
+bottom: 0%;
+width:50%;
+height: 7%;
+background: #000000;
+border-radius: 18px;
+color:#FFFFFF;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 21px;
+}

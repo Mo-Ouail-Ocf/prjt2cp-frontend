@@ -1,4 +1,4 @@
-import Home from "../component/homecomponent/Home.tsx"; // Correct import path for Entete component
+import Home from "../components/homecomponent/Home.tsx"; // Correct import path for Entete component
 
 import Help from "./Help";
 import AboutUs from "./AboutUs";
@@ -14,10 +14,7 @@ import {
 const Homepage = () => {
   return (
     <Router>
-      {" "}
-      {/* <Home /> */}
       <Routes>
-        {" "}
         <Route path="" element={<Home />} />{" "}
         <Route path="help" element={<Help />} />{" "}
         <Route path="about" element={<AboutUs />} />{" "}
