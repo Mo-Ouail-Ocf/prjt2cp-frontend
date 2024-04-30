@@ -3,6 +3,7 @@ import './App.css'
 import { getAccessToken} from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
 import Worksapce from "./pages/Workspace.tsx";
+import { Toaster } from '@/components/ui/toaster'; // Adjust the import path as needed
 
 
 function App() {
@@ -14,7 +15,9 @@ function App() {
   }, [])
   return (
     <>
+       
       {loggedIn ? <Worksapce/> : <Homepage/>}
+      <Toaster /> 
     </>
   );
 }

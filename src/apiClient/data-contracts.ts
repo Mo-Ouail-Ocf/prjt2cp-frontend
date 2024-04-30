@@ -62,6 +62,48 @@ export interface BodyTokenV1AuthTokenPost {
   redirect_uri: string;
 }
 
+/** CombinedIdeaResponse */
+export interface CombinedIdeaResponse {
+  /** Combined Idea Id */
+  combined_idea_id: number;
+  /** Source Idea Id */
+  source_idea_id: number;
+}
+
+/** CommentResponse */
+export interface CommentResponse {
+  /** Idea Id */
+  idea_id: number;
+  /** Content */
+  content: string;
+  /** Author Id */
+  author_id: number;
+  /** Comment Id */
+  comment_id: number;
+  /**
+   * Creation Date
+   * @format date-time
+   */
+  creation_date: string;
+}
+
+/** FinalDecisionResponse */
+export interface FinalDecisionResponse {
+  /** Rationale */
+  rationale: string;
+  /** Idea Id */
+  idea_id: number;
+  /** Session Id */
+  session_id: number;
+  /** Decision Id */
+  decision_id: number;
+  /**
+   * Decision Date
+   * @format date-time
+   */
+  decision_date: string;
+}
+
 /** HTTPValidationError */
 export interface HTTPValidationError {
   /** Detail */
@@ -72,6 +114,31 @@ export interface HTTPValidationError {
 export interface Idea {
   /** Idea */
   idea: string;
+}
+
+/** IdeaResponse */
+export interface IdeaResponse {
+  /** Content */
+  content: string;
+  /** Details */
+  details: string | null;
+  /** Parent Idea Id */
+  parent_idea_id: number | null;
+  /** Submitter Id */
+  submitter_id: number;
+  /** Session Id */
+  session_id: number;
+  /** Idea Id */
+  idea_id: number;
+  /**
+   * Creation Date
+   * @format date-time
+   */
+  creation_date: string;
+  /** Votes */
+  votes: number | null;
+  /** Deleted */
+  deleted: boolean;
 }
 
 /** IdeasList */
@@ -95,6 +162,13 @@ export interface PendingInvitationInfo {
    * @format email
    */
   creator_email: string;
+  /**
+   * Invitation Time
+   * @format date-time
+   */
+  invitation_time: string;
+  /** Creator Image */
+  creator_image: string;
 }
 
 /** ProjectCreate */
@@ -166,6 +240,11 @@ export interface ProjectUserDisplay {
   role: string;
   /** Invitation Status */
   invitation_status: string;
+  /**
+   * Invitation Time
+   * @format date-time
+   */
+  invitation_time: string;
 }
 
 /** ResourceCreate */
@@ -178,6 +257,19 @@ export interface ResourceCreate {
   level?: string | null;
   /** Description */
   description?: string | null;
+}
+
+/** SessionExport */
+export interface SessionExport {
+  metadata: SessionResponse;
+  /** Ideas */
+  ideas: IdeaResponse[];
+  /** Comments */
+  comments: CommentResponse[];
+  /** Combined Ideas */
+  combined_ideas: CombinedIdeaResponse[];
+  /** Final Decisions */
+  final_decisions: FinalDecisionResponse[];
 }
 
 /** SessionResponse */
@@ -193,9 +285,19 @@ export interface SessionResponse {
   ideation_technique: string;
   /** Objectives */
   objectives?: string | null;
+  /** Round Time */
+  round_time: number;
+  /**
+   * Nb Rounds
+   * @default 1
+   */
+  nb_rounds?: number;
   /** Session Id */
   session_id: number;
-  /** Session Status */
+  /**
+   * Session Status
+   * @pattern open|started|closed
+   */
   session_status: string;
   /**
    * Start Time

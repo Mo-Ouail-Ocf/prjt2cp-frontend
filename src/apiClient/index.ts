@@ -70,3 +70,6 @@ const apiConfig: ApiConfig = {
 const v1Client = new V1(apiConfig);
 // Now you can use v1Client to make authenticated requests
 export default v1Client;
+
+// const response = await v1Client.readPendingInvitationsV1ProjectUserPendingInvitationsGet()
+// console.log("Resources fetched successfully:", response.status);

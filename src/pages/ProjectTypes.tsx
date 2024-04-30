@@ -1,13 +1,20 @@
 
+import { Button } from "@/components/ui/button"
+import { useToast } from "@/components/ui/use-toast"
 
-const ProjectTypes = () => {
+export default function ProjectTypes() {
+  const { toast } = useToast()
   return (
-    <div className="pro-typ">
-      <h1>
-        Project types
-      </h1>
-    </div>
+    <Button
+      variant="outline"
+      onClick={() => {
+        toast({
+          description: "Your message has been sent.",
+        })
+      }}
+    >
+      Show Toast
+    </Button>
   )
 }
 
-export default ProjectTypes

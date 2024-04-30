@@ -17,6 +17,10 @@ import { SideBarData } from "./SideBarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons";
 
+interface SideBarNavProps {
+  sidebar?: string;
+}
+
 const Nav = styled.div`
   background: #4b0082;
   height: 80px;
@@ -32,7 +36,11 @@ const NavIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
 `;
-const SideBarNav = styled.nav`
+const SideBarNav = styled.nav.attrs<SideBarNavProps>(({ sidebar }) => ({
+  style: {
+    left: sidebar || "-100%", // Default to "-100%" if sidebar is undefined
+  },
+}))<SideBarNavProps>`
   background: #4b0082;
   width: 200px;
   height: 100vh;
@@ -40,7 +48,6 @@ const SideBarNav = styled.nav`
   justify-content: center;
   position: fixed;
   top: 0;
-  left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
   transition: ease-in-out 0.7s;
   z-index: 10;
 `;
@@ -88,7 +95,7 @@ const SideBar = () => {
           </DropdownMenu>
         </Nav>
 
-        <SideBarNav sidebar={sidebar}>
+        <SideBarNav sidebar={sidebar ? "0" : undefined}>
           <SideBarWrapper>
             <NavIcon to="#">
               <AiIcons.AiOutlineClose onClick={HideSideBar} />
