@@ -294,4 +294,6 @@ export interface AppSchemeRessourceSchemeResourceDisplay {
   level?: string | null;
   /** Description */
   description?: string | null;
+
+  photo?: string | null;
 }

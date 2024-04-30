@@ -1,0 +1,1220 @@
+[
+    {
+        "resource_id": 1,
+        "name": "ALG1",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Algèbre 1"
+    },
+    {
+        "resource_id": 2,
+        "name": "ALG2",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Algèbre 2"
+    },
+    {
+        "resource_id": 3,
+        "name": "ALSDD",
+        "type": "module",
+        "level": "1CP",
+        "description": "Ingénierie du Logiciel: Algorithmique et Structure de données dynamique"
+    },
+    {
+        "resource_id": 4,
+        "name": "ALSDS",
+        "type": "module",
+        "level": "1CP",
+        "description": "Ingénierie du Logiciel: Algorithmique et Structures de Données Statiques"
+    },
+    {
+        "resource_id": 5,
+        "name": "ANAL1",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Analyse mathématique 1"
+    },
+    {
+        "resource_id": 6,
+        "name": "ANAL2",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Analyse 2"
+    },
+    {
+        "resource_id": 7,
+        "name": "ANG1",
+        "type": "module",
+        "level": "1CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Anglais 1"
+    },
+    {
+        "resource_id": 8,
+        "name": "ARCH1",
+        "type": "module",
+        "level": "1CP",
+        "description": "Infrastructure et Réseaux: Architectures des ordinateurs 1"
+    },
+    {
+        "resource_id": 9,
+        "name": "BW",
+        "type": "module",
+        "level": "1CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Bureautique et Web"
+    },
+    {
+        "resource_id": 10,
+        "name": "ELECT",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Eléctricité"
+    },
+    {
+        "resource_id": 11,
+        "name": "ELEF1",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Electronique fondamentale 1"
+    },
+    {
+        "resource_id": 12,
+        "name": "MECA",
+        "type": "module",
+        "level": "1CP",
+        "description": "Mathématique pour l'Ingénieur: Mécanique du point"
+    },
+    {
+        "resource_id": 13,
+        "name": "SYST1",
+        "type": "module",
+        "level": "1CP",
+        "description": "Infrastructure et Réseaux: Instroduction au Système d'exploitation 1"
+    },
+    {
+        "resource_id": 14,
+        "name": "SYST2",
+        "type": "module",
+        "level": "1CP",
+        "description": "Infrastructure et Réseaux: Introduction aux systèmes d'exploitation 2"
+    },
+    {
+        "resource_id": 15,
+        "name": "TEE",
+        "type": "module",
+        "level": "1CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Technique d'expression écrite"
+    },
+    {
+        "resource_id": 16,
+        "name": "TEO",
+        "type": "module",
+        "level": "1CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Techniques d'expression orale"
+    },
+    {
+        "resource_id": 17,
+        "name": "ALG3",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Algèbre 3"
+    },
+    {
+        "resource_id": 18,
+        "name": "ANAL3",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Analyse 3"
+    },
+    {
+        "resource_id": 19,
+        "name": "ANAL4",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Analyse 4"
+    },
+    {
+        "resource_id": 20,
+        "name": "ANG2",
+        "type": "module",
+        "level": "2CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Anglais 2"
+    },
+    {
+        "resource_id": 21,
+        "name": "ANG3",
+        "type": "module",
+        "level": "2CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Anglais 3"
+    },
+    {
+        "resource_id": 22,
+        "name": "ARCH2",
+        "type": "module",
+        "level": "2CP",
+        "description": "Infrastructure et Réseaux: Architecture des ordinateurs 2"
+    },
+    {
+        "resource_id": 23,
+        "name": "ECON",
+        "type": "module",
+        "level": "2CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Economie"
+    },
+    {
+        "resource_id": 24,
+        "name": "ELEF2",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Electronique fondamentale 2"
+    },
+    {
+        "resource_id": 25,
+        "name": "LOGM",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Logique Mathématique"
+    },
+    {
+        "resource_id": 26,
+        "name": "OOE",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Optique et Ondes éléctromagnétiques"
+    },
+    {
+        "resource_id": 27,
+        "name": "POO",
+        "type": "module",
+        "level": "2CP",
+        "description": "Ingénierie du Logiciel: Programmation Orientée Objet"
+    },
+    {
+        "resource_id": 28,
+        "name": "PRJP",
+        "type": "module",
+        "level": "2CP",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Projet Pluridisciplinaire"
+    },
+    {
+        "resource_id": 29,
+        "name": "PRST1",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Probabilités et statistiques"
+    },
+    {
+        "resource_id": 30,
+        "name": "PRST2",
+        "type": "module",
+        "level": "2CP",
+        "description": "Mathématique pour l'Ingénieur: Probabilités et Statistiques 2"
+    },
+    {
+        "resource_id": 31,
+        "name": "SFSD",
+        "type": "module",
+        "level": "2CP",
+        "description": "Ingénierie du Logiciel: Structure Fichiers et Structures de Données"
+    },
+    {
+        "resource_id": 32,
+        "name": "SINF",
+        "type": "module",
+        "level": "2CP",
+        "description": "Ingénierie des Systèmes d'Information: Introduction aux systèmes d'information"
+    },
+    {
+        "resource_id": 33,
+        "name": "ANUM",
+        "type": "module",
+        "level": "1CS",
+        "description": "Mathématique pour l'Ingénieur: Analyse Numérique"
+    },
+    {
+        "resource_id": 34,
+        "name": "ARCH",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Architecture"
+    },
+    {
+        "resource_id": 35,
+        "name": "BDD",
+        "type": "module",
+        "level": "1CS",
+        "description": "Ingénierie des Systèmes d'Information: Bases de données"
+    },
+    {
+        "resource_id": 36,
+        "name": "CPROJ",
+        "type": "module",
+        "level": "1CS",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Conduite de projets"
+    },
+    {
+        "resource_id": 37,
+        "name": "IGL",
+        "type": "module",
+        "level": "1CS",
+        "description": "Ingénierie du Logiciel: Introduction au génie logiciel"
+    },
+    {
+        "resource_id": 38,
+        "name": "LANG1",
+        "type": "module",
+        "level": "1CS",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Langue anglaise 1"
+    },
+    {
+        "resource_id": 39,
+        "name": "LANG2",
+        "type": "module",
+        "level": "1CS",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Langue anglaise 2"
+    },
+    {
+        "resource_id": 40,
+        "name": "MCSI",
+        "type": "module",
+        "level": "1CS",
+        "description": "Ingénierie des Systèmes d'Information: Méthodologies d'analyse et conception de systèmes d'information"
+    },
+    {
+        "resource_id": 41,
+        "name": "ORG",
+        "type": "module",
+        "level": "1CS",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Analyse des organisations"
+    },
+    {
+        "resource_id": 42,
+        "name": "PROJ",
+        "type": "module",
+        "level": "1CS",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Projet"
+    },
+    {
+        "resource_id": 43,
+        "name": "RES1",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Réseaux 1"
+    },
+    {
+        "resource_id": 44,
+        "name": "RES2",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Réseaux 2"
+    },
+    {
+        "resource_id": 45,
+        "name": "RO",
+        "type": "module",
+        "level": "1CS",
+        "description": "Mathématique pour l'Ingénieur: Recherche Opérationnelle: graphes et algorithmes"
+    },
+    {
+        "resource_id": 46,
+        "name": "SEC",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Introduction à la sécurité informatique"
+    },
+    {
+        "resource_id": 47,
+        "name": "SYS1",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Systèmes d'exploitation 1"
+    },
+    {
+        "resource_id": 48,
+        "name": "SYS2",
+        "type": "module",
+        "level": "1CS",
+        "description": "Infrastructure et Réseaux: Système d'exploitation 2"
+    },
+    {
+        "resource_id": 49,
+        "name": "THP",
+        "type": "module",
+        "level": "1CS",
+        "description": "Ingénierie du Logiciel: Théorie des langages de programmation et applications"
+    },
+    {
+        "resource_id": 50,
+        "name": "AL",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Architectures logicielles"
+    },
+    {
+        "resource_id": 51,
+        "name": "ANAD",
+        "type": "module",
+        "level": "2ST",
+        "description": "Data Science et Intelligence Artificielle: Analyse et fouille de données"
+    },
+    {
+        "resource_id": 52,
+        "name": "AQUA",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Assurance qualité"
+    },
+    {
+        "resource_id": 53,
+        "name": "ASI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Analyse des Systèmes d'Information"
+    },
+    {
+        "resource_id": 54,
+        "name": "AUSI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Audit de systèmes d'information"
+    },
+    {
+        "resource_id": 55,
+        "name": "BDA",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Bases de données avancées"
+    },
+    {
+        "resource_id": 56,
+        "name": "BDM",
+        "type": "module",
+        "level": "2ST",
+        "description": "Data Science et Intelligence Artificielle: Big data mining"
+    },
+    {
+        "resource_id": 57,
+        "name": "BI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Business Intelligence"
+    },
+    {
+        "resource_id": 58,
+        "name": "COFI",
+        "type": "module",
+        "level": "2ST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Comptabilité et Finances"
+    },
+    {
+        "resource_id": 59,
+        "name": "CRM",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Gestion de la Relation Client"
+    },
+    {
+        "resource_id": 60,
+        "name": "ENTP",
+        "type": "module",
+        "level": "2ST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Entreprenariat et création d’entreprise"
+    },
+    {
+        "resource_id": 61,
+        "name": "FASI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Mathématique pour l'Ingénieur: Files d'attente et simulations"
+    },
+    {
+        "resource_id": 62,
+        "name": "IHM",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Interaction Homme Machine"
+    },
+    {
+        "resource_id": 63,
+        "name": "IPLS",
+        "type": "module",
+        "level": "2ST",
+        "description": "Infrastructure et Réseaux: Ingénierie des protocoles et logiciels sécurisés"
+    },
+    {
+        "resource_id": 64,
+        "name": "MPSI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Management du changement dans les projets de systèmes d'information"
+    },
+    {
+        "resource_id": 65,
+        "name": "MSSI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Ingénierie et management de la sécurité des systèmes d'information"
+    },
+    {
+        "resource_id": 66,
+        "name": "PGI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Progiciels de gestion intégrée"
+    },
+    {
+        "resource_id": 67,
+        "name": "PRJS",
+        "type": "module",
+        "level": "2ST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Projet de spécialité"
+    },
+    {
+        "resource_id": 68,
+        "name": "PYT",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Langage de programmation Python"
+    },
+    {
+        "resource_id": 69,
+        "name": "SIAD",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Système d'information d'aide à la décision: méthodes et outils"
+    },
+    {
+        "resource_id": 70,
+        "name": "SIC",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'information coopératifs"
+    },
+    {
+        "resource_id": 71,
+        "name": "SIG",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'Information Géographiques"
+    },
+    {
+        "resource_id": 72,
+        "name": "SPE",
+        "type": "module",
+        "level": "2ST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Stage Pratique en Entreprise"
+    },
+    {
+        "resource_id": 73,
+        "name": "TDM",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Techniques de Développement Mobile"
+    },
+    {
+        "resource_id": 74,
+        "name": "TDW",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie du Logiciel: Techniques de Développement Web"
+    },
+    {
+        "resource_id": 75,
+        "name": "TICO",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Technologies de l'information et de la communication en organisation"
+    },
+    {
+        "resource_id": 76,
+        "name": "URSI",
+        "type": "module",
+        "level": "2ST",
+        "description": "Ingénierie des Systèmes d'Information: Urbanisation des systèmes d'information"
+    },
+    {
+        "resource_id": 77,
+        "name": "SPE",
+        "type": "module",
+        "level": "2CS_SPE",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Stage Pratique en Entreprise"
+    },
+    {
+        "resource_id": 78,
+        "name": "AL",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Architectures Logicielles"
+    },
+    {
+        "resource_id": 79,
+        "name": "ANAD",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Data Science et Intelligence Artificielle: Analyse et fouille de données"
+    },
+    {
+        "resource_id": 80,
+        "name": "BDDA",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie des Systèmes d'Information: SGBD et Bases de Données avancées"
+    },
+    {
+        "resource_id": 81,
+        "name": "COM",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Compilation"
+    },
+    {
+        "resource_id": 82,
+        "name": "COMM",
+        "type": "module",
+        "level": "2SQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Communication"
+    },
+    {
+        "resource_id": 83,
+        "name": "ENTP",
+        "type": "module",
+        "level": "2SQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Entreprenariat et création d’entreprise"
+    },
+    {
+        "resource_id": 84,
+        "name": "FAS",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Mathématique pour l'Ingénieur: File d'attente et Simulation"
+    },
+    {
+        "resource_id": 85,
+        "name": "HPC",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Calcul Intensif"
+    },
+    {
+        "resource_id": 86,
+        "name": "IHM",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Interaction Homme Machine"
+    },
+    {
+        "resource_id": 87,
+        "name": "IMN",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Data Science et Intelligence Artificielle: Images Numériques"
+    },
+    {
+        "resource_id": 88,
+        "name": "ML",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Data Science et Intelligence Artificielle: Machine learning"
+    },
+    {
+        "resource_id": 89,
+        "name": "MSS",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Data Science et Intelligence Artificielle: Modèles Stochastiques et Simulation"
+    },
+    {
+        "resource_id": 90,
+        "name": "OGL",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Outils de Génie Logiciel"
+    },
+    {
+        "resource_id": 91,
+        "name": "OPT",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Data Science et Intelligence Artificielle: Optimisation Combinatoire"
+    },
+    {
+        "resource_id": 92,
+        "name": "PRJS",
+        "type": "module",
+        "level": "2SQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Projet de spécialité"
+    },
+    {
+        "resource_id": 93,
+        "name": "QL",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Qualité Logicielle"
+    },
+    {
+        "resource_id": 94,
+        "name": "RESA",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Réseaux Avancés"
+    },
+    {
+        "resource_id": 95,
+        "name": "RV",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Réalité Virtuelle"
+    },
+    {
+        "resource_id": 96,
+        "name": "SCI",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Systèmes Communicants et Intelligents"
+    },
+    {
+        "resource_id": 97,
+        "name": "SIG",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'Information Géographiques"
+    },
+    {
+        "resource_id": 98,
+        "name": "SIGA",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'Information Géographiques Avancés"
+    },
+    {
+        "resource_id": 99,
+        "name": "SPE",
+        "type": "module",
+        "level": "2SQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Stage Pratique en Entreprise"
+    },
+    {
+        "resource_id": 100,
+        "name": "SSR",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Sécurité Systèmes et Réseaux"
+    },
+    {
+        "resource_id": 101,
+        "name": "SYSE",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Systèmes Embarqués"
+    },
+    {
+        "resource_id": 102,
+        "name": "SYSR",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Systèmes Répartis"
+    },
+    {
+        "resource_id": 103,
+        "name": "TDM",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Techniques de Développement Mobile"
+    },
+    {
+        "resource_id": 104,
+        "name": "TDM1",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Technologies de Développement Mobile 1"
+    },
+    {
+        "resource_id": 105,
+        "name": "TDM2",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Technologies de Développement Mobile 2"
+    },
+    {
+        "resource_id": 106,
+        "name": "TDW",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Techniques de Développement Web"
+    },
+    {
+        "resource_id": 107,
+        "name": "TPRO",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Ingénierie du Logiciel: Théorie de la Programmation"
+    },
+    {
+        "resource_id": 108,
+        "name": "TSG",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Mathématique pour l'Ingénieur: Traitement de Signal"
+    },
+    {
+        "resource_id": 109,
+        "name": "VCL",
+        "type": "module",
+        "level": "2SQ",
+        "description": "Infrastructure et Réseaux: Virtualisation et Cloud"
+    },
+    {
+        "resource_id": 110,
+        "name": "AL",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Architectures Logicielles"
+    },
+    {
+        "resource_id": 111,
+        "name": "ANAD",
+        "type": "module",
+        "level": "2SL",
+        "description": "Data Science et Intelligence Artificielle: Analyse et fouille de données"
+    },
+    {
+        "resource_id": 112,
+        "name": "BDDA",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie des Systèmes d'Information: SGBD et Bases de Données Avancées"
+    },
+    {
+        "resource_id": 113,
+        "name": "BDM",
+        "type": "module",
+        "level": "2SL",
+        "description": "Data Science et Intelligence Artificielle: Big data mining"
+    },
+    {
+        "resource_id": 114,
+        "name": "COM",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Compilation"
+    },
+    {
+        "resource_id": 115,
+        "name": "ENTP",
+        "type": "module",
+        "level": "2SL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Entreprenariat et création d’entreprise"
+    },
+    {
+        "resource_id": 116,
+        "name": "HPC",
+        "type": "module",
+        "level": "2SL",
+        "description": "Infrastructure et Réseaux: Calcul Intensif"
+    },
+    {
+        "resource_id": 117,
+        "name": "IHM",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Interaction Homme Machine"
+    },
+    {
+        "resource_id": 118,
+        "name": "IPLS",
+        "type": "module",
+        "level": "2SL",
+        "description": "Infrastructure et Réseaux: Ingénierie des protocoles et logiciels sécurisés"
+    },
+    {
+        "resource_id": 119,
+        "name": "MA",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Méthodes Agiles"
+    },
+    {
+        "resource_id": 120,
+        "name": "ML",
+        "type": "module",
+        "level": "2SL",
+        "description": "Data Science et Intelligence Artificielle: Machine learning"
+    },
+    {
+        "resource_id": 121,
+        "name": "OGL",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Outils de Génie Logiciel"
+    },
+    {
+        "resource_id": 122,
+        "name": "PDC",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Patrons de conception"
+    },
+    {
+        "resource_id": 123,
+        "name": "PDJ",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Python et Développement Web Full Stack avec Django"
+    },
+    {
+        "resource_id": 124,
+        "name": "PRJS",
+        "type": "module",
+        "level": "2SL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Projet de spécialité"
+    },
+    {
+        "resource_id": 125,
+        "name": "QL",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Qualité Logicielle"
+    },
+    {
+        "resource_id": 126,
+        "name": "SCI",
+        "type": "module",
+        "level": "2SL",
+        "description": "Infrastructure et Réseaux: Systèmes Communicants et Intelligents"
+    },
+    {
+        "resource_id": 127,
+        "name": "SIG",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'Information Géographiques"
+    },
+    {
+        "resource_id": 128,
+        "name": "SIGA",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie des Systèmes d'Information: Systèmes d'Information Géographiques Avancés"
+    },
+    {
+        "resource_id": 129,
+        "name": "SPE",
+        "type": "module",
+        "level": "2SL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Stage Pratique en Entreprise"
+    },
+    {
+        "resource_id": 130,
+        "name": "TDM1",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Technologies de Développement Mobile 1"
+    },
+    {
+        "resource_id": 131,
+        "name": "TDM2",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Technologies de Développement Mobile 2"
+    },
+    {
+        "resource_id": 132,
+        "name": "TDW",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Techniques de Développement Web"
+    },
+    {
+        "resource_id": 133,
+        "name": "TPRO",
+        "type": "module",
+        "level": "2SL",
+        "description": "Ingénierie du Logiciel: Théorie de la Programmation"
+    },
+    {
+        "resource_id": 134,
+        "name": "VCL",
+        "type": "module",
+        "level": "2SL",
+        "description": "Infrastructure et Réseaux: Virtualisation et Cloud"
+    },
+    {
+        "resource_id": 135,
+        "name": "PFE",
+        "type": "module",
+        "level": "3ST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du Mémoire d'Ingénieur"
+    },
+    {
+        "resource_id": 136,
+        "name": "PFE",
+        "type": "module",
+        "level": "3SL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du Mémoire d'Ingénieur"
+    },
+    {
+        "resource_id": 137,
+        "name": "PFE",
+        "type": "module",
+        "level": "3SQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du Mémoire d'Ingénieur"
+    },
+    {
+        "resource_id": 138,
+        "name": "PFE",
+        "type": "module",
+        "level": "3SX",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du Mémoire d'Ingénieur"
+    },
+    {
+        "resource_id": 139,
+        "name": "PFE",
+        "type": "module",
+        "level": "3SD",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du Mémoire d'Ingénieur"
+    },
+    {
+        "resource_id": 140,
+        "name": "EMM",
+        "type": "module",
+        "level": "MSD",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du mémoire de Master"
+    },
+    {
+        "resource_id": 141,
+        "name": "IMR",
+        "type": "module",
+        "level": "MSD",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Initiation à la méthodologie de recherche"
+    },
+    {
+        "resource_id": 142,
+        "name": "IVR",
+        "type": "module",
+        "level": "MSD",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Innovation et valorisation de la recherche"
+    },
+    {
+        "resource_id": 143,
+        "name": "MLA",
+        "type": "module",
+        "level": "MSD",
+        "description": "Data Science et Intelligence Artificielle: Machine learning avancé"
+    },
+    {
+        "resource_id": 144,
+        "name": "RDCR",
+        "type": "module",
+        "level": "MSD",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Recherche documentaire et communication de recherche"
+    },
+    {
+        "resource_id": 145,
+        "name": "EMM",
+        "type": "module",
+        "level": "MXT",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du mémoire de Master"
+    },
+    {
+        "resource_id": 146,
+        "name": "GPS",
+        "type": "module",
+        "level": "MXT",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Gestion de projets scientifiques"
+    },
+    {
+        "resource_id": 147,
+        "name": "IMR",
+        "type": "module",
+        "level": "MXT",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Initiation à la méthodologie de recherche"
+    },
+    {
+        "resource_id": 148,
+        "name": "IVR",
+        "type": "module",
+        "level": "MXT",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Innovation et valorisation de la recherche"
+    },
+    {
+        "resource_id": 149,
+        "name": "RDCR",
+        "type": "module",
+        "level": "MXT",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Recherche documentaire et communication de recherche"
+    },
+    {
+        "resource_id": 150,
+        "name": "EMM",
+        "type": "module",
+        "level": "MSQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du mémoire de Master"
+    },
+    {
+        "resource_id": 151,
+        "name": "GPS",
+        "type": "module",
+        "level": "MSQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Gestion de projets scientifiques"
+    },
+    {
+        "resource_id": 152,
+        "name": "IMR",
+        "type": "module",
+        "level": "MSQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Initiation à la méthodologie de recherche"
+    },
+    {
+        "resource_id": 153,
+        "name": "IVR",
+        "type": "module",
+        "level": "MSQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Innovation et valorisation de la recherche"
+    },
+    {
+        "resource_id": 154,
+        "name": "RDCR",
+        "type": "module",
+        "level": "MSQ",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Recherche documentaire et communication de recherche"
+    },
+    {
+        "resource_id": 155,
+        "name": "EMM",
+        "type": "module",
+        "level": "MST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du mémoire de Master"
+    },
+    {
+        "resource_id": 156,
+        "name": "GPS",
+        "type": "module",
+        "level": "MST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Gestion de projets scientifiques"
+    },
+    {
+        "resource_id": 157,
+        "name": "IMR",
+        "type": "module",
+        "level": "MST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Initiation à la méthodologie de recherche"
+    },
+    {
+        "resource_id": 158,
+        "name": "IVR",
+        "type": "module",
+        "level": "MST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Innovation et valorisation de la recherche"
+    },
+    {
+        "resource_id": 159,
+        "name": "RDCR",
+        "type": "module",
+        "level": "MST",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Recherche documentaire et communication de recherche"
+    },
+    {
+        "resource_id": 160,
+        "name": "EMM",
+        "type": "module",
+        "level": "MSL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Elaboration du mémoire de Master"
+    },
+    {
+        "resource_id": 161,
+        "name": "GPS",
+        "type": "module",
+        "level": "MSL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Gestion de projets scientifiques"
+    },
+    {
+        "resource_id": 162,
+        "name": "IMR",
+        "type": "module",
+        "level": "MSL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Initiation à la méthodologie de recherche"
+    },
+    {
+        "resource_id": 163,
+        "name": "IVR",
+        "type": "module",
+        "level": "MSL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat): Innovation et valorisation de la recherche"
+    },
+    {
+        "resource_id": 164,
+        "name": "RDCR",
+        "type": "module",
+        "level": "MSL",
+        "description": "SHSE (Sciences Humaines, Sociales et Entrepreunariat) : Recherche documentaire et communication de recherche"
+    },
+    {
+        "resource_id": 165,
+        "name": "GDG",
+        "type": "club",
+        "level": null,
+        "description": "Google Developers Group, Algiers Chapter."
+    },
+    {
+        "resource_id": 166,
+        "name": "WTM",
+        "type": "club",
+        "level": null,
+        "description": "A program founded by google that aims to encourage and improve the enroll"
+    },
+    {
+        "resource_id": 167,
+        "name": "Sourire à l'innocence",
+        "type": "club",
+        "level": null,
+        "description": "Club à but non lucratif pour rendre le sourire aux enfants qui l'ont perdu"
+    },
+    {
+        "resource_id": 168,
+        "name": "ETIC",
+        "type": "club",
+        "level": null,
+        "description": "ETIC est un club estudiantin basé à l'Ecole Supérieure d'Informatique visant à rapprocher l'étudiant du monde entrepreneurial."
+    },
+    {
+        "resource_id": 169,
+        "name": "CSE",
+        "type": "club",
+        "level": null,
+        "description": "Le CSE est un club créé par des étudiants de l'ESI qui se sont réunis dans le but de donner une nouvelle perspective à leurs études."
+    },
+    {
+        "resource_id": 170,
+        "name": "SOAI_ALGIERS",
+        "type": "club",
+        "level": null,
+        "description": "School of Ai - Algiers is a local group of Ai wizards that teaches about Ai technology and shares ideas and techniques.Le CSE est un club créé par des étudiants de l'ESI qui se sont réunis dans le but de donner une nouvelle perspective à leurs études."
+    },
+    {
+        "resource_id": 171,
+        "name": "SHELLMATES",
+        "type": "club",
+        "level": null,
+        "description": "Algerian students & cybersecurity enthusiasts community /* WHERE THERE IS A SHELL, THERE IS A WAY */"
+    },
+    {
+        "resource_id": 172,
+        "name": "CACE",
+        "type": "club",
+        "level": null,
+        "description": "Le C.A.C.E a été fondé en 2016 par des étudiants-artistes de l'ESI, avec le but d'alléger le stress de la vie estudiantine. À travers de nombreux événements et formations pertinentes aux arts et cultures diverses."
+    },
+    {
+        "resource_id": 173,
+        "name": "ASTROTECH",
+        "type": "club",
+        "level": null,
+        "description": "Club d'astronomie de l'École Nationale Supérieure d'Informatique (ESI ex INI)"
+    },
+    {
+        "resource_id": 174,
+        "name": "SEC",
+        "type": "club",
+        "level": null,
+        "description": "Sport & Entertainment Club of the Higher National School of Computer Science (ESI)"
+    }
+]
