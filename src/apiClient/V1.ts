@@ -15,6 +15,7 @@ import {
   BodyLoginV1AuthLoginPost,
   BodyNameV1UserNamePut,
   BodyTokenV1AuthTokenPost,
+  FinalDecisionResponse,
   HTTPValidationError,
   Idea,
   IdeasList,
@@ -25,6 +26,7 @@ import {
   ProjectInvitationResponse,
   ProjectUpdate,
   ResourceCreate,
+  SessionExport,
   SessionResponse,
   Token,
   Topic,
@@ -327,12 +329,12 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * No description
    *
    * @tags SESSION
-   * @name CreateV1SessionProjectIdPost
-   * @summary Create
-   * @request POST:/v1/session/{project_id}
+   * @name CreateASessionV1SessionProjectProjectIdPost
+   * @summary Create A Session
+   * @request POST:/v1/session/project/{project_id}
    * @secure
    */
-  createV1SessionProjectIdPost = (
+  createASessionV1SessionProjectProjectIdPost = (
     projectId: number,
     query: {
       /** Title */
@@ -346,11 +348,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       ideation_technique: string;
       /** Objectives */
       objectives?: string | null;
+      /** Round Time */
+      round_time: number;
+      /**
+       * Nb Rounds
+       * @default 1
+       */
+      nb_rounds?: number;
     },
     params: RequestParams = {},
   ) =>
     this.request<SessionResponse, void | HTTPValidationError>({
-      path: `/v1/session/${projectId}`,
+      path: `/v1/session/project/${projectId}`,
       method: "POST",
       query: query,
       secure: true,
@@ -361,14 +370,14 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * No description
    *
    * @tags SESSION
-   * @name GetOpenV1SessionProjectIdGet
-   * @summary Get Open
-   * @request GET:/v1/session/{project_id}
+   * @name GetOpenSessionsForAProjectV1SessionProjectProjectIdGet
+   * @summary Get Open Sessions For A Project
+   * @request GET:/v1/session/project/{project_id}
    * @secure
    */
-  getOpenV1SessionProjectIdGet = (projectId: number, params: RequestParams = {}) =>
+  getOpenSessionsForAProjectV1SessionProjectProjectIdGet = (projectId: number, params: RequestParams = {}) =>
     this.request<SessionResponse[], void | HTTPValidationError>({
-      path: `/v1/session/${projectId}`,
+      path: `/v1/session/project/${projectId}`,
       method: "GET",
       secure: true,
       format: "json",
@@ -378,23 +387,18 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * No description
    *
    * @tags SESSION
-   * @name UpdateV1SessionSessionIdPut
-   * @summary Update
+   * @name UpdateASessionV1SessionSessionIdPut
+   * @summary Update A Session
    * @request PUT:/v1/session/{session_id}
    * @secure
    */
-  updateV1SessionSessionIdPut = (
+  updateASessionV1SessionSessionIdPut = (
     sessionId: number,
-    query: {
+    query?: {
       /** Title */
       title?: string | null;
       /** Description */
       description?: string | null;
-      /**
-       * Session Status
-       * @pattern open|colsed
-       */
-      session_status: string;
       /** Objectives */
       objectives?: string | null;
     },
@@ -412,15 +416,77 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
    * No description
    *
    * @tags SESSION
-   * @name DownloadSessionV1SessionDownloadSessionIdGet
-   * @summary Download Session
+   * @name GetClosedSessionsForAProjectV1SessionProjectProjectIdClosedGet
+   * @summary Get Closed Sessions For A Project
+   * @request GET:/v1/session/project/{project_id}/closed
+   * @secure
+   */
+  getClosedSessionsForAProjectV1SessionProjectProjectIdClosedGet = (projectId: number, params: RequestParams = {}) =>
+    this.request<SessionResponse[], void | HTTPValidationError>({
+      path: `/v1/session/project/${projectId}/closed`,
+      method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name SessionAsJsonV1SessionExportSessionIdGet
+   * @summary Session As Json
+   * @request GET:/v1/session/export/{session_id}/
+   * @secure
+   */
+  sessionAsJsonV1SessionExportSessionIdGet = (sessionId: number, params: RequestParams = {}) =>
+    this.request<SessionExport, void | HTTPValidationError>({
+      path: `/v1/session/export/${sessionId}/`,
+      method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name DownloadSessionAsJsonV1SessionDownloadSessionIdGet
+   * @summary Download Session As Json
    * @request GET:/v1/session/download/{session_id}
    * @secure
    */
-  downloadSessionV1SessionDownloadSessionIdGet = (sessionId: number, params: RequestParams = {}) =>
+  downloadSessionAsJsonV1SessionDownloadSessionIdGet = (sessionId: number, params: RequestParams = {}) =>
     this.request<any, void | HTTPValidationError>({
       path: `/v1/session/download/${sessionId}`,
       method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name UploadSessionToDriveV1SessionDriveSessionIdPost
+   * @summary Upload Session To Drive
+   * @request POST:/v1/session/drive/{session_id}
+   * @secure
+   */
+  uploadSessionToDriveV1SessionDriveSessionIdPost = (
+    sessionId: number,
+    query?: {
+      /**
+       * File Name
+       * @default ""
+       */
+      file_name?: string;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<any, void | HTTPValidationError>({
+      path: `/v1/session/drive/${sessionId}`,
+      method: "POST",
+      query: query,
       secure: true,
       format: "json",
       ...params,
@@ -479,6 +545,23 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags FINAL DECISIONS
+   * @name GetFinalDecisionsOfSessionV1FinalDecisionsSessionSessionIdGet
+   * @summary Get Final Decisions Of Session
+   * @request GET:/v1/final_decisions/session/{session_id}
+   * @secure
+   */
+  getFinalDecisionsOfSessionV1FinalDecisionsSessionSessionIdGet = (sessionId: number, params: RequestParams = {}) =>
+    this.request<FinalDecisionResponse[], HTTPValidationError>({
+      path: `/v1/final_decisions/session/${sessionId}`,
+      method: "GET",
+      secure: true,
       format: "json",
       ...params,
     });

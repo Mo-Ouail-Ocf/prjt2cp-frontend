@@ -8,7 +8,7 @@ const authApiConfig: ApiConfig = {
 
 export const v1AuthClient = new V1(authApiConfig);
 
-const tokenExpired = (token: str) => {
+const tokenExpired = (token: string) => {
   if (token == null) {
     return false;
   }
@@ -24,13 +24,13 @@ const tokenExpired = (token: str) => {
 export const getAccessToken = (): string | null => {
   const access_token = localStorage.getItem('access_token');
 
-  if (! tokenExpired(access_token)) {
+  if (! tokenExpired(access_token as string)) {
     return access_token;
   }
 
   const refresh_token = localStorage.getItem("refresh_token");
 
-  if (tokenExpired(refresh_token)) {
+  if (tokenExpired(refresh_token as string)) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     return null;
@@ -70,3 +70,6 @@ const apiConfig: ApiConfig = {
 const v1Client = new V1(apiConfig);
 // Now you can use v1Client to make authenticated requests
 export default v1Client;
+
+// const response = await v1Client.readPendingInvitationsV1ProjectUserPendingInvitationsGet()
+// console.log("Resources fetched successfully:", response.status);
