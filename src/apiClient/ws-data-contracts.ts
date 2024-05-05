@@ -184,7 +184,7 @@ export interface Message {
 export interface SysEvent {
   /**
    * Event
-   * @pattern join|joined|start|close|quit
+   * @pattern join|joined|start|close|quit|next
    */
   event: string;
 }
@@ -193,7 +193,7 @@ export interface SysEvent {
 export interface SysEventBroadcast {
   /**
    * Event
-   * @pattern join|joined|start|close|quit
+   * @pattern join|joined|start|close|quit|next
    */
   event: string;
   /** Users */

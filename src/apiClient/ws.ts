@@ -35,24 +35,26 @@ export default class WSClient {
         }
     }
 
-    start_session() {
+    send_sys_event(event: string) {
         const data = {
             type: "sys_event",
             content: {
-                event: "start"
+                event: event
             }
         }
         this.ws.send(JSON.stringify(data))
     }
 
-    close_session() {
-        const data = {
-            type: "sys_event",
-            content: {
-                event: "close"
-            }
-        }
-        this.ws.send(JSON.stringify(data))
+    startSession() {
+        this.send_sys_event("start")
+    }
+
+    closeSession() {
+        this.send_sys_event("close")
+    }
+
+    startNext() {
+        this.send_sys_event("next")
     }
 
     sendMessage(msg: string) {
@@ -77,11 +79,11 @@ export default class WSClient {
         this.ws.send(JSON.stringify(data))
     }
 
-    sendComment(comment_idea_id: number, comment_content: string) {
+    sendComment(idea_id: number, comment_content: string) {
         const data = {
             type: "comment",
             content: {
-                idea_id: comment_idea_id,
+                idea_id: idea_id,
                 content: comment_content,
             }
         }
@@ -109,12 +111,12 @@ export default class WSClient {
         this.ws.send(JSON.stringify(data))
     }
 
-    sendFinalDecision(final_decision_idea_id: number, final_decision_rationale: string) {
+    sendFinalDecision(idea_id: number, rationale: string) {
         const data = {
             type: "final_decision",
             content: {
-                rationale: final_decision_rationale,
-                idea_id: final_decision_idea_id,
+                rationale: rationale,
+                idea_id: idea_id,
             }
         }
         this.ws.send(JSON.stringify(data))

@@ -42,24 +42,26 @@ interface IdeaCardProps {
   votes: number,
   handleComment: (comment: string, ideaId: number) => void,
   handleVote: (ideaId: number) => void,
+  handleSelect: (ideaId: number, checked: boolean | 'indeterminate') => void,
 }
 
 const IdeaCard = (props: IdeaCardProps) => {
   const [comment, setComment] = useState("");
-  const send = () => {
+  const send = (e) => {
     props.handleComment(comment, props.ideaId)
     setComment("")
+    e.preventDefault();
   }
 
   return (
-    <Dialog>
-      <Card style={{backgroundColor: props.bgColor}}>
-        <CardContent className="p-4 min-h-36 min-w-64">
+    <Dialog className="w-full h-full">
+      <Card style={{backgroundColor: props.bgColor}} className="flex flex-col h-full w-full">
+        <CardContent className="p-4 min-h-36 min-w-64 h-full">
           <p className="text-lg">{props.idea}</p>
         </CardContent>
         <Separator />
-        <CardFooter className="flex flex-row justify-end items-center max-h-8 p-0">
-          {props.isMod ? <Checkbox className="m-1" /> : null}
+        <CardFooter className="flex flex-row justify-end items-center h-8 p-0">
+          {props.isMod ? <Checkbox className="m-1" onCheckedChange={(checked) => props.handleSelect(props.ideaId, checked)} /> : null}
           {props.showVote ? <Button variant="outline" className="text-base m-1 h-6 w-8" onClick={() => props.handleVote(props.ideaId)}>{props.votes}</Button> : null}
           <DialogTrigger asChild>
             <Button variant="outline" className="text-lg m-1 h-6 w-8">...</Button>
@@ -90,8 +92,10 @@ const IdeaCard = (props: IdeaCardProps) => {
           </ScrollArea>
         </div>
         <DialogFooter>
-          <Input placeholder="Enter a comment" value={comment} onChange={e => setComment(e.target.value)}/>
-          <Button type="submit" onClick={send}>Comment</Button>
+          <form onSubmit={send} className="flex justify-between w-full space-x-2">
+            <Input placeholder="Enter a comment" value={comment} onChange={e => setComment(e.target.value)}/>
+            <Button type="submit">Comment</Button>
+          </form>
         </DialogFooter>
       </DialogContent>
     </Dialog>
