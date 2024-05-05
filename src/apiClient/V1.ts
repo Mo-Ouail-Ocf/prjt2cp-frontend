@@ -28,6 +28,7 @@ import {
   ResourceCreate,
   SessionExport,
   SessionResponse,
+  SessionSchema,
   Token,
   Topic,
   UpdateInvitation,
@@ -139,6 +140,38 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       body: data,
       secure: true,
       type: ContentType.UrlEncoded,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags USER
+   * @name GetUserByIdV1UserUserIdGet
+   * @summary Get User By Id
+   * @request GET:/v1/user/{user_id}
+   */
+  getUserByIdV1UserUserIdGet = (userId: number, params: RequestParams = {}) =>
+    this.request<UserResponse, void | HTTPValidationError>({
+      path: `/v1/user/${userId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags PROJECT
+   * @name GetDetailsV1ProjectProjectIdGet
+   * @summary Get Details
+   * @request GET:/v1/project/{project_id}/
+   * @secure
+   */
+  getDetailsV1ProjectProjectIdGet = (projectId: number, params: RequestParams = {}) =>
+    this.request<ProjectDisplay, void | HTTPValidationError>({
+      path: `/v1/project/${projectId}/`,
+      method: "GET",
+      secure: true,
       format: "json",
       ...params,
     });
@@ -286,6 +319,23 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags PROJECT
+   * @name GetSessionsForProjectV1ProjectProjectIdSessionsGet
+   * @summary Get Sessions For Project
+   * @request GET:/v1/project/{project_id}/sessions
+   * @secure
+   */
+  getSessionsForProjectV1ProjectProjectIdSessionsGet = (projectId: number, params: RequestParams = {}) =>
+    this.request<SessionSchema[], void | HTTPValidationError>({
+      path: `/v1/project/${projectId}/sessions`,
+      method: "GET",
+      secure: true,
       format: "json",
       ...params,
     });

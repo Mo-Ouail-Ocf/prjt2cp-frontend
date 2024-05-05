@@ -1,5 +1,4 @@
-
-const Home = () => {
+const ScrollAreaDemo = () => {
   return (
     <div className='home'>
       <h1>Home</h1>
@@ -8,4 +7,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default ScrollAreaDemo;
