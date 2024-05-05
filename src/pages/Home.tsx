@@ -1,11 +1,9 @@
-
-const Home = () => {
+const ScrollAreaDemo = () => {
   return (
-    <div className='home'>
-      <h1>Home</h1>
-   
-    </div>
-  )
-}
+    <>
+      <p>hi</p>
+    </>
+  );
+};
 
-export default Home
+export default ScrollAreaDemo;

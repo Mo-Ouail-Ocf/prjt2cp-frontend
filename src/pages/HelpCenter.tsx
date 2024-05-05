@@ -1,13 +1,7 @@
-
-
-const HelpCenter = () => {
-  return (
-    <div className="help">
-      <h1>
-        Help Center
-      </h1>
-    </div>
-  )
+import Unauthorized from "./Unauthorized"
+export default function BasicDemo() {
+    return (
+           <Unauthorized/>
+    )
 }
-
-export default HelpCenter
+        
