@@ -79,27 +79,29 @@ function App() {
       <Router>
         <Routes>
           {loggedIn ? (
-            <Route path="/" element={<SideBarLayout />}>
-              <Route>
-                {SideBarData.map((item, index) => {
-                  return (
-                    <Route
-                      path={item.path}
-                      element={item.element}
-                      key={index}
-                    />
-                  );
-                })}
-                <Route
-                  path="/project/:projectId"
-                  element={<ProjectDetails />}
-                />
+            <>
+              <Route path="/" element={<SideBarLayout />}>
+                <Route>
+                  {SideBarData.map((item, index) => {
+                    return (
+                      <Route
+                        path={item.path}
+                        element={item.element}
+                        key={index}
+                      />
+                    );
+                  })}
+                  <Route
+                    path="/project/:projectId"
+                    element={<ProjectDetails />}
+                  />
+                </Route>
               </Route>
-            </Route>
+              <Route path="/session/:session_id" element={<TabsDemo />}></Route>
+            </>
           ) : (
             <Route path="/" element={<Homepage />}></Route>
           )}
-          <Route path="/session/:session_id" element={<TabsDemo />}></Route>
         </Routes>
       </Router>
       <Toaster />
