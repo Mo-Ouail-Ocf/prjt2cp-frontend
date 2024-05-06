@@ -174,7 +174,7 @@ const ProjectDetails: React.FC = ({}) => {
       return;
     }
     try {
-      const updatedProject: ProjectUpdate = {
+      const updatedProject = {
         description: description,
         status: "open",
         title: title,

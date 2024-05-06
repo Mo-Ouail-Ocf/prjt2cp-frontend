@@ -14,12 +14,12 @@ const Homepage = () => {
   return (
     <>
       <Routes>
-        <Route path="" element={<Home />} />{" "}
-        <Route path="help" element={<Help />} />{" "}
-        <Route path="about" element={<AboutUs />} />{" "}
-        <Route path="login" element={<Login />} />{" "}
-        <Route path="Explication" element={<Explication />} />{" "}
-        <Route path="ContactUs" element={<ContactUs />} />{" "}
+        <Route path="/" element={<Home />} />{" "}
+        <Route path="/help" element={<Help />} />{" "}
+        <Route path="/about" element={<AboutUs />} />{" "}
+        <Route path="/login" element={<Login />} />{" "}
+        <Route path="/Explication" element={<Explication />} />{" "}
+        <Route path="/ContactUs" element={<ContactUs />} />{" "}
       </Routes>
     </>
   );

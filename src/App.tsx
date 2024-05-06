@@ -6,13 +6,14 @@ import { Toaster } from "@/components/ui/toaster"; // Adjust the import path as 
 import { TabsDemo } from "./pages/Brainwriting.tsx";
 import { SideBarData } from "./components/SideBarData";
 import ProjectDetails from "./pages/ProjectDetails";
-
+import ClosedSession from "./pages/ClosedSession.tsx";
 import {
   BrowserRouter,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+import Session from "./pages/Session.tsx";
 import SideBarLayout from "./components/SideBarLayout.tsx";
 
 function App() {
@@ -97,7 +98,7 @@ function App() {
                   />
                 </Route>
               </Route>
-              <Route path="/session/:session_id" element={<TabsDemo />}></Route>
+              <Route path="/session/:session_id" element={<Session />}></Route>
             </>
           ) : (
             <Route path="/" element={<Homepage />}></Route>
