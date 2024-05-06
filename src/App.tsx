@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import Session from "./pages/Session.tsx";
 import SideBarLayout from "./components/SideBarLayout.tsx";
+import Session from "./pages/Session.tsx";
 
 function App() {
   const metadata = {
