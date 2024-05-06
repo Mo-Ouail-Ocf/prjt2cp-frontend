@@ -6,14 +6,13 @@ import Login from "./Login";
 import Explication from "./Explication.tsx";
 import ContactUs from "./contact.tsx";
 import {
-  BrowserRouter as Router, // Utilisation de BrowserRouter avec un alias Router
   Route,
   Routes, // Utilisation de Routes au lieu de createRoutesFromElements
 } from "react-router-dom";
 
 const Homepage = () => {
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="" element={<Home />} />{" "}
         <Route path="help" element={<Help />} />{" "}
@@ -22,7 +21,7 @@ const Homepage = () => {
         <Route path="Explication" element={<Explication />} />{" "}
         <Route path="ContactUs" element={<ContactUs />} />{" "}
       </Routes>
-    </Router>
+    </>
   );
 };
 

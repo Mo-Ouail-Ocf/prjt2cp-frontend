@@ -2,12 +2,19 @@ import Homepage from "./pages/Homepage";
 import "./App.css";
 import { getAccessToken } from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
-import Worksapce from "./pages/Workspace.tsx";
 import { Toaster } from "@/components/ui/toaster"; // Adjust the import path as needed
-import QueuePage from "./pages/QueuePage.tsx";
-import Essaibutton from "./ChatInSessions.tsx";
 import { TabsDemo } from "./pages/Brainwriting.tsx";
-import Chat from "./components/Chat.tsx";
+import { SideBarData } from "./components/SideBarData";
+import ProjectDetails from "./pages/ProjectDetails";
+
+import {
+  BrowserRouter,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import SideBarLayout from "./components/SideBarLayout.tsx";
+
 function App() {
   const metadata = {
     title: "session title",
@@ -69,10 +76,35 @@ function App() {
 
   return (
     <>
-      {loggedIn ? <Worksapce /> : <Homepage />}
+      <Router>
+        <Routes>
+          {loggedIn ? (
+            <>
+              <Route path="/" element={<SideBarLayout />}>
+                <Route>
+                  {SideBarData.map((item, index) => {
+                    return (
+                      <Route
+                        path={item.path}
+                        element={item.element}
+                        key={index}
+                      />
+                    );
+                  })}
+                  <Route
+                    path="/project/:projectId"
+                    element={<ProjectDetails />}
+                  />
+                </Route>
+              </Route>
+              <Route path="/session/:session_id" element={<TabsDemo />}></Route>
+            </>
+          ) : (
+            <Route path="/" element={<Homepage />}></Route>
+          )}
+        </Routes>
+      </Router>
       <Toaster />
-      {/*       <TabsDemo />
-      <Essaibutton /> */}
     </>
   );
 }

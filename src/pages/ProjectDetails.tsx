@@ -1,12 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import v1Client from "@/apiClient";
-import {
-  ProjectDisplay,
-  ProjectCreate,
-  SessionSchema,
-  ProjectUpdate,
-} from "@/apiClient/data-contracts";
+import { ProjectDisplay, ProjectCreate } from "@/apiClient/data-contracts";
 import { SessionResponse } from "@/apiClient/data-contracts";
 import { UserResponse } from "@/apiClient/data-contracts";
 import { Button } from "@/components/ui/button";
