@@ -20,12 +20,12 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Input } from "@/components/ui/input"
 
-import { SesssionResponse, UserResponse, IdeaResponse } from "@/apiClient/data-contracts"
+import { SessionResponse, UserResponse, IdeaResponse, CommentResponse } from "@/apiClient/data-contracts"
 
 
 interface BSProps {
-  metadata: SesssionResponse,
-  useres: Map<number, UserResponse>,
+  metadata: SessionResponse,
+  users: Map<number, UserResponse>,
   ideas: Map<number, IdeaResponse>,
   colors: Map<number, string>,
   comments: CommentResponse[],
@@ -207,7 +207,7 @@ const Brainstorming = (props: BSProps) => {
           <AvatarImage src={user.pfp} alt={user.name} />
           <AvatarFallback>TK</AvatarFallback>
         </Avatar>
-        <Carousel key={user.user_id} className="p-5 h-full">
+        <Carousel key={user.id} className="p-5 h-full">
           <CarouselPrevious className="-left-4 z-10"/>
           <CarouselContent className="h-full ">
             {ideas}

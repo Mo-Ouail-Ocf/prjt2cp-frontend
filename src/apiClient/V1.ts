@@ -28,7 +28,6 @@ import {
   ResourceCreate,
   SessionExport,
   SessionResponse,
-  SessionSchema,
   Token,
   Topic,
   UpdateInvitation,
@@ -155,23 +154,6 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
     this.request<UserResponse, void | HTTPValidationError>({
       path: `/v1/user/${userId}`,
       method: "GET",
-      format: "json",
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags PROJECT
-   * @name GetDetailsV1ProjectProjectIdGet
-   * @summary Get Details
-   * @request GET:/v1/project/{project_id}/
-   * @secure
-   */
-  getDetailsV1ProjectProjectIdGet = (projectId: number, params: RequestParams = {}) =>
-    this.request<ProjectDisplay, void | HTTPValidationError>({
-      path: `/v1/project/${projectId}/`,
-      method: "GET",
-      secure: true,
       format: "json",
       ...params,
     });
@@ -325,23 +307,6 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
   /**
    * No description
    *
-   * @tags PROJECT
-   * @name GetSessionsForProjectV1ProjectProjectIdSessionsGet
-   * @summary Get Sessions For Project
-   * @request GET:/v1/project/{project_id}/sessions
-   * @secure
-   */
-  getSessionsForProjectV1ProjectProjectIdSessionsGet = (projectId: number, params: RequestParams = {}) =>
-    this.request<SessionSchema[], void | HTTPValidationError>({
-      path: `/v1/project/${projectId}/sessions`,
-      method: "GET",
-      secure: true,
-      format: "json",
-      ...params,
-    });
-  /**
-   * No description
-   *
    * @tags RESSOURCE
    * @name ReadResourcesV1RessourceGet
    * @summary Read Resources
@@ -372,6 +337,52 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name GetSessionByIdV1SessionSessionIdGet
+   * @summary Get Session By Id
+   * @request GET:/v1/session/{session_id}
+   * @secure
+   */
+  getSessionByIdV1SessionSessionIdGet = (sessionId: number, params: RequestParams = {}) =>
+    this.request<SessionResponse, void | HTTPValidationError>({
+      path: `/v1/session/${sessionId}`,
+      method: "GET",
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name UpdateASessionV1SessionSessionIdPut
+   * @summary Update A Session
+   * @request PUT:/v1/session/{session_id}
+   * @secure
+   */
+  updateASessionV1SessionSessionIdPut = (
+    sessionId: number,
+    query?: {
+      /** Title */
+      title?: string | null;
+      /** Description */
+      description?: string | null;
+      /** Objectives */
+      objectives?: string | null;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<SessionResponse, void | HTTPValidationError>({
+      path: `/v1/session/${sessionId}`,
+      method: "PUT",
+      query: query,
+      secure: true,
       format: "json",
       ...params,
     });
@@ -429,35 +440,6 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
     this.request<SessionResponse[], void | HTTPValidationError>({
       path: `/v1/session/project/${projectId}`,
       method: "GET",
-      secure: true,
-      format: "json",
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags SESSION
-   * @name UpdateASessionV1SessionSessionIdPut
-   * @summary Update A Session
-   * @request PUT:/v1/session/{session_id}
-   * @secure
-   */
-  updateASessionV1SessionSessionIdPut = (
-    sessionId: number,
-    query?: {
-      /** Title */
-      title?: string | null;
-      /** Description */
-      description?: string | null;
-      /** Objectives */
-      objectives?: string | null;
-    },
-    params: RequestParams = {},
-  ) =>
-    this.request<SessionResponse, void | HTTPValidationError>({
-      path: `/v1/session/${sessionId}`,
-      method: "PUT",
-      query: query,
       secure: true,
       format: "json",
       ...params,

@@ -33,7 +33,7 @@ interface CommentInterface {
 interface IdeaCardProps {
   ideaId: number,
   idea: string,
-  details: string,
+  details: string | null,
   submitter: UserResponse,
   isMod: boolean,
   showVote: boolean,

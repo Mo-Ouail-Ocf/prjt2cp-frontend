@@ -47,6 +47,7 @@ export const getAccessToken = (): string | null => {
     localStorage.setItem("refresh_token", response.data.refresh_token);
   }).catch(error => {
     console.log("Couldn't refresh tokens", error);
+    throw new error
   })
 
   return localStorage.getItem("access_token")

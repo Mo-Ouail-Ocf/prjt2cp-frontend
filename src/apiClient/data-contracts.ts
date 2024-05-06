@@ -303,33 +303,6 @@ export interface SessionResponse {
   project_id: number;
 }
 
-/** SessionSchema */
-export interface SessionSchema {
-  /** Session Id */
-  session_id: number;
-  /** Project Id */
-  project_id: number;
-  /** Title */
-  title: string;
-  /** Description */
-  description: string | null;
-  /** Ideation Technique */
-  ideation_technique: string;
-  /**
-   * Start Time
-   * @format date-time
-   */
-  start_time: string;
-  /** Session Status */
-  session_status: string;
-  /** Objectives */
-  objectives: string | null;
-  /** Round Time */
-  round_time: number;
-  /** Nb Rounds */
-  nb_rounds: number;
-}
-
 /** Token */
 export interface Token {
   /** Access Token */
@@ -418,4 +391,6 @@ export interface AppSchemeRessourceSchemeResourceDisplay {
   level?: string | null;
   /** Description */
   description?: string | null;
+  /** Photo */
+  photo?: string | null;
 }

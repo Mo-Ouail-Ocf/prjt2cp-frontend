@@ -19,7 +19,7 @@ import { useState } from "react";
 import { useRef } from 'react';
 
 
-interface ChatProps {
+export interface ChatProps {
   name: string,
   children: SentMessage | ReceivedMessage;
   right: number,
@@ -28,7 +28,7 @@ interface ChatProps {
   close: () => void,
 }
 
-interface ChatMessageProps {
+export interface ChatMessageProps {
   user: UserResponse,
   message: string,
 }
