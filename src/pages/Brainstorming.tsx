@@ -1,37 +1,36 @@
 // TODO: fix the input & sizing
-import React from 'react';
-import Logo from "@/images/logo.svg"; 
+import React from "react";
+import Logo from "@/images/logo.svg";
 import { useState } from "react";
-import Countdown from 'react-countdown';
+import Countdown from "react-countdown";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import IdeaCard from "@/components/IdeaCard"
+} from "@/components/ui/carousel";
+import IdeaCard from "@/components/IdeaCard";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Input } from "@/components/ui/input"
-
-import { SesssionResponse, UserResponse, IdeaResponse } from "@/apiClient/data-contracts"
-
+  SessionResponse,
+  UserResponse,
+  IdeaResponse,
+} from "@/apiClient/data-contracts";
 
 interface BSProps {
-  metadata: SesssionResponse,
-  useres: Map<number, UserResponse>,
-  ideas: Map<number, IdeaResponse>,
-  colors: Map<number, string>,
-  comments: CommentResponse[],
-  handleComment: (comment: string, ideaId: number) => void,
-  handleIdea: (idea: string, details: string) => void,
-  handlePhaseEnd: () => void,
+  metadata: SessionResponse;
+  users: Map<number, UserResponse>;
+  ideas: Map<number, IdeaResponse>;
+  colors: Map<number, string>;
+  comments: CommentResponse[];
+  handleComment: (comment: string, ideaId: number) => void;
+  handleIdea: (idea: string, details: string) => void;
+  handlePhaseEnd: () => void;
 }
 
 // test data
@@ -122,38 +121,36 @@ const Brainstorming = (props: BSProps) => {
   const endTime = Date.now() + props.metadata.round_time * 60 * 1000;
 
   const submitIdea = (e) => {
-    props.handleIdea(ideaContent, details)
-    setIdeaContent("")
-    setDetails("")
+    props.handleIdea(ideaContent, details);
+    setIdeaContent("");
+    setDetails("");
     e.preventDefault();
-  }
+  };
 
   const handleTimerComplete = () => {
     // this function is wrapped here in case we need to do some defensive stuff
-    props.handlePhaseEnd()
-  }
-
+    props.handlePhaseEnd();
+  };
 
   let gridLayout;
   switch (props.users.size) {
     case 6:
     case 5:
-      gridLayout = ' grid-cols-3 p-16 gap-16';
+      gridLayout = " grid-cols-3 p-16 gap-16";
       break;
     case 4:
     case 3:
-      gridLayout = ' grid-cols-2 p-24 gap-16';
+      gridLayout = " grid-cols-2 p-24 gap-16";
       break;
     default:
-      gridLayout = ' grid-cols-1 p-48 gap-16';
+      gridLayout = " grid-cols-1 p-48 gap-16";
       break;
   }
 
-
-  let displays = []
+  let displays = [];
 
   props.users.forEach((user, user_id) => {
-    let ideas = []
+    let ideas = [];
 
     props.ideas.forEach((idea, idea_id) => {
       if (idea.submitter_id == user_id) {
@@ -165,40 +162,48 @@ const Brainstorming = (props: BSProps) => {
           isMod: false,
           showVote: false,
           bgColor: props.colors.get(user_id),
-          comments: props.comments.filter(comment => {comment.idea_id == idea.idea_id}),
+          comments: props.comments.filter((comment) => {
+            comment.idea_id == idea.idea_id;
+          }),
           votes: 0,
           handleComment: props.handleComment,
           handleVote: (ideaId: number) => {},
-          handleSelect: (ideaId: number, checked: boolean | 'indeterminate') => {},
-        }
+          handleSelect: (
+            ideaId: number,
+            checked: boolean | "indeterminate"
+          ) => {},
+        };
         ideas.push(
           <CarouselItem className="h-full">
-            <IdeaCard {...ideaProps} className="h-full"/>
+            <IdeaCard {...ideaProps} className="h-full" />
           </CarouselItem>
-        )
+        );
       }
-    })
+    });
 
     if (ideas.length == 0) {
-        const ideaProps = {
-          ideaId: 0,
-          idea: "[thinking.....]",
-          details: "",
-          submitter: user,
-          isMod: false,
-          showVote: false,
-          bgColor: props.colors.get(user_id),
-          comments: [],
-          votes: 0,
-          handleComment: (ideaId, comment) => {},
-          handleVote: (ideaId: number) => {},
-          handleSelect: (ideaId: number, checked: boolean | 'indeterminate') => {},
-        }
-        ideas.push(
-          <CarouselItem className="h-full">
-            <IdeaCard {...ideaProps} className="h-full"/>
-          </CarouselItem>
-        )
+      const ideaProps = {
+        ideaId: 0,
+        idea: "[thinking.....]",
+        details: "",
+        submitter: user,
+        isMod: false,
+        showVote: false,
+        bgColor: props.colors.get(user_id),
+        comments: [],
+        votes: 0,
+        handleComment: (ideaId, comment) => {},
+        handleVote: (ideaId: number) => {},
+        handleSelect: (
+          ideaId: number,
+          checked: boolean | "indeterminate"
+        ) => {},
+      };
+      ideas.push(
+        <CarouselItem className="h-full">
+          <IdeaCard {...ideaProps} className="h-full" />
+        </CarouselItem>
+      );
     }
 
     displays.push(
@@ -208,26 +213,32 @@ const Brainstorming = (props: BSProps) => {
           <AvatarFallback>TK</AvatarFallback>
         </Avatar>
         <Carousel key={user.user_id} className="p-5 h-full">
-          <CarouselPrevious className="-left-4 z-10"/>
-          <CarouselContent className="h-full ">
-            {ideas}
-          </CarouselContent>
-          <CarouselNext className="-right-4"/>
+          <CarouselPrevious className="-left-4 z-10" />
+          <CarouselContent className="h-full ">{ideas}</CarouselContent>
+          <CarouselNext className="-right-4" />
         </Carousel>
       </div>
-    )
-  })
+    );
+  });
 
   return (
-    <div className='h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around'>
+    <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
-          <img src={Logo} className="h-16 p-2"/>
-          <p className="font-bold text-3xl justify-center items-center flex font-sans pr-2">Tikta</p>
+          <img src={Logo} className="h-16 p-2" />
+          <p className="font-bold text-3xl justify-center items-center flex font-sans pr-2">
+            Tikta
+          </p>
         </div>
-        <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">Idaeation session title</p>
+        <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">
+          Idaeation session title
+        </p>
         <p className="bg-zinc-200 p-4 rounded-lg text-xl font-semibold content-center">
-          <Countdown date={endTime} daysInHours={true} onComplete={handleTimerComplete}/>
+          <Countdown
+            date={endTime}
+            daysInHours={true}
+            onComplete={handleTimerComplete}
+          />
         </p>
       </div>
 
@@ -246,7 +257,7 @@ const Brainstorming = (props: BSProps) => {
         */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Brainstorming
+export default Brainstorming;
