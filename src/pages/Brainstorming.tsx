@@ -16,10 +16,16 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+
 import {
   SessionResponse,
   UserResponse,
   IdeaResponse,
+  CommentResponse,
 } from "@/apiClient/data-contracts";
 
 interface BSProps {
@@ -212,7 +218,7 @@ const Brainstorming = (props: BSProps) => {
           <AvatarImage src={user.pfp} alt={user.name} />
           <AvatarFallback>TK</AvatarFallback>
         </Avatar>
-        <Carousel key={user.user_id} className="p-5 h-full">
+        <Carousel key={user.id} className="p-5 h-full">
           <CarouselPrevious className="-left-4 z-10" />
           <CarouselContent className="h-full ">{ideas}</CarouselContent>
           <CarouselNext className="-right-4" />

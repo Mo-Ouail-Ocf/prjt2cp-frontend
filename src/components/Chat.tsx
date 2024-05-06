@@ -14,8 +14,8 @@ import { UserResponse } from "@/apiClient/data-contracts.ts";
 import { useState } from "react";
 import { useRef } from "react";
 
-interface ChatProps {
-  name: string;
+export interface ChatProps {
+  name: string,
   children: SentMessage | ReceivedMessage;
   right: number;
   bottom: number;
@@ -23,9 +23,9 @@ interface ChatProps {
   close: () => void;
 }
 
-interface ChatMessageProps {
-  user: UserResponse;
-  message: string;
+export interface ChatMessageProps {
+  user: UserResponse,
+  message: string,
 }
 
 const ChatArea = (props: ChatProps) => {

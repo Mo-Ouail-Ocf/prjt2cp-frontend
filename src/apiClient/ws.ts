@@ -2,22 +2,26 @@ import { BroadCast } from "./ws-data-contracts.ts";
 
 
 export default class WSClient {
-    session_id: number;
-    ws;
-    message_handler: (data: BroadCast) => void;
+    session_id: number = 0;
+    ws: WebSocket | null = null;
+    messageHandler: (data: BroadCast) => void;
 
-    constuctor(session_id: number, message_handler: (data: BroadCast) => void) {
+    constructor(session_id: number, messageHandler: (data: BroadCast) => void) {
         this.session_id = session_id;
-        this.message_handler = message_handler;
+        this.messageHandler = messageHandler;
         this.ws = null;
     }
 
     connect(access_token: string) {
-        this.ws = new WebSocket("ws://localhost:8000/v1/ws/" + session_id + "?access_token=" + access_token);
+        if (this.ws != null) {
+            return;
+        }
+
+        this.ws = new WebSocket("ws://localhost:8000/v1/ws/" + this.session_id + "?access_token=" + access_token);
 
         this.ws.onmessage = (event) => {
-            const data: BoardCast = JSON.parse(JSON.parse(event.data));
-            this.message_handler(data);
+            const data: BroadCast = JSON.parse(JSON.parse(event.data));
+            this.messageHandler(data);
 
             event.preventDefault();
         }
