@@ -1,10 +1,9 @@
 const ScrollAreaDemo = () => {
   return (
-    <div className='home'>
+    <div className="home">
       <h1>Home</h1>
-
     </div>
-  )
-}
+  );
+};
 
 export default ScrollAreaDemo;
