@@ -236,9 +236,7 @@ const Brainstorming = (props: BSProps) => {
         <p className="bg-zinc-200 p-4 rounded-lg text-xl font-semibold content-center">
           <Countdown
             date={endTime}
-            daysInHours={true}
-            onComplete={handleTimerComplete}
-          />
+            daysInHours={true} onComplete={handleTimerComplete}/>
         </p>
       </div>
 
@@ -257,7 +255,7 @@ const Brainstorming = (props: BSProps) => {
         */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Brainstorming;
+export default Brainstorming

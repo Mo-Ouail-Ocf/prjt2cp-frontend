@@ -79,15 +79,15 @@ const OpenSession = (props: SessionProps) => {
 
     if (user == undefined) {
       v1Client.getUserByIdV1UserUserIdGet(userId).then(res => {
-        user = res.data;
-        users.set(userId, user);
+        users.set(userId, res.data);
         setUsers(users);
+        return res.data
       }).catch(() => {
         throw new Error("Unable to retreive user data");
       })
+    } else {
+      return user
     }
-
-    return user as UserResponse;
   }
 
   const handleSysEvent = (event: SysEventBroadcast) => {

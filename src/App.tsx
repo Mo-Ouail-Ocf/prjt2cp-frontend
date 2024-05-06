@@ -14,6 +14,7 @@ import {
   Routes,
 } from "react-router-dom";
 import SideBarLayout from "./components/SideBarLayout.tsx";
+import Session from "./pages/Session.tsx";
 
 function App() {
   const metadata = {
@@ -97,7 +98,7 @@ function App() {
                   />
                 </Route>
               </Route>
-              <Route path="/session/:session_id" element={<TabsDemo />}></Route>
+              <Route path="/session/:sessionId" element={<Session />}></Route>
             </>
           ) : (
             <Route path="/" element={<Homepage />}></Route>
