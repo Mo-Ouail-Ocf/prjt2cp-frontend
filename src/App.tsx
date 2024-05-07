@@ -5,7 +5,12 @@ import { Toaster } from "@/components/ui/toaster"; // Adjust the import path as 
 import { TabsDemo } from "./pages/Brainwriting.tsx";
 import { SideBarData } from "./components/SideBarData";
 import ProjectDetails from "./pages/ProjectDetails";
-
+import ClosedSession from "./pages/ClosedSession.tsx";
+import Help from "./pages/Help";
+import AboutUs from "./pages/AboutUs";
+import Login from "./pages/Login";
+import Explication from "./pages/Explication.tsx";
+import ContactUs from "./pages/contact.tsx";
 import {
   BrowserRouter,
   Route,
@@ -107,17 +112,17 @@ function App() {
                   />
                 </Route>
               </Route>
-              <Route path="/session/:sessionId" element={<Session />}></Route>
+              <Route path="/session/:session_id" element={<Session />}></Route>
             </>
           ) : (
             <>
             <Route path="/" element={<Homepage />}></Route>
-        <Route path="/help" element={<Help />} />{" "}
+            <Route path="/help" element={<Help />} />{" "}
         <Route path="/about" element={<AboutUs />} />{" "}
         <Route path="/login" element={<Login />} />{" "}
         <Route path="/Explication" element={<Explication />} />{" "}
         <Route path="/ContactUs" element={<ContactUs />} />{" "}
-            </>
+        </>
           )}
         </Routes>
       </Router>

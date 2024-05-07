@@ -3,7 +3,7 @@ import Home from "../components/homecomponent/Home.tsx"; // Correct import path 
 const Homepage = () => {
   return (
     <>
-      <Home/>
+      <Home />
     </>
   );
 };

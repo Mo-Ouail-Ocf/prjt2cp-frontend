@@ -15,23 +15,24 @@ import { useState } from "react";
 import { useRef } from "react";
 
 export interface ChatProps {
-  name: string,
+  name: string;
   children: SentMessage | ReceivedMessage;
   right: number;
   bottom: number;
   send: (msg: string) => void;
   close: () => void;
+  handleShow: () => void;
 }
 
 export interface ChatMessageProps {
-  user: UserResponse,
-  message: string,
+  user: UserResponse;
+  message: string;
 }
 
 const ChatArea = (props: ChatProps) => {
   const [msg, setMsg] = useState("");
   const sa = useRef(null);
-
+  const ref = useRef<HTMLButtonElement>();
   const submit = (e) => {
     if (msg != "") {
       props.send(msg);
@@ -39,6 +40,10 @@ const ChatArea = (props: ChatProps) => {
       sa.current.children[1].scrollTop = sa.current.children[1].scrollHeight;
     }
     e.preventDefault();
+    if (ref.current) {
+      ref.current.click();
+    }
+    props.handleShow();
   };
 
   return (
@@ -48,7 +53,11 @@ const ChatArea = (props: ChatProps) => {
       <Card className="max-w-sm min-w-96">
         <CardHeader className="p-0 mr-1 flex-row justify-between">
           <CardTitle className="m-2">{props.name}</CardTitle>
-          <Button className="max-h-8 max-w-8 text-base" onClick={props.close}>
+          <Button
+            className="max-h-8 max-w-8 text-base"
+            onClick={props.close}
+            ref={ref}
+          >
             X
           </Button>
         </CardHeader>

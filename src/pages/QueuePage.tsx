@@ -45,13 +45,18 @@ interface QueueProps {
   isMod: boolean;
   metadata: SessionResponse;
   users: Map<number, UserResponse>;
-  colors: Map<number, string>;
   handleStart: () => void;
+  usersList: number[];
+  load: boolean;
 }
 const QueuePage = (props: QueueProps) => {
+  console.log(props);
+
+  if (props.load) {
+    return <p>load</p>;
+  }
   return (
     <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
-      Bra
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
@@ -135,7 +140,7 @@ const QueuePage = (props: QueueProps) => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        {props.isMod && <Button>Start the session</Button>}
+        {props.isMod && <Button onClick={props.handleStart}>Start the session</Button>}
       </div>
       <div className=" p-4 pr-16 pl-16 flex flex-col justify-around">
         <h1 className="text-center font-bold text-2xl">Active users</h1>
@@ -165,6 +170,7 @@ const QueuePage = (props: QueueProps) => {
                     <TableCell>{participant.name}</TableCell>
                   </TableRow>
                 ))}
+                {/*  */}
               </TableBody>
             </Table>
           </CardContent>

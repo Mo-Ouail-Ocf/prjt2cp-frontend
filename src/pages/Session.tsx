@@ -1,44 +1,80 @@
 import v1Client from "@/apiClient";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {  ProjectDisplay, SessionResponse } from "@/apiClient/data-contracts";
+import {
+  ProjectDisplay,
+  SessionResponse,
+  SessionExport,
+} from "@/apiClient/data-contracts";
+import Unauthorized from "./Unauthorized";
 import OpenSession from "./OpenSession";
+import ClosedSession from "./ClosedSession";
 
+interface Metadata {
+  session: SessionResponse;
+  project: ProjectDisplay;
+}
 
 const Session = () => {
-    const { sessionId } = useParams();
-    const [session, setSession] = useState<SessionResponse>()
-    const [project, setProject] = useState<ProjectDisplay>()
+  const { session_id } = useParams();
+  const [session, setSession] = useState<SessionResponse | null>(null);
+  const [project, setProject] = useState<ProjectDisplay | null>(null);
 
-    useEffect(() => {
-        v1Client.getSessionByIdV1SessionSessionIdGet(sessionId).then(res => {
-            setSession(res.data)
-            v1Client.getDetailsV1ProjectProjectIdGet(session.project_id).then(res => {
-                setProject(res.data)
-            }).catch(() => {
-                throw new Error("Coudn't fetch session data");
-            })
-        }).catch(() => {
-            throw new Error("Coudn't fetch session data");
-        })
-    }, [])
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        if (session_id != null) {
+          setLoading(true); // Start loading
+          const [sessionResponse] = await Promise.all([
+            v1Client.getSessionByIdV1SessionSessionIdGet(Number(session_id)),
+          ]);
+          setSession(sessionResponse.data);
 
-    return (
-        <>
-            {
+          const projectResponse =
+            await v1Client.getDetailsV1ProjectProjectIdGet(
+              sessionResponse.data.project_id
+            );
+          setProject(projectResponse.data);
+          setLoading(false);
+        } else {
+          setError("no project id found");
+        }
+      } catch (err) {
+        setError("Failed to fetch sessions");
+        setLoading(false);
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                session.session_status == "open" ?
-                    <OpenSession metadata={session} project={project} />
-                    : (
-                        session.session_status == "closed" ?
-                            null // static
-                        :
-                        null // unauthorized
-                )
+    fetchSessions();
+  }, [session_id]);
 
-            }
-        </>
-    )
-}
+  if (loading) {
+    return <p>Loading</p>;
+  }
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+  return (
+    <>
+      {
+        //@ts-ignore
+        session.session_status == "open" ? (
+          //@ts-ignore
+          <OpenSession metadata={session} project={project} />
+        ) : //@ts-ignore
+        session.session_status == "closed" ? (
+          <ClosedSession />
+        ) : (
+          <Unauthorized />
+        ) // static // unauthorized
+      }
+    </>
+  );
+};
 
 export default Session;

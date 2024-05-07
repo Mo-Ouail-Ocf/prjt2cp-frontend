@@ -174,7 +174,7 @@ const ProjectDetails: React.FC = ({}) => {
       return;
     }
     try {
-      const updatedProject: ProjectUpdate = {
+      const updatedProject = {
         description: description,
         status: "open",
         title: title,
@@ -403,7 +403,7 @@ const ProjectDetails: React.FC = ({}) => {
         <div className="flex gap-3">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Edit Profile</Button>
+              <Button variant="outline">Edit project</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogClose asChild className="hidden">
@@ -774,7 +774,7 @@ const ProjectDetails: React.FC = ({}) => {
                         }
                       />
                     </div>
-                    {ideationTech === "brain_storming" && (
+                    {ideationTech === "brain_writing" && (
                       <>
                         <div className="grid grid-cols-4 items-center gap-4">
                           <Label

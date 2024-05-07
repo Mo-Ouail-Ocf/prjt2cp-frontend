@@ -9,12 +9,25 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { UserResponse } from "./apiClient/data-contracts";
+import { ChatBroadCast } from "./apiClient/ws-data-contracts";
 /* this the well positioned 2 chats and buttons to use within our ideation sessions*/
-const Essaibutton = () => {
+
+interface ChatProps {
+  userId: number;
+  users: Map<number, UserResponse>;
+  sessionMessages: ChatBroadCast[];
+  botMessages: ChatBroadCast[];
+  handleSessionMessage: (msg: string) => void;
+  handleBotMessage: (msg: string) => void;
+}
+const Essaibutton = (props: ChatProps) => {
+  console.log(props);
+
   const [showChat1, setShowChat1] = useState(false);
   const [showChat2, setShowChat2] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -37,6 +50,13 @@ const Essaibutton = () => {
     }
   };
 
+  const handleShow = () => {
+    setSubmitted(!submitted);
+  };
+  useEffect(() => {
+    if (!showChat2) setShowChat2(true);
+    if (!showChat1) setShowChat1(true);
+  }, [submitted]);
   return (
     <div className="">
       <div className="fixed bottom-4 right-4">
@@ -88,38 +108,58 @@ const Essaibutton = () => {
       {showChat1 && (
         <div className={`fixed top-36`}>
           <ChatArea
-            name="Chat 1"
-            children={
-              <SentMessage
-                user={{ name: "User 1", pfp: "/path/to/image" }}
-                message="Hello from User 1"
-              />
-            }
+            name="ChatBot"
             right={20}
             bottom={20}
-            send={(msg: string) =>
-              console.log("Sending message from Chat 1:", msg)
-            }
+            send={props.handleBotMessage}
             close={() => setShowChat1(false)}
+            handleShow={handleShow}
           />
         </div>
       )}
       {showChat2 && (
         <div className={`fixed top-36`}>
           <ChatArea
-            name="Chat 2"
-            children={
-              <ReceivedMessage
-                user={{ name: "User 2", pfp: "/path/to/image" }}
-                message="Hello from User 2"
-              />
-            }
+            name="Chat"
+            children={props.sessionMessages.map((msg, index) => {
+              const user = props.users.get(msg.user_id);
+
+              if (user == undefined) {
+                return null;
+              }
+
+              switch (msg.user_id) {
+                case 0: {
+                  console.log(msg.msg);
+                  break;
+                }
+                case props.userId: {
+                  return (
+                    <SentMessage
+                      key={index}
+                      user={props.users.get(props.userId)}
+                      message={msg.msg}
+                    />
+                  );
+                  break;
+                }
+                default: {
+                  return (
+                    <ReceivedMessage
+                      key={index}
+                      user={props.users.get(msg.user_id)}
+                      message={msg.msg}
+                    />
+                  );
+                  break;
+                }
+              }
+            })}
             right={70}
             bottom={70}
-            send={(msg: string) =>
-              console.log("Sending message from Chat 2:", msg)
-            }
+            send={props.handleSessionMessage}
             close={() => setShowChat2(false)}
+            handleShow={handleShow}
           />
         </div>
       )}
