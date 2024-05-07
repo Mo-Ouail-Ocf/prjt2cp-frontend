@@ -1,6 +1,7 @@
 import WSClient from "@/apiClient/ws";
 import {
   BroadCast,
+  ChatBroadCast,
   CombinedIdeaResponse,
   FinalDecisionResponse,
   SysEventBroadcast,
@@ -16,10 +17,11 @@ import {
 import { ReactElement, useState, useEffect } from "react";
 import Brainstorming from "./Brainstorming.tsx";
 import v1Client, { getAccessToken } from "@/apiClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
 import QueuePage from "./QueuePage.tsx";
 import Essaibutton from "@/ChatInSessions.tsx";
+import { log } from "console";
 
 interface SessionProps {
   metadata: SessionResponse;
@@ -37,13 +39,15 @@ const OpenSession = (props: SessionProps) => {
   const [ideas, setIdeas] = useState<Map<number, IdeaResponse>>(new Map());
   const [comments, setComments] = useState<CommentResponse[]>([]);
   const [colors, setColors] = useState<Map<number, string>>(new Map());
-  const [chatMsgs, setChatMsgs] = useState<[]>([]);
   const [ideaMatrix, setIdeaMatrix] = useState<number[][]>([[]]);
   const [refinedIdeas, setRefinedIdeas] = useState<number[]>([]);
   const [expandedIdeas, setExpandedIdeas] = useState<number[]>([]);
   const [combinedIdeas, setCombinedIdeas] = useState<CombinedIdeaResponse[]>(
     []
   );
+  const [sessionMessages, setSessionMessages] = useState<ChatBroadCast[]>([]);
+  const [botMessages, setSBotMessages] = useState<ChatBroadCast[]>([]);
+
   const [finalDecisions, setFinalDecisions] = useState<FinalDecisionResponse[]>(
     []
   );
@@ -55,15 +59,20 @@ const OpenSession = (props: SessionProps) => {
   const [load, setLoad] = useState<boolean>(false);
   const enventHanlder = (data: BroadCast) => {
     // TODO: chat, combined_idea, final_decision
+    console.log(data);
+
     switch (data.type) {
       case "chat":
+        sessionMessages.push(data.content as ChatBroadCast);
+        setSessionMessages(sessionMessages);
+        console.log(sessionMessages);
+
         break;
       case "idea": {
         const ideaId = (data.content as IdeaResponse).idea_id;
         const existed = ideas.has(ideaId);
-        const newIdeas = new Map([...ideas]);
-        newIdeas.set(ideaId, data.content as IdeaResponse);
-        setIdeas(newIdeas);
+        ideas.set(ideaId, data.content as IdeaResponse);
+        setIdeas(ideas);
         if (currentStep != 0) {
           if (existed && !(data.content as IdeaResponse).deleted) {
             const newRefinedIdeas = [...refinedIdeas];
@@ -78,25 +87,22 @@ const OpenSession = (props: SessionProps) => {
         break;
       }
       case "combined_idea":
-        const newCombinedIdeas = [...combinedIdeas];
-        newCombinedIdeas.push(data.content as CombinedIdeaResponse);
-        setCombinedIdeas(newCombinedIdeas);
+        combinedIdeas.push(data.content as CombinedIdeaResponse);
+        setCombinedIdeas(combinedIdeas);
         break;
       case "comment": {
-        const newComments = [...comments];
-        newComments.push(data.content as CommentResponse);
-        setComments(newComments);
+        comments.push(data.content as CommentResponse);
+        setComments(comments);
         break;
       }
       case "vote": {
-        const newIdeas = new Map([...ideas]);
         const idea = ideas.get((data.content as Vote).idea_id) as IdeaResponse;
         if (idea.votes == null) {
           idea.votes = 0;
         }
         idea.votes++;
-        newIdeas.set((data.content as Vote).idea_id, idea);
-        setIdeas(newIdeas);
+        ideas.set((data.content as Vote).idea_id, idea);
+        setIdeas(ideas);
         break;
       }
 
@@ -105,9 +111,8 @@ const OpenSession = (props: SessionProps) => {
         break;
       }
       case "final_decision": {
-        const newFinalDecisions = [...finalDecisions];
-        newFinalDecisions.push(data.content as FinalDecisionResponse);
-        setFinalDecisions(newFinalDecisions);
+        finalDecisions.push(data.content as FinalDecisionResponse);
+        setFinalDecisions(finalDecisions);
         break;
       }
     }
@@ -164,10 +169,15 @@ const OpenSession = (props: SessionProps) => {
           "#e1bee7",
         ];
 
-        usersList.forEach((userId, index) => {
-          colors.set(userId, colorList[index]); // Update the color for each user ID
+        // usersList.forEach((userId, index) => {
+        //   colors.set(userId, colorList[index]); // Update the color for each user ID
+        // });
+        let i = 0;
+        users.forEach((user) => {
+          colors.set(user.id, colorList[i]);
+          setColors(colors); // Update the colors state with the new Map
+          i++;
         });
-        setColors(colors); // Update the colors state with the new Map
         setStarted(true);
         break;
       }
@@ -229,7 +239,7 @@ const OpenSession = (props: SessionProps) => {
       const res = await v1Client.currentV1UserCurrentGet();
       setUserId(res.data.id);
 
-      setUsers(users.set(userId, res.data));
+      setUsers(users.set(res.data.id, res.data));
 
       // init mods list
       let mods: number[] = [];
@@ -329,6 +339,10 @@ const OpenSession = (props: SessionProps) => {
     },
   };
 
+  const chatProps = {
+    handleSessionMessage: (msg: string) => ws.sendMessage(msg),
+    handleBotMessage: (msg: string) => {},
+  };
   return (
     <>
       {started ? (
@@ -342,7 +356,13 @@ const OpenSession = (props: SessionProps) => {
           load={load}
         />
       )}
-      <Essaibutton></Essaibutton>
+      <Essaibutton
+        {...chatProps}
+        userId={userId}
+        users={users}
+        sessionMessages={sessionMessages}
+        botMessages={botMessages}
+      />
     </>
   );
 };
