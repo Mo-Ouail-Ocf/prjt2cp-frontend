@@ -2,10 +2,8 @@ import Homepage from "./pages/Homepage";
 import { getAccessToken } from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster"; // Adjust the import path as needed
-import { TabsDemo } from "./pages/Brainwriting.tsx";
 import { SideBarData } from "./components/SideBarData";
 import ProjectDetails from "./pages/ProjectDetails";
-import ClosedSession from "./pages/ClosedSession.tsx";
 import Help from "./pages/Help";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
@@ -19,11 +17,6 @@ import {
 } from "react-router-dom";
 import SideBarLayout from "./components/SideBarLayout.tsx";
 import Session from "./pages/Session.tsx";
-import Help from "./pages/Help.tsx";
-import AboutUs from "./pages/AboutUs.tsx";
-import Login from "./pages/Login.tsx";
-import Explication from "./pages/Explication.tsx";
-import ContactUs from "./pages/contact.tsx";
 
 function App() {
   const metadata = {
@@ -86,7 +79,7 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-   
+
     setLoggedIn(false);
   };
   return (
@@ -95,7 +88,10 @@ function App() {
         <Routes>
           {loggedIn ? (
             <>
-              <Route path="/" element={<SideBarLayout onSignOut={handleSignOut}/>}>
+              <Route
+                path="/"
+                element={<SideBarLayout onSignOut={handleSignOut} />}
+              >
                 <Route>
                   {SideBarData.map((item, index) => {
                     return (
@@ -116,13 +112,13 @@ function App() {
             </>
           ) : (
             <>
-            <Route path="/" element={<Homepage />}></Route>
-            <Route path="/help" element={<Help />} />{" "}
-        <Route path="/about" element={<AboutUs />} />{" "}
-        <Route path="/login" element={<Login />} />{" "}
-        <Route path="/Explication" element={<Explication />} />{" "}
-        <Route path="/ContactUs" element={<ContactUs />} />{" "}
-        </>
+              <Route path="/" element={<Homepage />}></Route>
+              <Route path="/help" element={<Help />} />{" "}
+              <Route path="/about" element={<AboutUs />} />{" "}
+              <Route path="/login" element={<Login />} />{" "}
+              <Route path="/Explication" element={<Explication />} />{" "}
+              <Route path="/ContactUs" element={<ContactUs />} />{" "}
+            </>
           )}
         </Routes>
       </Router>
