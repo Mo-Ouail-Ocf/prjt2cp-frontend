@@ -1,6 +1,18 @@
-import WSClient from "@/apiClient/ws"
-import { BroadCast, CombinedIdeaResponse, SysEventBroadcast, Vote } from "@/apiClient/ws-data-contracts";
-import { CommentResponse, IdeaResponse, ProjectDisplay, SessionResponse, UserResponse } from "@/apiClient/data-contracts";
+import WSClient from "@/apiClient/ws";
+import {
+  BroadCast,
+  CombinedIdeaResponse,
+  FinalDecisionResponse,
+  SysEventBroadcast,
+  Vote,
+} from "@/apiClient/ws-data-contracts";
+import {
+  CommentResponse,
+  IdeaResponse,
+  ProjectDisplay,
+  SessionResponse,
+  UserResponse,
+} from "@/apiClient/data-contracts";
 import { ReactElement, useState, useEffect } from "react";
 import Brainstorming from "./Brainstorming.tsx";
 import v1Client, { getAccessToken } from "@/apiClient";
@@ -9,251 +21,327 @@ import { toast } from "@/components/ui/use-toast";
 import QueuePage from "./QueuePage.tsx";
 import Essaibutton from "@/ChatInSessions.tsx";
 
-
 interface SessionProps {
-  metadata: SessionResponse,
-  project: ProjectDisplay,
+  metadata: SessionResponse;
+  project: ProjectDisplay;
 }
-
 
 const OpenSession = (props: SessionProps) => {
   const navigate = useNavigate();
   const [mods, setMods] = useState<number[]>([]); // list of mods
   const [userId, setUserId] = useState<number>(0); // current user
-
+  ///////////////////////
+  //////////////////////
   const [users, setUsers] = useState<Map<number, UserResponse>>(new Map());
   const [usersList, setUsersList] = useState<number[]>([]); // a list of session usrers
   const [ideas, setIdeas] = useState<Map<number, IdeaResponse>>(new Map());
   const [comments, setComments] = useState<CommentResponse[]>([]);
   const [colors, setColors] = useState<Map<number, string>>(new Map());
   const [chatMsgs, setChatMsgs] = useState<[]>([]);
-  const [ideaMatrix, setIdeaMatrix] = useState<number[][]>([[]])
-  const [refinedIdeas, setRefinedIdeas] = useState<number[]>([])
-  const [combinedIdeas, setCombinedIdeas] = useState<CombinedIdeaResponse[]>([])
+  const [ideaMatrix, setIdeaMatrix] = useState<number[][]>([[]]);
+  const [refinedIdeas, setRefinedIdeas] = useState<number[]>([]);
+  const [expandedIdeas, setExpandedIdeas] = useState<number[]>([]);
+  const [combinedIdeas, setCombinedIdeas] = useState<CombinedIdeaResponse[]>(
+    []
+  );
+  const [finalDecisions, setFinalDecisions] = useState<FinalDecisionResponse[]>(
+    []
+  );
+  const [error, setError] = useState<string | null>(null);
 
   const [started, setStarted] = useState<boolean>(false);
   const [steps, setSteps] = useState<ReactElement[]>([]);
-  const [currentStep, setCurrentStep] = useState<number>(0)
-
-
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [load, setLoad] = useState<boolean>(false);
   const enventHanlder = (data: BroadCast) => {
     // TODO: chat, combined_idea, final_decision
     switch (data.type) {
       case "chat":
         break;
       case "idea": {
-        ideas.set((data.content as IdeaResponse).idea_id, data.content as IdeaResponse)
-        setIdeas(ideas)
+        const ideaId = (data.content as IdeaResponse).idea_id;
+        const existed = ideas.has(ideaId);
+        const newIdeas = new Map([...ideas]);
+        newIdeas.set(ideaId, data.content as IdeaResponse);
+        setIdeas(newIdeas);
+        if (currentStep != 0) {
+          if (existed && !(data.content as IdeaResponse).deleted) {
+            const newRefinedIdeas = [...refinedIdeas];
+            newRefinedIdeas.push(ideaId);
+            setRefinedIdeas(newRefinedIdeas);
+          } else {
+            const newExpandedIdeas = [...expandedIdeas];
+            newExpandedIdeas.push(ideaId);
+            setExpandedIdeas(newExpandedIdeas);
+          }
+        }
         break;
       }
       case "combined_idea":
+        const newCombinedIdeas = [...combinedIdeas];
+        newCombinedIdeas.push(data.content as CombinedIdeaResponse);
+        setCombinedIdeas(newCombinedIdeas);
         break;
       case "comment": {
-        comments.push(data.content as CommentResponse)
-        setComments(comments)
+        const newComments = [...comments];
+        newComments.push(data.content as CommentResponse);
+        setComments(newComments);
         break;
       }
       case "vote": {
-        const idea = ideas.get((data.content as Vote).idea_id) as IdeaResponse
+        const newIdeas = new Map([...ideas]);
+        const idea = ideas.get((data.content as Vote).idea_id) as IdeaResponse;
         if (idea.votes == null) {
           idea.votes = 0;
         }
         idea.votes++;
-        setIdeas(ideas);
+        newIdeas.set((data.content as Vote).idea_id, idea);
+        setIdeas(newIdeas);
         break;
       }
+
       case "sys_event": {
-        handleSysEvent(data.content as SysEventBroadcast)
+        handleSysEvent(data.content as SysEventBroadcast);
         break;
       }
-      case "final_decision":
+      case "final_decision": {
+        const newFinalDecisions = [...finalDecisions];
+        newFinalDecisions.push(data.content as FinalDecisionResponse);
+        setFinalDecisions(newFinalDecisions);
         break;
+      }
     }
-  }
+  };
 
-  const addUser = (userId: number): UserResponse => {
-    usersList.push(userId)
-    setUsersList(usersList)
+  const addUser = async (userId: number): Promise<UserResponse | undefined> => {
+    try {
+      // Check if the user is already in the users map
+      setLoad(true);
+      if (users.has(userId)) {
+        console.log("index: ", usersList.indexOf(userId));
 
-    let user = users.get(userId);
+        if (usersList.indexOf(userId) < 0) {
+          console.log("gerwougfresh");
 
-    if (user == undefined) {
-      v1Client.getUserByIdV1UserUserIdGet(userId).then(res => {
-        users.set(userId, res.data);
-        setUsers(users);
-        return res.data
-      }).catch(() => {
-        throw new Error("Unable to retreive user data");
-      })
-    } else {
-      return user
+          usersList.push(userId);
+          setUsersList(usersList);
+        }
+        return users.get(userId);
+      }
+
+      // Fetch user data using v1Client
+      const res = await v1Client.getUserByIdV1UserUserIdGet(userId);
+      const userData = res.data;
+
+      setUsers(users.set(userId, res.data));
+
+      usersList.push(userId);
+      setUsersList(usersList);
+
+      return userData;
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      throw new Error("Unable to retrieve user data");
+    } finally {
+      console.log("users");
+      console.log(usersList);
+
+      setLoad(false);
     }
-  }
+  };
 
-  const handleSysEvent = (event: SysEventBroadcast) => {
+  const handleSysEvent = async (event: SysEventBroadcast) => {
+    console.log(event);
+
     switch (event.event) {
       case "start": {
-        const colorList = [ "cdfc93", "ffb1b1", "fff9c4", "b3e5fc", "f8bbd0", "e1bee7", ]
-        usersList.map((userId, index) => {
-          colors.set(userId, colorList[index]);
-          setColors(colors);
-        })
-        setStarted(true)
+        const colorList = [
+          "#cdfc93",
+          "#ffb1b1",
+          "#fff9c4",
+          "#b3e5fc",
+          "#f8bbd0",
+          "#e1bee7",
+        ];
+
+        usersList.forEach((userId, index) => {
+          colors.set(userId, colorList[index]); // Update the color for each user ID
+        });
+        setColors(colors); // Update the colors state with the new Map
+        setStarted(true);
         break;
       }
       case "join": {
         const userId = event.users[0];
-        const user = addUser(userId);
+        const user = await addUser(userId);
         toast({
           title: "Session Info",
+          //@ts-ignore
           description: user.name + " joined the session!",
-        })
+        });
         break;
       }
       case "joined": {
-        for (let userId of event.users) {
-          addUser(userId)
+        if (event.users.length == 1) {
+          const usertest = await addUser(event.users[0]);
+          console.log(usertest);
+        } else {
+          for (let userId of event.users) {
+            await addUser(userId);
+          }
         }
         break;
       }
       case "quit": {
-        if (! started) {
+        const user = users.get(event.users[0]);
+        toast({
+          title: "Session Info",
+          description: (user as UserResponse).name + " left the session!",
+        });
+        if (!started) {
           const index = usersList.indexOf(event.users[0]);
           if (index > -1) {
-            usersList.splice(index, 1);
+            setUsersList(usersList.slice(index, 1));
           }
-          setUsersList(usersList)
+          users.delete(event.users[0]);
+          setUsers(users);
         }
-
-        const user = users.get(event.users[0])
-        toast({ title: "Session Info",
-          description: (user as UserResponse).name + " left the session!",
-        })
         break;
       }
       case "close": {
-        ws.disconnet()
-        navigate("/session/"+props.metadata.session_id);
+        ws.disconnet();
+        navigate("/");
         navigate(0);
         break;
       }
       case "next": {
-        setCurrentStep(currentStep + 1) 
+        setCurrentStep(currentStep + 1);
         break;
       }
     }
-  }
-  const [ws, setWs] = useState<WSClient>(new WSClient(props.metadata.session_id, enventHanlder));
-
+  };
+  const [ws, setWs] = useState<WSClient>(
+    new WSClient(props.metadata.session_id, enventHanlder)
+  );
 
   useEffect(() => {
-    v1Client.currentV1UserCurrentGet().then(res => {
-      setUserId(res.data.id)
-      users.set(userId, res.data);
-      setUsers(users);
-    }).catch(() => {
-      throw new Error("Coudn't fetch user data");
-      
-    })
+    async function setup() {
+      const res = await v1Client.currentV1UserCurrentGet();
+      setUserId(res.data.id);
 
+      setUsers(users.set(userId, res.data));
 
-    // init mods list
-    let mods: number[] = [];
-    // props.project.participants?.filter(user => {user.role == "moderator"}).map(user => {tmp.push(user.user.user_id)}) // mods
-    mods.push(props.project.owner_id) // the Admin
-    setMods(mods);
+      // init mods list
+      let mods: number[] = [];
+      // props.project.participants?.filter(user => {user.role == "moderator"}).map(user => {tmp.push(user.user.user_id)}) // mods
+      mods.push(props.project.owner_id); // the Admin
+      setMods(mods);
 
-    // init steps
-    switch (props.metadata.ideation_technique) {
-      case "brain_writing": {
-        const BWProps = {
-          metadata: props.metadata,
-          users: users,
-          usersList: usersList,
-          ideas: ideas,
-          colors: colors,
-          comments: comments,
-          handleComment: (comment: string, ideaId: number) => { ws.sendComment(ideaId, comment) },
-          handleIdea: (content: string, details: string, parent_idea_id: number | null) => { ws.sendIdea(content, details, parent_idea_id) },
-          handlePhaseEnd: () => {
-            setCurrentStep(currentStep + 1) 
-          },
-          handleRoundEnd: () => {
-            // TODO: build the matrix
-          },
+      // init steps
+      switch (props.metadata.ideation_technique) {
+        case "brain_writing": {
+          const BWProps = {
+            metadata: props.metadata,
+            users: users,
+            usersList: usersList,
+            ideas: ideas,
+            colors: colors,
+            comments: comments,
+            handleComment: (comment: string, ideaId: number) => {
+              ws.sendComment(ideaId, comment);
+            },
+            handleIdea: (
+              content: string,
+              details: string,
+              parent_idea_id: number | null
+            ) => {
+              ws.sendIdea(content, details, parent_idea_id);
+            },
+            handlePhaseEnd: () => {
+              setCurrentStep(currentStep + 1);
+            },
+            handleRoundEnd: () => {
+              // TODO: build the matrix
+            },
+          };
+
+          setSteps([
+            // TODO: add the steps
+          ]);
+          break;
         }
 
-        setSteps([
-        // TODO: add the steps
-
-        ])
-        break;
-      }
-
-      case "brain_storming": {
-        const BSProps = {
-          metadata: props.metadata,
-          users: users,
-          ideas: ideas,
-          colors: colors,
-          comments: comments,
-          handleComment: (comment: string, ideaId: number) => { ws.sendComment(ideaId, comment) },
-          handleIdea: (content: string, details: string) => { ws.sendIdea(content, details, null) },
-          handlePhaseEnd: () => {
-            let rows = Math.sqrt(ideas.size)
-            if (! Number.isInteger(rows)) {
-              rows = Math.trunc(rows) + 1
-            }
-
-            let i = 0;
-            let j = 0;
-
-            ideas.forEach((_, key) => {
-              ideaMatrix[i][j] = key
-              j++;
-              if (j >= rows) {
-                j = 0;
-                i++;
+        case "brain_storming": {
+          const BSProps = {
+            metadata: props.metadata,
+            users: users,
+            colors: colors,
+            handleComment: (comment: string, ideaId: number) => {
+              ws.sendComment(ideaId, comment);
+            },
+            handleIdea: (content: string, details: string) => {
+              ws.sendIdea(content, details, null);
+            },
+            handlePhaseEnd: () => {
+              let rows = Math.sqrt(ideas.size);
+              if (!Number.isInteger(rows)) {
+                rows = Math.trunc(rows) + 1;
               }
-            })
 
-            setIdeaMatrix(ideaMatrix)
-            setCurrentStep(currentStep + 1) 
-          },
+              let i = 0;
+              let j = 0;
+
+              ideas.forEach((_, key) => {
+                ideaMatrix[i][j] = key;
+                j++;
+                if (j >= rows) {
+                  j = 0;
+                  i++;
+                }
+              });
+
+              setIdeaMatrix(ideaMatrix);
+              setCurrentStep(currentStep + 1);
+            },
+          };
+
+          setSteps([
+            <Brainstorming
+              {...BSProps}
+              ideas={ideas}
+              comments={comments}
+            ></Brainstorming>,
+            // TODO: add other steps
+          ]);
+          break;
         }
-
-        setSteps([
-          <Brainstorming {...BSProps} />,
-          // TODO: add other steps
-
-        ])
-        break;
       }
+
+      ws.connect(getAccessToken() as string);
     }
-
-
-
-    ws.connect(getAccessToken() as string)
-  }, [])
+    setup();
+  }, []);
 
   const queueProps = {
-    isMod: mods.indexOf(userId) >= 0,
     metadata: props.metadata,
-    users: users,
-    colors: colors,
     handleStart: () => {
-      ws.startSession()
-    }
-  }
+      ws.startSession();
+    },
+  };
 
   return (
     <>
-      {
-        started ?
-          steps[currentStep]
-          :
-          <QueuePage {...queueProps} />
-      }
+      {started ? (
+        steps[currentStep]
+      ) : (
+        <QueuePage
+          {...queueProps}
+          users={users}
+          isMod={mods.indexOf(userId) >= 0}
+          usersList={usersList}
+          load={load}
+        />
+      )}
       <Essaibutton></Essaibutton>
     </>
   );

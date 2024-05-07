@@ -23,11 +23,11 @@ import {
 } from "@/apiClient/data-contracts";
 
 interface BSProps {
-  metadata: SessionResponse;
-  users: Map<number, UserResponse>;
-  ideas: Map<number, IdeaResponse>;
-  colors: Map<number, string>;
-  comments: CommentResponse[];
+  metadata: SessionResponse; //no
+  users: Map<number, UserResponse>; //no
+  ideas: Map<number, IdeaResponse>; //yes
+  colors: Map<number, string>; //no
+  comments: CommentResponse[]; //yes
   handleComment: (comment: string, ideaId: number) => void;
   handleIdea: (idea: string, details: string) => void;
   handlePhaseEnd: () => void;
@@ -236,7 +236,9 @@ const Brainstorming = (props: BSProps) => {
         <p className="bg-zinc-200 p-4 rounded-lg text-xl font-semibold content-center">
           <Countdown
             date={endTime}
-            daysInHours={true} onComplete={handleTimerComplete}/>
+            daysInHours={true}
+            onComplete={handleTimerComplete}
+          />
         </p>
       </div>
 
@@ -244,18 +246,28 @@ const Brainstorming = (props: BSProps) => {
         {displays}
       </div>
       <div className="mt-4 max-h-26">
-        {/*
         <ScrollArea className="rounded-md border max-h-26">
-          <form onSubmit={submitIdea} className="p-4 flex justify-between flex-col space-y-4">
-              <Input placeholder="Enter an idea" value={ideaContent} onChange={e => setIdeaContent(e.target.value)} className=""/>
-              <Input placeholder="Enter details" value={details} onChange={e => setDetails(e.target.value)}/>
-              <Button type="submit">Submit</Button>
+          <form
+            onSubmit={submitIdea}
+            className="p-4 flex justify-between flex-col space-y-4"
+          >
+            <Input
+              placeholder="Enter an idea"
+              value={ideaContent}
+              onChange={(e) => setIdeaContent(e.target.value)}
+              className=""
+            />
+            <Input
+              placeholder="Enter details"
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+            />
+            <Button type="submit">Submit</Button>
           </form>
         </ScrollArea>
-        */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Brainstorming
+export default Brainstorming;

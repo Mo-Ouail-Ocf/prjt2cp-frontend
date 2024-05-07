@@ -7,13 +7,17 @@ import { TabsDemo } from "./pages/Brainwriting.tsx";
 import { SideBarData } from "./components/SideBarData";
 import ProjectDetails from "./pages/ProjectDetails";
 import ClosedSession from "./pages/ClosedSession.tsx";
+import Help from "./pages/Help";
+import AboutUs from "./pages/AboutUs";
+import Login from "./pages/Login";
+import Explication from "./pages/Explication.tsx";
+import ContactUs from "./pages/contact.tsx";
 import {
   BrowserRouter,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Session from "./pages/Session.tsx";
 import SideBarLayout from "./components/SideBarLayout.tsx";
 import Session from "./pages/Session.tsx";
 
@@ -102,7 +106,14 @@ function App() {
               <Route path="/session/:session_id" element={<Session />}></Route>
             </>
           ) : (
+            <>
             <Route path="/" element={<Homepage />}></Route>
+            <Route path="/help" element={<Help />} />{" "}
+        <Route path="/about" element={<AboutUs />} />{" "}
+        <Route path="/login" element={<Login />} />{" "}
+        <Route path="/Explication" element={<Explication />} />{" "}
+        <Route path="/ContactUs" element={<ContactUs />} />{" "}
+        </>
           )}
         </Routes>
       </Router>
