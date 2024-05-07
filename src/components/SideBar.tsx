@@ -1,31 +1,23 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
 import styled from "styled-components";
-import "./SideBar.css";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { SideBarData } from "./SideBarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons";
-
-interface SideBarNavProps {
-  sidebar?: string;
-}
-
+import Logos from "../images/logo.svg";
+import ProfileIcon from "./ProfileIcon";
 const Nav = styled.div`
-  background: #4b0082;
+  background: hsl(var(--primary));
   height: 80px;
+  width: 100%;
+  top: 0;
   display: flex;
+  position: sticky;
   justify-content: space-between;
+  z-index: 10;
   align-items: center;
 `;
 const NavIcon = styled(Link)`
@@ -36,18 +28,16 @@ const NavIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
 `;
-const SideBarNav = styled.nav.attrs<SideBarNavProps>(({ sidebar }) => ({
-  style: {
-    left: sidebar || "-100%", // Default to "-100%" if sidebar is undefined
-  },
-}))<SideBarNavProps>`
-  background: #4b0082;
+const SideBarNav = styled.nav<{ sidebar: boolean }>`
+  background:hsl(var(--primary));
+  border-radius: 0%;
   width: 200px;
   height: 100vh;
   display: flex;
   justify-content: center;
   position: fixed;
   top: 0;
+  left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
   transition: ease-in-out 0.7s;
   z-index: 10;
 `;
@@ -55,17 +45,29 @@ const SideBarWrapper = styled.div`
   width: 100%;
   height: 100vh;
 `;
+const NavWrapper = styled.div`
+ 
+`;
 const Logo = styled.div`
   font-size: 40px;
   color: #f8f4ff;
   height: 60px;
+  
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Lato", sans-serif;
+  font-family: "Quattrocento";
+  margin: auto;
 `;
-
-const SideBar = () => {
+const DropM = styled.div`
+  margin-right: 2rem;
+  box-sizing: border-box;
+`;
+interface Props {
+  onSignOut: () => void;
+}
+const SideBar = ({onSignOut}:Props) => {
   const [sidebar, setSidebar] = useState(false);
   const ShowSideBar = () => {
     setSidebar(true);
@@ -73,29 +75,30 @@ const SideBar = () => {
   const HideSideBar = () => {
     setSidebar(false);
   };
+
   return (
     <>
       <IconContext.Provider value={{ color: "#d6cadd" }}>
         <Nav>
-          <NavIcon to="#">
-            <FaIcons.FaBars onClick={ShowSideBar} />
-          </NavIcon>
-
-          <Logo>TikTa</Logo>
-
-          <DropdownMenu >
-            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Log Out</DropdownMenuItem>
-
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <NavWrapper>
+            <NavIcon to="#">
+              <FaIcons.FaBars onClick={ShowSideBar} />
+            </NavIcon>
+          </NavWrapper>
+          <Logo>
+            <img
+              src={Logos}
+              alt="logo"
+              style={{ height: "50px", marginRight: "10px" }}
+            />
+            TikTa
+          </Logo>
+          <DropM>
+          <ProfileIcon onSignOut={onSignOut} />
+          </DropM>
         </Nav>
 
-        <SideBarNav sidebar={sidebar ? "0" : undefined}>
+        <SideBarNav sidebar={sidebar}>
           <SideBarWrapper>
             <NavIcon to="#">
               <AiIcons.AiOutlineClose onClick={HideSideBar} />

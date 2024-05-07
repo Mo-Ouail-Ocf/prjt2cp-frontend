@@ -172,7 +172,7 @@ const Projects: React.FC = () => {
       <thead className="bg-gray-50">
         <tr>
           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>
-          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Creation Date</th>
+          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">edit Date</th>
           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Resource Name</th>
           <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Participants</th>
         </tr>

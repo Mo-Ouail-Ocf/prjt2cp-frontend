@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -6,6 +9,9 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    "./index.html", "./src/**/*.{js,ts,jsx,tsx}"
+  ,
+  flowbite.content(),
   ],
   prefix: "",
   theme: {
@@ -73,5 +79,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), flowbite.plugin(),],
 }

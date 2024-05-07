@@ -1,5 +1,4 @@
 import Homepage from "./pages/Homepage";
-import "./App.css";
 import { getAccessToken } from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster"; // Adjust the import path as needed
@@ -15,6 +14,11 @@ import {
 } from "react-router-dom";
 import SideBarLayout from "./components/SideBarLayout.tsx";
 import Session from "./pages/Session.tsx";
+import Help from "./pages/Help.tsx";
+import AboutUs from "./pages/AboutUs.tsx";
+import Login from "./pages/Login.tsx";
+import Explication from "./pages/Explication.tsx";
+import ContactUs from "./pages/contact.tsx";
 
 function App() {
   const metadata = {
@@ -74,14 +78,19 @@ function App() {
       console.log(users);
     }, 5000);
   }, []);
-
+  const handleSignOut = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+   
+    setLoggedIn(false);
+  };
   return (
     <>
       <Router>
         <Routes>
           {loggedIn ? (
             <>
-              <Route path="/" element={<SideBarLayout />}>
+              <Route path="/" element={<SideBarLayout onSignOut={handleSignOut}/>}>
                 <Route>
                   {SideBarData.map((item, index) => {
                     return (
@@ -101,7 +110,14 @@ function App() {
               <Route path="/session/:sessionId" element={<Session />}></Route>
             </>
           ) : (
+            <>
             <Route path="/" element={<Homepage />}></Route>
+        <Route path="/help" element={<Help />} />{" "}
+        <Route path="/about" element={<AboutUs />} />{" "}
+        <Route path="/login" element={<Login />} />{" "}
+        <Route path="/Explication" element={<Explication />} />{" "}
+        <Route path="/ContactUs" element={<ContactUs />} />{" "}
+            </>
           )}
         </Routes>
       </Router>

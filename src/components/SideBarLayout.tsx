@@ -1,10 +1,12 @@
 import { Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
-
-const SideBarLayout = () => {
+interface Props {
+  onSignOut: () => void;
+}
+const SideBarLayout = ({onSignOut}: Props) => {
   return (
     <>
-      <SideBar />
+      <SideBar onSignOut={onSignOut}/>
       <Outlet />
     </>
   );
