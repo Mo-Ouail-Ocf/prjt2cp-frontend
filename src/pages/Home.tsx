@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   }
 `;
 const Home = () => {
-  const [ownedProjects, setOwnedProjects] = useState<ProjectDisplay[]>([]);
+  /* const [ownedProjects, setOwnedProjects] = useState<ProjectDisplay[]>([]);
   const [participatedProjects, setParticipatedProjects] = useState<
     ProjectDisplay[]
   >([]);
@@ -40,7 +40,7 @@ const Home = () => {
       }
     };
     fetchProjects();
-  }, []);
+  }, []); */
   return <MatriceBrainwriting />;
 };
 
