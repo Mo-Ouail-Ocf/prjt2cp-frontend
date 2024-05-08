@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import v1Client from "@/apiClient";
 import { ProjectDisplay, SessionResponse } from "@/apiClient/data-contracts";
-
+import MatriceBrainwriting from "./Matrix";
 const Wrapper = styled.div`
   display: flex,
   flex-direction: column;
@@ -41,24 +41,7 @@ const Home = () => {
     };
     fetchProjects();
   }, []);
-  return (
-    <div
-      className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4"
-      style={{
-        display: "flex",
-        padding: "2rem 2rem",
-        textAlign: "center",
-        textDecoration: "underline",
-      }}
-    >
-      <Wrapper>
-        <h1>Recent Project </h1>
-      </Wrapper>
-      <Wrapper>
-        <h1>Recent Session </h1>
-      </Wrapper>
-    </div>
-  );
+  return <MatriceBrainwriting />;
 };
 
 export default Home;

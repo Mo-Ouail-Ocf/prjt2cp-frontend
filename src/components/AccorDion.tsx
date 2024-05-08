@@ -6,7 +6,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import vd from "./coc.mp4";
 import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;

@@ -1,0 +1,12 @@
+.gridcontainer {
+  width: 100%;
+  display: grid;
+  gap: 20px;
+}
+
+.gridrow {
+  display: grid;
+  grid-template-columns: repeat(var(--num-cols, 1), 1fr);
+  /* grid-template-rows: repeat(var(--num-rows, 1), auto); */
+  gap: 20px;
+}

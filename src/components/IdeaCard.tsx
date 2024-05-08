@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { UserResponse } from "@/apiClient/data-contracts.ts";
+import { log } from "console";
 
 interface CommentInterface {
   user: UserResponse;
@@ -38,6 +39,7 @@ interface IdeaCardProps {
 }
 
 const IdeaCard = (props: IdeaCardProps) => {
+  console.log(props);
   const [comment, setComment] = useState("");
   const send = (e) => {
     props.handleComment(comment, props.ideaId);
