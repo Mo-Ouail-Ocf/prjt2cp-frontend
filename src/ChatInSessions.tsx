@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import  { useEffect, useState } from "react";
 import ChatArea, { SentMessage, ReceivedMessage } from "./components/Chat";
 import Chatbot from "./assets/chatbot.png";
 import Chat from "./assets/chat.png";
@@ -10,31 +9,47 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { UserResponse } from "./apiClient/data-contracts";
-import { ChatBroadCast } from "./apiClient/ws-data-contracts";
+import { useUserStore } from "./store/userStore";
+import { useSessionStore } from "./store/sessionStore";
+import { useChatStore } from "./store/chatStore";
+import { useWsStore } from "./store/wsStore";
+import v1Client from "./apiClient";
 /* this the well positioned 2 chats and buttons to use within our ideation sessions*/
 
-interface ChatProps {
-  userId: number;
-  users: Map<number, UserResponse>;
-  sessionMessages: ChatBroadCast[];
-  botMessages: ChatBroadCast[];
-  handleSessionMessage: (msg: string) => void;
-  handleBotMessage: (msg: string) => void;
-}
-const Essaibutton = (props: ChatProps) => {
-  console.log(props);
+const handleBotMessage = async (msg: string) => {
+  const userId = useSessionStore.getState().userId;
+  useChatStore.setState(state => {
+    state.chatBotMessages.push({user_id: userId, msg: msg})
+  })
 
+  const res = await v1Client.generateIdeasV1BotGenerateIdeasPost({topic: msg})
+  res.data.map((idea: string) => {
+    if (idea != "") {
+      useChatStore.setState(state => {
+        state.chatBotMessages.push({user_id: 0, msg: idea})
+      })
+    }
+  })
+
+}
+
+const SessionChat = () => {
   const [showChat1, setShowChat1] = useState(false);
   const [showChat2, setShowChat2] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  const users = useUserStore(state => state.users)
+  const userId = useSessionStore(state => state.userId)
+  const sessionMessages = useChatStore(state => state.sessionMessages)
+  const chatBotMessages = useChatStore(state => state.chatBotMessages)
+  const ws = useWsStore(state => state.ws)
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
-    console.log(screenWidth);
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -50,13 +65,6 @@ const Essaibutton = (props: ChatProps) => {
     }
   };
 
-  const handleShow = () => {
-    setSubmitted(!submitted);
-  };
-  useEffect(() => {
-    if (!showChat2) setShowChat2(true);
-    if (!showChat1) setShowChat1(true);
-  }, [submitted]);
   return (
     <div className="">
       <div className="fixed bottom-4 right-4">
@@ -111,9 +119,32 @@ const Essaibutton = (props: ChatProps) => {
             name="ChatBot"
             right={20}
             bottom={20}
-            send={props.handleBotMessage}
+            messages={
+              chatBotMessages.map((msg, index) => {
+              switch (msg.user_id) {
+                case userId: {
+                  return (
+                    <SentMessage
+                      key={index}
+                      user={users.get(userId) as UserResponse}
+                      message={msg.msg}
+                    />
+                  );
+                }
+                default: {
+                  return (
+                    <ReceivedMessage
+                      key={index}
+                      user={users.get(msg.user_id) as UserResponse}
+                      message={msg.msg}
+                    />
+                  );
+                }
+              }
+            })
+            }
+            send={handleBotMessage}
             close={() => setShowChat1(false)}
-            handleShow={handleShow}
           />
         </div>
       )}
@@ -121,45 +152,33 @@ const Essaibutton = (props: ChatProps) => {
         <div className={`fixed top-36`}>
           <ChatArea
             name="Chat"
-            children={props.sessionMessages.map((msg, index) => {
-              const user = props.users.get(msg.user_id);
-
-              if (user == undefined) {
-                return null;
-              }
-
+            messages={
+              sessionMessages.map((msg, index) => {
               switch (msg.user_id) {
-                case 0: {
-                  console.log(msg.msg);
-                  break;
-                }
-                case props.userId: {
+                case userId: {
                   return (
                     <SentMessage
                       key={index}
-                      user={props.users.get(props.userId)}
+                      user={users.get(userId) as UserResponse}
                       message={msg.msg}
                     />
                   );
-                  break;
                 }
                 default: {
                   return (
                     <ReceivedMessage
                       key={index}
-                      user={props.users.get(msg.user_id)}
+                      user={users.get(msg.user_id) as UserResponse}
                       message={msg.msg}
                     />
                   );
-                  break;
                 }
               }
             })}
             right={70}
             bottom={70}
-            send={props.handleSessionMessage}
+            send={(msg: string) => {ws?.sendMessage(msg)}}
             close={() => setShowChat2(false)}
-            handleShow={handleShow}
           />
         </div>
       )}
@@ -167,4 +186,4 @@ const Essaibutton = (props: ChatProps) => {
   );
 };
 
-export default Essaibutton;
+export default SessionChat;
