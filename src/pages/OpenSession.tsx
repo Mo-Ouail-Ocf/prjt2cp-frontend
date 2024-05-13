@@ -6,6 +6,9 @@ import { setupSession } from "@/session/session.ts";
 import { useSessionStore } from "@/store/sessionStore.ts";
 import { useToast } from "@/components/ui/use-toast.ts";
 import { useToastStore } from "@/store/toastStore.ts";
+import { useWsStore } from "@/store/wsStore.ts";
+import { useIdeaStore } from "@/store/ideaStore.ts";
+import { useUserStore } from "@/store/userStore.ts";
 
 interface SessionProps {
   session: SessionResponse;
@@ -23,6 +26,13 @@ const OpenSession = (props: SessionProps) => {
 
   useEffect(() => {
     setupSession(props.session, props.project);
+
+    return () => {
+      useWsStore.getState().ws?.disconnect();
+      useUserStore.setState((state) => {
+        state.userList = [];
+      });
+    };
   }, []);
 
   useEffect(() => {

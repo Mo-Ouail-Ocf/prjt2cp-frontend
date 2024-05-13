@@ -17,9 +17,13 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    if (getAccessToken() != null) {
-      setLoggedIn(true);
-    }
+    const login = async () => {
+      try {
+        const _ = await getAccessToken();
+        setLoggedIn(true);
+      } catch {}
+    };
+    login();
   }, []);
 
   const handleSignOut = () => {

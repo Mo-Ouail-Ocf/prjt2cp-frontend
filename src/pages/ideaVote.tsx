@@ -95,11 +95,7 @@ const IdeaVote = () => {
       <div className="p-8 mb-4 pt-2">
         <h1>Expended Ideas: </h1>
         <br />
-        <div
-          className={
-            "grid grid-flow-col gap-5 grid-cols-" + ideaMatrix[0].length
-          }
-        >
+        <div className={"grid gap-5 grid-cols-" + ideaMatrix[0].length}>
           {expendedIdeas.map((ideaId) => {
             return (
               <IdeaCard
@@ -114,11 +110,7 @@ const IdeaVote = () => {
       </div>
       <div className="p-8 mt-4 pt-2">
         <h1>Combined Ideas: </h1>
-        <div
-          className={
-            "grid grid-flow-col gap-5 grid-cols-" + ideaMatrix[0].length
-          }
-        >
+        <div className={"grid gap-5 grid-cols-" + ideaMatrix[0].length}>
           {Array.from(combinedIdeas.keys()).map((ideaId) => {
             return (
               <IdeaCard
