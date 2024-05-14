@@ -102,14 +102,13 @@ const Brainstorming: React.FC = () => {
           );
 
           return (
-            <div className="bg-red-200 max-h-full max-w-full">
-              <Carousel className="">
+              <Carousel className="w-full h-full">
                 <CarouselPrevious className="-left-4" />
-                <CarouselContent className="">
+                <CarouselContent className="w-full h-full">
                   {userIdeas.length > 0 ? (
                     userIdeas.map((idea) => (
                       <CarouselItem
-                        className="max-h-full max-w-full"
+                        className="h-full w-full"
                         key={idea.idea_id}
                       >
                         <IdeaCard
@@ -121,7 +120,7 @@ const Brainstorming: React.FC = () => {
                       </CarouselItem>
                     ))
                   ) : (
-                    <CarouselItem className="">
+                    <CarouselItem className="h-full w-full">
                       <IdeaCard
                         ideaId={0}
                         showMod={false}
@@ -133,7 +132,6 @@ const Brainstorming: React.FC = () => {
                 </CarouselContent>
                 <CarouselNext className="-right-4" />
               </Carousel>
-            </div>
           );
         })}
       </div>
