@@ -11,7 +11,7 @@ import { useUserStore } from "@/store/userStore.ts";
 import { useChatStore } from "@/store/chatStore.ts";
 import { useCommentStore } from "@/store/commentStore.ts";
 import { useFinalDecisionStore } from "@/store/finalDecisionStore.ts";
-
+import { useIdeaStore } from "@/store/ideaStore.ts";
 interface SessionProps {
   session: SessionResponse;
   project: ProjectDisplay;

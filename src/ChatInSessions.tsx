@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ChatArea, { SentMessage, ReceivedMessage } from "./components/Chat";
 import Chatbot from "./assets/chatbot.png";
+import Queue from "./assets/queue.png";
 import Chat from "./assets/chat.png";
 import {
   Tooltip,
@@ -34,6 +35,7 @@ import { useUserStore } from "./store/userStore";
 import { useChatStore } from "./store/chatStore";
 import { useWsStore } from "./store/wsStore";
 import v1Client from "./apiClient";
+import TeamWork from "./assets/teamwork.png";
 /* this the well positioned 2 chats and buttons to use within our ideation sessions*/
 import { useSessionStore } from "./store/sessionStore";
 const handleBotMessage = async (msg: string) => {
@@ -55,6 +57,9 @@ const handleBotMessage = async (msg: string) => {
 };
 
 const SessionChat = () => {
+  const session = useSessionStore((state) => state.session);
+  const currStep = useSessionStore((state) => state.currentStep);
+  const started = useSessionStore((state) => state.started);
   const [showChat1, setShowChat1] = useState(false);
   const [showChat2, setShowChat2] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -101,28 +106,236 @@ const SessionChat = () => {
             </DialogHeader>
             <ScrollArea className="h-[400px] w-[450px] rounded-md border">
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-center">
-                    <span>Brainstorming</span>
-                    <img src={brainstorming} className="w-12 ml-2" />
-                  </CardTitle>
-                  <CardDescription className=" text-center">
-                    Brainstorming is a creative ideation technique that involves
-                    group collaboration to generate a large number of ideas that
-                    can later be refined and evaluated.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <h2 className="text-center text-xl font-bold">
-                    Key aspects:
-                  </h2>
-                  <ul className="list-disc">
-                    <li>Participants share ideas freely in a group setting.</li>
-                    <li>All ideas are accepted without criticism.</li>
-                    <li>Users can build on each other’s ideas.</li>
-                    <li>Moderators guide the session to ensure focus.</li>
-                  </ul>
-                </CardContent>
+                {/*  */}
+                {!started ? (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-center">
+                        <span>Queue page</span>
+                        <img src={Queue} className="w-12 ml-2" />
+                      </CardTitle>
+                      <CardDescription className=" text-center">
+                        Wait until moderator decides to start the session
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <h2 className="text-center text-xl font-bold">
+                        Key aspects:
+                      </h2>
+
+                      <ul className="list-disc">
+                        <li>
+                          Waiting Area: Users wait in the queue page before the
+                        </li>
+                        <br />
+                        <li>
+                          session starts. View Active Users: Users can see other
+                        </li>
+                        <br />
+                        <li>
+                          active users also in the queue. Session Start: Admin
+                          can
+                        </li>
+                        <br />
+                        <li>
+                          {" "}
+                          start the session, initiating the ideation process.
+                        </li>
+                        <br />
+                      </ul>
+                    </CardContent>
+                  </>
+                ) : currStep == 0 &&
+                  session?.ideation_technique == "brain_storming" ? (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-center">
+                        <span>Idea submission</span>
+                        <img src={brainstorming} className="w-12 ml-2" />
+                      </CardTitle>
+                      <CardDescription className=" text-center">
+                        Brain storming session
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <h2 className="text-center text-xl font-bold">
+                        Key aspects:
+                      </h2>
+
+                      <ul className="list-disc">
+                        <li>Rounds System: Users submit ideas in rounds.</li>
+                        <br />
+                        <li>
+                          Color-Coded Cards: Each user has a specific card color
+                          for identification.{" "}
+                        </li>
+                        <br />
+                        <li>Submission Limit: Users can submit only once.</li>
+                        <br />
+                        <li>
+                          Submission Timeframe: Ideas submitted in allowed time.
+                        </li>
+                        <li>
+                          Late Submission Handling: If time's up and no
+                          submission, idea is blank.
+                        </li>
+                        <br />
+                        <li>
+                          Review Previous Ideas: Users can see others' ideas in
+                          the same column and comment.
+                        </li>
+                        <li>
+                          Chatbot for Idea Generation: Users can use a chatbot
+                          to generate ideas.
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </>
+                ) : currStep == 0 &&
+                  session?.ideation_technique == "brain_writing" ? (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-center">
+                        <span>Idea submission</span>
+                        <img src={brainwriting} className="w-12 ml-2" />
+                      </CardTitle>
+                      <CardDescription className=" text-center">
+                        Brain writing session
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <h2 className="text-center text-xl font-bold">
+                        Key aspects:
+                      </h2>
+
+                      <ul className="list-disc">
+                        <li>
+                          Real-time Idea Submission: Users' ideas are instantly
+                          added to their carousel.
+                        </li>
+                        <br />
+                        <li>
+                          Color-Coded Cards: Each user has a specific card color
+                          for identification.{" "}
+                        </li>
+                        <br />
+                        <li>
+                          Submission Limit: Users can submit only once in each
+                          round.
+                        </li>
+                        <br />
+                        <li>
+                          Submission Timeframe: Ideas submitted in allowed time.
+                        </li>
+                        <br />
+                        <li>
+                          Late Submission Handling: If time's up and no
+                          submission, idea is blank.
+                        </li>
+                        <br />
+                        <li>
+                          Chatbot for Idea Generation: Users can use a chatbot
+                          to generate ideas.
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </>
+                ) : currStep == 1 ? (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-center">
+                        <span>Idea development</span>
+                        <img src={TeamWork} className="w-12 ml-2" />
+                      </CardTitle>
+                      <CardDescription className=" text-center">
+                        Develop your ideas collectively
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <h2 className="text-center text-xl font-bold">
+                        Key aspects:
+                      </h2>
+
+                      <ul className="list-disc">
+                        <li>
+                          Comments and Chat: Users can comment on others' ideas
+                          and chat.
+                        </li>
+                        <br />
+                        <li>
+                          Moderator Actions: Moderator can combine, extend,
+                          delete, and refine ideas.
+                        </li>
+                        <br />
+                        <li>
+                          Moderator Control: Decides when to end the phase and
+                          move to voting.
+                        </li>
+                        <br />
+                        <li>
+                          Combining Ideas: Moderator selects ideas to combine.
+                          Creates a new combined idea, added to the combined
+                          ideas section.
+                        </li>
+                        <br />
+                        <li>
+                          Refinement: Users can refine ideas by modifying their
+                          content.
+                        </li>
+                        <br />
+                        <li>
+                          Expansion: Users can expand an idea's content.
+                          Expanded ideas are added to the expanded ideas
+                          section, visible in real-time.
+                        </li>
+                        <br />
+                        <li>
+                          Deletion: Moderator can delete ideas. Deleted ideas
+                          are marked with grey color.
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </>
+                ) : (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-center">
+                        <span>Ideas voting</span>
+                        <img src={TeamWork} className="w-12 ml-2" />
+                      </CardTitle>
+                      <CardDescription className=" text-center">
+                        Vote on your ideas collectively
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <h2 className="text-center text-xl font-bold">
+                        Key aspects:
+                      </h2>
+
+                      <ul className="list-disc">
+                        <li>
+                          Voting Process: Users vote by clicking on the button
+                          on the idea card. Real-time results are displayed for
+                          users to see.
+                        </li>
+                        <br />
+                        <li>
+                          Final Idea Selection: Moderator selects final ideas by
+                          clicking on the decision button. Final decisions are
+                          marked with a star sign.
+                        </li>
+                        <br />
+                        <li>
+                          Session Completion: At the end of the session, users
+                          are redirected to the session page. Users can
+                          visualize all ideas submitted during the session.
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </>
+                )}
+
+                {/*  */}
               </Card>
             </ScrollArea>
           </DialogContent>

@@ -311,11 +311,19 @@ const ProjectDetails: React.FC = ({}) => {
   };
 
   if (loadProject === true) {
-    return <div>Loading sessions...</div>;
+    return (
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Loading project ...
+      </h2>
+    );
   }
 
   if (errorLoadProject) {
-    return <div>Error: {errorLoadProject}</div>;
+    return (
+      <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Error: {errorLoadProject}
+      </div>
+    );
   }
 
   interface TableProps {
