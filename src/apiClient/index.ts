@@ -1,7 +1,10 @@
 import { V1 } from "./V1";
 import { ApiConfig, RequestParams } from "./http-client";
+import * as env from 'env-var';
 
-const url = "http://localhost:8000";
+const domain: string = env.get('API_DOMAIN').required().asString()
+
+const url = "http://"+domain;
 
 const authApiConfig: ApiConfig = {
   baseUrl: url,

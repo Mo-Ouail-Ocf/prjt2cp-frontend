@@ -1,7 +1,8 @@
 import { messageHandler } from "./handlers.ts";
 import { BroadCast } from "./ws-data-contracts.ts";
+import * as env from 'env-var';
 
-const backendDomain = "localhost:8000";
+const domain: string = env.get('API_DOMAIN').required().asString()
 
 export default class WSClient {
   sessionId: number = 0;
@@ -19,7 +20,7 @@ export default class WSClient {
     }
 
     this.ws = new WebSocket(
-      `ws://${backendDomain}/v1/ws/` +
+      `ws://${domain}/v1/ws/` +
         this.sessionId +
         "?access_token=" +
         accessToken
