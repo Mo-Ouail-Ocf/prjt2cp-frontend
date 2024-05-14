@@ -1,10 +1,8 @@
 .AccordionItem {
  font-size: 25px;
- font-family: 'Quattrocento sans', sans-serif;
   margin: 10px 10px;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 10px;
   box-sizing: border-box;
   transition: all 0.3s;
-
 }

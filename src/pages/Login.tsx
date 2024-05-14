@@ -1,5 +1,5 @@
 import styles from "../components/homecomponent/login.module.css";
-import LogoB from "../images/logoblanc.png";
+import LogoB from "../images/logo.svg";
 import React, { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { v1AuthClient } from "../apiClient/index.ts";

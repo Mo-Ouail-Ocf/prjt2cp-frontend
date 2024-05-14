@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Homepage from "./pages/Homepage";
 import { getAccessToken } from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
@@ -8,21 +9,26 @@ import Help from "./pages/Help";
 import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
 import Explication from "./pages/Explication.tsx";
-import ProjectVisualize from "./pages/ProjectVisualize.tsx";
 import ContactUs from "./pages/contact.tsx";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import SideBarLayout from "./components/SideBarLayout.tsx";
+import {
+  BrowserRouter,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import Session from "./pages/Session.tsx";
+import HeaderBarLayout from "./components/HeaderBar.tsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-
   useEffect(() => {
     const login = async () => {
       try {
         const _ = await getAccessToken();
         setLoggedIn(true);
-      } catch {}
+      } catch {
+        console.log("Not authenticated")
+      }
     };
     login();
   }, []);
@@ -36,55 +42,45 @@ function App() {
 
   return (
     <>
-      <div className="main">
-        <div className="gradient"></div>
-        <Router>
-          <Routes>
-            {loggedIn ? (
-              <>
-                <Route
-                  path="/"
-                  element={<SideBarLayout onSignOut={handleSignOut} />}
-                >
-                  <Route>
-                    {SideBarData.map((item, index) => {
-                      return (
-                        <Route
-                          path={item.path}
-                          element={item.element}
-                          key={index}
-                        />
-                      );
-                    })}
-                    <Route
-                      path="/project/:projectId"
-                      element={<ProjectDetails />}
-                    />
-                  </Route>
+     <Router>
+        <Routes>
+          {loggedIn ? (
+            <>
+              <Route
+                path="/"
+                element={<HeaderBarLayout  onSignOut={handleSignOut}/>}
+              >
+                <Route>
+                  {SideBarData.map((item, index) => {
+                    return (
+                      <Route
+                        path={item.path}
+                        element={item.element}
+                        key={index}
+                      />
+                    );
+                  })}
+                  <Route
+                    path="/project/:projectId"
+                    element={<ProjectDetails />}
+                  />
                 </Route>
-                <Route
-                  path="/session/:session_id"
-                  element={<Session />}
-                ></Route>
-                <Route
-                  path="/visualize/:projectId"
-                  element={<ProjectVisualize />}
-                />
-              </>
-            ) : (
-              <>
-                <Route path="/" element={<Homepage />}></Route>
-                <Route path="/help" element={<Help />} />{" "}
-                <Route path="/about" element={<AboutUs />} />{" "}
-                <Route path="/login" element={<Login />} />{" "}
-                <Route path="/Explication" element={<Explication />} />{" "}
-                <Route path="/ContactUs" element={<ContactUs />} />{" "}
-              </>
-            )}
-          </Routes>
-        </Router>
-        <Toaster />
-      </div>
+              </Route>
+              <Route path="/session/:session_id" element={<Session />}></Route>
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Homepage />}></Route>
+              <Route path="/help" element={<Help />} />{" "}
+              <Route path="/about" element={<AboutUs />} />{" "}
+              <Route path="/login" element={<Login />} />{" "}
+              <Route path="/Explication" element={<Explication />} />{" "}
+              <Route path="/ContactUs" element={<ContactUs />} />{" "}
+            </>
+          )}
+        </Routes>
+      </Router>
+      <Toaster />
     </>
   );
 }

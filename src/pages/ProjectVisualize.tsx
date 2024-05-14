@@ -51,7 +51,11 @@ const ProjectVisualize = () => {
     fetchProject();
   }, []);
   if (loadProject) {
-    return <p>loading ...</p>;
+    return (
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Loading the project ...
+      </h2>
+    );
   } else {
     return (
       <div className="p-4 pr-16 pl-16 flex flex-col justify-around">

@@ -1,4 +1,4 @@
-import Logo from "../../images/logo.png"; // Assuming 'images' folder exists
+import Logo from "../../images/logo.svg"; // Assuming 'images' folder exists
 import Lampe from "../../images/lampe.png";
 import Cahier from "../../images/cahier-crayon.png";
 import Card1 from "../../images/card1.png";

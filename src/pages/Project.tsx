@@ -241,6 +241,13 @@ const Projects: React.FC = () => {
     </>
   );
 
+  if (loadProjects) {
+    return (
+      <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Loading ...
+      </h2>
+    );
+  }
   return (
     <div className="p-8">
       <div className="flex items-center justify-between p-4">
@@ -376,26 +383,40 @@ const Projects: React.FC = () => {
       </div>
 
       {/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+      {ownedProjects.length == 0 && participatedProjects.length == 0 && (
+        <div className=" h-[80vh] flex items-center justify-center">
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No projects to display
+          </h2>
+        </div>
+      )}
       {ownedProjects.length > 0 ? (
         <>
-          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
             Owned Projects
           </h2>
           <Table projects={ownedProjects} />
         </>
       ) : (
-        <p>No owned projects to display.</p>
+        participatedProjects.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No owned projects to show
+          </h2>
+        )
       )}
-
       {participatedProjects.length > 0 ? (
         <>
-          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
-            Participated Projects
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            Owned Projects
           </h2>
           <Table projects={participatedProjects} />
         </>
       ) : (
-        <p>No participated projects to display.</p>
+        ownedProjects.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No participated projects to show
+          </h2>
+        )
       )}
     </div>
   );

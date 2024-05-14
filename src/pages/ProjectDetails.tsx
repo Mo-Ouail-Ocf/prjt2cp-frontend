@@ -311,11 +311,19 @@ const ProjectDetails: React.FC = ({}) => {
   };
 
   if (loadProject === true) {
-    return <div>Loading sessions...</div>;
+    return (
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Loading project ...
+      </h2>
+    );
   }
 
   if (errorLoadProject) {
-    return <div>Error: {errorLoadProject}</div>;
+    return (
+      <div className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Error: {errorLoadProject}
+      </div>
+    );
   }
 
   interface TableProps {
@@ -561,7 +569,7 @@ const ProjectDetails: React.FC = ({}) => {
                 <DialogTrigger>
                   <Button>New ideation session</Button>
                 </DialogTrigger>
-                <DialogContent className="w-[490px]">
+                <DialogContent className="w-[490px] justify-center items-center p-0  ">
                   <Tabs defaultValue="brainstorming" className="w-[400px]">
                     <TabsList className="grid w-full grid-cols-2">
                       <TabsTrigger value="brainstorming">
@@ -571,7 +579,7 @@ const ProjectDetails: React.FC = ({}) => {
                         Brainwriting
                       </TabsTrigger>
                     </TabsList>
-                    <TabsContent value="brainstorming">
+                    <TabsContent value="brainstorming" className="mt-5">
                       <Card>
                         <CardHeader>
                           <CardTitle className="flex items-center justify-center">
@@ -626,7 +634,7 @@ const ProjectDetails: React.FC = ({}) => {
                         </CardFooter>
                       </Card>
                     </TabsContent>
-                    <TabsContent value="brainwriting">
+                    <TabsContent value="brainwriting" className="mt-5">
                       <Card>
                         <CardHeader>
                           <CardTitle className="flex items-center justify-center">
