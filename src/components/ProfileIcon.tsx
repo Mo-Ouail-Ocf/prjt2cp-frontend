@@ -14,7 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-
+import { useUserStore } from "@/stores/userStore";
 import "./Profile.css";
 import { Avatar, CustomFlowbiteTheme, Flowbite, Label } from "flowbite-react";
 import ProfilePage from "@/pages/ProfilePage";
@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { UserResponse } from "@/apiClient/data-contracts";
 import v1Client from "@/apiClient";
+import { ToastAction } from "./ui/toast";
+import { useToast } from "./ui/use-toast";
 interface Props {
   onSignOut: () => void;
 }
@@ -34,44 +36,46 @@ const customTheme: CustomFlowbiteTheme = {
     },
   },
 };
+
 const ProfileIcon = ({ onSignOut }: Props) => {
+  /////The Store
+  const {
+    user,
+    loadUser,
+    errorUser,
+    successUser,
+    getUser,
+    modifyUserName,
+    loadUpdate,
+    successUpdate,
+  } = useUserStore((state) => state);
+  //////////////
+
+  //shadcnui
+  const { toast } = useToast();
+  //
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [user, setUser] = useState<UserResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await v1Client.currentV1UserCurrentGet();
-        setUser(response.data);
-      } catch (e) {
-        setError("error while fetching user data");
-        console.log(e);
-      } finally {
-        setShowProfile(true);
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-expect-error
-          showProfile && setName(user?.name);
-        }
-      }
+    const getCurr = async () => {
+      await getUser();
     };
-    getUser();
+    getCurr();
   }, []);
-  const submit = () => {
-    v1Client
-
-      .nameV1UserNamePut({ name: name })
-      .then((response) => {
-        setUser(response.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        setError("error while updating user data");
-        console.log(e);
+  const submit = async () => {
+     
+    await modifyUserName(name);
+    if (successUpdate) {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Your username is updated",
+        action: <ToastAction altText="close">Close</ToastAction>,
       });
+    }
   };
   return (
     <>

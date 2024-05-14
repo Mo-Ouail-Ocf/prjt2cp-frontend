@@ -1,20 +1,6 @@
-// TODO: fix the input & sizing
-import React from "react";
-import {
-  SessionResponse,
-  UserResponse,
-  CommentResponse,
-  IdeaResponse,
-} from "@/apiClient/data-contracts";
-import IdeaCard from "@/components/IdeaCard";
+import { SessionResponse } from "@/apiClient/data-contracts";
 import Logo from "@/images/logo.svg";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -25,38 +11,27 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogFooter,
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogClose,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
-interface QueueProps {
-  isMod: boolean;
-  metadata: SessionResponse;
-  users: Map<number, UserResponse>;
-  handleStart: () => void;
-  usersList: number[];
-  load: boolean;
-}
-const QueuePage = (props: QueueProps) => {
-  console.log(props);
+import { useUserStore } from "@/store/userStore";
+import { useSessionStore } from "@/store/sessionStore";
+import { useWsStore } from "@/store/wsStore";
 
-  if (props.load) {
-    return <p>load</p>;
-  }
+const QueuePage = () => {
+  const session = useSessionStore((state) => state.session) as SessionResponse;
+  const mods = useSessionStore((state) => state.mods);
+  const userId = useSessionStore((state) => state.userId);
+  const ws = useWsStore((state) => state.ws);
+  const usersList = useUserStore((state) => state.userList);
+  const users = useUserStore((state) => state.users);
+
   return (
-    <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
+    <div className="h-screen w-screen p-4 pr-16 pl-16 ">
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
@@ -66,7 +41,7 @@ const QueuePage = (props: QueueProps) => {
         </div>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">{props.metadata.title}</Button>
+            <Button variant="outline">{session.title}</Button>
           </DialogTrigger>
           <DialogContent>
             <Card>
@@ -80,14 +55,14 @@ const QueuePage = (props: QueueProps) => {
                     id="name"
                     className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100"
                   >
-                    {props.metadata.title}
+                    {session.title}
                   </span>
                 </div>
                 <div className="space-y-1 space-x-4">
                   <Label htmlFor="username">Description:</Label>
-                  {props.metadata.description ? (
+                  {session.description ? (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {props.metadata.description}
+                      {session.description}
                     </span>
                   ) : (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
@@ -99,28 +74,28 @@ const QueuePage = (props: QueueProps) => {
                   <Label>Ideation technique:</Label>
                   {/*@ts-ignore*/}
                   <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                    {props.metadata.ideation_technique}
+                    {session.ideation_technique}
                   </span>
                 </div>
                 <div className="space-y-1 space-x-4">
                   <Label>Round time:</Label>
                   <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                    {props.metadata.round_time} minutes
+                    {session.round_time} minutes
                   </span>
                 </div>
-                {props.metadata.ideation_technique === "brain_writing" && (
+                {session.ideation_technique === "brain_writing" && (
                   <div className="space-y-1 space-x-4">
                     <Label>Number of rounds:</Label>
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {props.metadata.round_time} rounds
+                      {session.round_time} rounds
                     </span>
                   </div>
                 )}
                 <div className="space-y-1 space-x-4">
                   <Label>Objective</Label>
-                  {props.metadata.objectives ? (
+                  {session.objectives ? (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {props.metadata.objectives}
+                      {session.objectives}
                     </span>
                   ) : (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
@@ -140,7 +115,15 @@ const QueuePage = (props: QueueProps) => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        {props.isMod && <Button onClick={props.handleStart}>Start the session</Button>}
+        {mods.indexOf(userId) >= 0 && (
+          <Button
+            onClick={() => {
+              ws?.startSession();
+            }}
+          >
+            Start the session
+          </Button>
+        )}
       </div>
       <div className=" p-4 pr-16 pl-16 flex flex-col justify-around">
         <h1 className="text-center font-bold text-2xl">Active users</h1>
@@ -155,22 +138,22 @@ const QueuePage = (props: QueueProps) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/*@ts-ignore*/}
-                {Array.from(props.users.values()).map((participant, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="rounded-full overflow-hidden">
-                      {/*@ts-ignore*/}
-                      <img
-                        src={participant.pfp}
-                        alt=""
-                        className="h-10 w-10 rounded-full border-2 border-white bg-white"
-                      />
-                    </TableCell>
-                    <TableCell>{participant.email}</TableCell>
-                    <TableCell>{participant.name}</TableCell>
-                  </TableRow>
-                ))}
-                {/*  */}
+                {usersList.map((userId, index) => {
+                  const user = users.get(userId);
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="rounded-full overflow-hidden">
+                        <img
+                          src={user?.pfp}
+                          alt=""
+                          className="h-10 w-10 rounded-full border-2 border-white bg-white"
+                        />
+                      </TableCell>
+                      <TableCell>{user?.email}</TableCell>
+                      <TableCell>{user?.name}</TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </CardContent>

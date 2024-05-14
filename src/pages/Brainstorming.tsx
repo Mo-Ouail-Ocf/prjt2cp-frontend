@@ -1,5 +1,4 @@
-// TODO: fix the input & sizing
-import React, { useEffect } from "react";
+import React from "react";
 import Logo from "@/images/logo.svg";
 import { useState } from "react";
 import Countdown from "react-countdown";
@@ -15,44 +14,58 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
-import {
-  SessionResponse,
-  UserResponse,
-  IdeaResponse,
-  CommentResponse,
-} from "@/apiClient/data-contracts";
-import ideas from "@/components/test";
+import { UserResponse } from "@/apiClient/data-contracts";
+import { useWsStore } from "@/store/wsStore";
+import { useSessionStore } from "@/store/sessionStore";
+import { useUserStore } from "@/store/userStore";
+import { useIdeaStore } from "@/store/ideaStore";
 
-interface BSProps {
-  metadata: SessionResponse; //no
-  users: Map<number, UserResponse>; //no
-  ideas: Map<number, IdeaResponse>; //yes
-  colors: Map<number, string>; //no
-  comments: CommentResponse[]; //yes
-  handleComment: (comment: string, ideaId: number) => void;
-  handleIdea: (idea: string, details: string) => void;
-  handlePhaseEnd: () => void;
-}
+const Brainstorming: React.FC = () => {
+  const ws = useWsStore((state) => state.ws);
+  const session = useSessionStore((state) => state.session);
+  const userList = useUserStore((state) => state.userList);
+  const users = useUserStore((state) => state.users);
+  const ideas = useIdeaStore((state) => state.ideas);
 
-const Brainstorming = (props: BSProps) => {
   const [ideaContent, setIdeaContent] = useState("");
   const [details, setDetails] = useState("");
-  const endTime = Date.now() + props.metadata.round_time * 60 * 1000;
+  const [endTime, _useEndTime] = useState(
+    //@ts-ignore
+    Date.now() + session?.round_time * 60 * 1000
+  );
 
-  const submitIdea = (e) => {
-    props.handleIdea(ideaContent, details);
-    setIdeaContent("");
-    setDetails("");
+  const submitIdea = (e: any) => {
+    if (ideaContent != "") {
+      ws?.sendIdea(ideaContent, details, null);
+      setIdeaContent("");
+      setDetails("");
+    }
     e.preventDefault();
   };
 
   const handleTimerComplete = () => {
-    // this function is wrapped here in case we need to do some defensive stuff
-    props.handlePhaseEnd();
+    useIdeaStore.setState((state) => {
+      const ideaList = Array.from(ideas.keys()).filter((ideaId) => ideaId != 0);
+
+      let rows = Math.sqrt(ideaList.length);
+      if (!Number.isInteger(rows)) {
+        rows = Math.trunc(rows) + 1;
+      }
+
+      for (let i = 0; i < ideaList.length; i += rows) {
+        const row = ideaList.slice(i, i + rows);
+        console.log(row);
+
+        state.ideaMatrix.push(row);
+      }
+    });
+    useSessionStore.setState((state) => {
+      state.currentStep++;
+    });
   };
 
   let gridLayout;
-  switch (props.users.size) {
+  switch (userList.length) {
     case 6:
     case 5:
       gridLayout = " grid-cols-3 p-16 gap-16";
@@ -65,13 +78,9 @@ const Brainstorming = (props: BSProps) => {
       gridLayout = " grid-cols-1 p-48 gap-16";
       break;
   }
-  useEffect(() => {
-    // This effect will trigger whenever props.ideas changes
-    console.log("Props.ideas changed:", props.ideas);
-  }, [props.ideas]);
 
   return (
-    <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
+    <div className=" min-h-[100vh] w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
@@ -80,7 +89,7 @@ const Brainstorming = (props: BSProps) => {
           </p>
         </div>
         <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">
-          Idaeation session title
+          {session?.title}
         </p>
         <p className="bg-zinc-200 p-4 rounded-lg text-xl font-semibold content-center">
           <Countdown
@@ -92,44 +101,36 @@ const Brainstorming = (props: BSProps) => {
       </div>
 
       <div className={"h-full w-full mt-4 grid grid-cols-2" + gridLayout}>
-        {Array.from(props.users.values()).map((user) => {
+        {userList.map((userId) => {
+          const user = users.get(userId) as UserResponse;
+          const userIdeas = Array.from(ideas.values()).filter(
+            (idea) => idea.submitter_id == user.id
+          );
+
           return (
-            <div className="flex flex-col">
+            <div className="flex flex-col" key={user.id}>
               <Avatar className="h-14 w-14 ml-auto mr-auto border">
                 <AvatarImage src={user.pfp} alt={user.name} />
                 <AvatarFallback>TK</AvatarFallback>
               </Avatar>
-              <Carousel key={user.id} className="p-5 h-full">
+              <Carousel className="p-5 h-full">
                 <CarouselPrevious className="-left-4 z-10" />
                 <CarouselContent className="h-full ">
-                  {Array.from(props.ideas.values()).map((idea) => {
-                    if (idea.submitter_id == user.id) {
-                      const ideaProps = {
-                        ideaId: idea.idea_id,
-                        idea: idea.content,
-                        details: idea.details,
-                        submitter: user,
-                        isMod: false,
-                        showVote: false,
-                        bgColor: props.colors.get(user.id),
-                        comments: props.comments.filter((comment) => {
-                          comment.idea_id == idea.idea_id;
-                        }),
-                        votes: 0,
-                        handleComment: props.handleComment,
-                        handleVote: (ideaId: number) => {},
-                        handleSelect: (
-                          ideaId: number,
-                          checked: boolean | "indeterminate"
-                        ) => {},
-                      };
-                      return (
-                        <CarouselItem className="h-full">
-                          <IdeaCard {...ideas} />
-                        </CarouselItem>
-                      );
-                    }
-                  })}
+                  {userIdeas.length > 0 ? (
+                    userIdeas.map((idea) => (
+                      <CarouselItem className="h-full" key={idea.idea_id}>
+                        <IdeaCard
+                          ideaId={idea.idea_id}
+                          showMod={false}
+                          showVote={false}
+                        />
+                      </CarouselItem>
+                    ))
+                  ) : (
+                    <CarouselItem className="h-full">
+                      <IdeaCard ideaId={0} showMod={false} showVote={false} />
+                    </CarouselItem>
+                  )}
                 </CarouselContent>
                 <CarouselNext className="-right-4" />
               </Carousel>

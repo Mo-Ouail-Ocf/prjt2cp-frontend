@@ -1,19 +1,10 @@
 import v1Client from "@/apiClient";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  ProjectDisplay,
-  SessionResponse,
-  SessionExport,
-} from "@/apiClient/data-contracts";
+import { ProjectDisplay, SessionResponse } from "@/apiClient/data-contracts";
 import Unauthorized from "./Unauthorized";
 import OpenSession from "./OpenSession";
 import ClosedSession from "./ClosedSession";
-
-interface Metadata {
-  session: SessionResponse;
-  project: ProjectDisplay;
-}
 
 const Session = () => {
   const { session_id } = useParams();
@@ -22,8 +13,9 @@ const Session = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
-    const fetchSessions = async () => {
+    const fetchSession = async () => {
       try {
         if (session_id != null) {
           setLoading(true); // Start loading
@@ -37,21 +29,19 @@ const Session = () => {
               sessionResponse.data.project_id
             );
           setProject(projectResponse.data);
-          setLoading(false);
         } else {
           setError("no project id found");
         }
       } catch (err) {
         setError("Failed to fetch sessions");
-        setLoading(false);
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSessions();
-  }, [session_id]);
+    fetchSession();
+  }, []);
 
   if (loading) {
     return <p>Loading</p>;
@@ -61,18 +51,13 @@ const Session = () => {
   }
   return (
     <>
-      {
-        //@ts-ignore
-        session.session_status == "open" ? (
-          //@ts-ignore
-          <OpenSession metadata={session} project={project} />
-        ) : //@ts-ignore
-        session.session_status == "closed" ? (
-          <ClosedSession />
-        ) : (
-          <Unauthorized />
-        ) // static // unauthorized
-      }
+      {session?.session_status == "open" ? (
+        <OpenSession session={session} project={project as ProjectDisplay} />
+      ) : session?.session_status == "closed" ? (
+        <ClosedSession session_id={parseInt(session_id)} />
+      ) : (
+        <Unauthorized />
+      )}
     </>
   );
 };

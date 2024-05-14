@@ -11,17 +11,15 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserResponse } from "@/apiClient/data-contracts.ts";
-import { useState } from "react";
-import { useRef } from "react";
+import { useRef , ReactNode, useEffect, useState } from "react";
 
 export interface ChatProps {
   name: string;
-  children: SentMessage | ReceivedMessage;
+  messages: ReactNode[];
   right: number;
   bottom: number;
   send: (msg: string) => void;
   close: () => void;
-  handleShow: () => void;
 }
 
 export interface ChatMessageProps {
@@ -31,20 +29,20 @@ export interface ChatMessageProps {
 
 const ChatArea = (props: ChatProps) => {
   const [msg, setMsg] = useState("");
-  const sa = useRef(null);
-  const ref = useRef<HTMLButtonElement>();
-  const submit = (e) => {
+
+  const ref = useRef()
+
+  const submit = (e: any) => {
     if (msg != "") {
       props.send(msg);
       setMsg("");
-      sa.current.children[1].scrollTop = sa.current.children[1].scrollHeight;
     }
     e.preventDefault();
-    if (ref.current) {
-      ref.current.click();
-    }
-    props.handleShow();
   };
+
+  useEffect(() => {
+    ref.current?.scrollIntoView()
+  }, [props.messages])
 
   return (
     <div
@@ -53,18 +51,29 @@ const ChatArea = (props: ChatProps) => {
       <Card className="max-w-sm min-w-96">
         <CardHeader className="p-0 mr-1 flex-row justify-between">
           <CardTitle className="m-2">{props.name}</CardTitle>
-          <Button
-            className="max-h-8 max-w-8 text-base"
-            onClick={props.close}
-            ref={ref}
-          >
+          <Button className="max-h-8 max-w-8 text-base" onClick={props.close}>
             X
           </Button>
         </CardHeader>
         <Separator className="my" />
         <CardContent className="p-1">
-          <ScrollArea className="h-96 p-3" ref={(ref) => (sa.current = ref)}>
-            {props.children}
+          <ScrollArea className="h-96 p-3 pt-0 pb-0">
+            {
+            props.messages.map((message, index) => {
+              if (index == props.messages.length - 1 ) {
+                return (
+                  <div ref={ref} className="m-0 p-0" key={index}>
+                    {message}
+                  </div>
+                )
+              }
+                return (
+                  <div className="m-0 p-0" key={index}>
+                    {message}
+                  </div>
+                )
+            })
+            }
           </ScrollArea>
         </CardContent>
         <Separator className="my" />
@@ -94,7 +103,7 @@ export const ReceivedMessage = (props: ChatMessageProps) => {
         <AvatarImage src={props.user.pfp} alt={props.user.name} />
         <AvatarFallback>TK</AvatarFallback>
       </Avatar>
-      <p className="text-lg bg-red-50 max-h-8 hyphens-auto rounded-lg p-1">
+      <p className="text-lg bg-red-50 hyphens-auto rounded-lg p-1">
         {props.message}
       </p>
     </div>

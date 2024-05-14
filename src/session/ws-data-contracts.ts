@@ -41,12 +41,12 @@ export interface ChatMessage {
   msg: string;
 }
 
-/** CombinedIdeaCreate */
-export interface CombinedIdeaCreate {
-  /** Combined Idea Id */
-  combined_idea_id: number;
-  /** Source Idea Id */
-  source_idea_id: number;
+/** CombinedIdeaWSCreate */
+export interface CombinedIdeaWSCreate {
+  /** Idea */
+  idea: IdeaResponse;
+  /** Source Ideas Ids */
+  source_idea_ids: number[];
 }
 
 /** CombinedIdeaResponse */
@@ -105,8 +105,9 @@ export interface FinalDecisionResponse {
    * @format date-time
    */
   decision_date: string;
-}
 
+  new_session_id: number | null;
+}
 
 /** IdeaRequest */
 export interface IdeaRequest {
@@ -116,6 +117,11 @@ export interface IdeaRequest {
   details: string | null;
   /** Parent Idea Id */
   parent_idea_id: number | null;
+  /**
+   * Idea Type
+   * @pattern ^(?:|expended|combined)$
+   */
+  idea_type: string;
 }
 
 /** IdeaResponse */
@@ -138,9 +144,14 @@ export interface IdeaResponse {
    */
   creation_date: string;
   /** Votes */
-  votes: number | null;
+  votes: number;
   /** Deleted */
   deleted: boolean;
+  /**
+   * Idea Type
+   * @pattern ^(?:|refined|expended|combined)$
+   */
+  idea_type: string;
 }
 
 /** IdeaUpdateWS */
@@ -158,7 +169,6 @@ export interface IdeaUpdateWS {
   idea_id: number;
 }
 
-
 /** Message */
 export interface Message {
   /**
@@ -171,14 +181,13 @@ export interface Message {
     | ChatMessage
     | IdeaRequest
     | IdeaUpdateWS
-    | CombinedIdeaCreate
+    | CombinedIdeaWSCreate
     | CommentRequest
     | SysEvent
     | FinalDecisionRequest
     | Vote
     | null;
 }
-
 
 /** SysEvent */
 export interface SysEvent {
@@ -200,11 +209,8 @@ export interface SysEventBroadcast {
   users: number[];
 }
 
-
 /** Vote */
 export interface Vote {
   /** Idea Id */
   idea_id: number;
 }
-
-/** ResourceDisplay */
