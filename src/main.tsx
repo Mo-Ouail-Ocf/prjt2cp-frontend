@@ -3,9 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import * as env from 'env-var';
 
-const clientId: string = env.get('GOOGLE_CLIENT_ID').required().asString()
+const clientId: string = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider clientId={clientId}>

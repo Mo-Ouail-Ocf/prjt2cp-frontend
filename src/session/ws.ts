@@ -1,8 +1,7 @@
 import { messageHandler } from "./handlers.ts";
 import { BroadCast } from "./ws-data-contracts.ts";
-import * as env from 'env-var';
 
-const domain: string = env.get('API_DOMAIN').required().asString()
+const domain: string = import.meta.env.VITE_API_DOMAIN
 
 export default class WSClient {
   sessionId: number = 0;

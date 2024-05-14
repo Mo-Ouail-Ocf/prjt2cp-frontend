@@ -1,8 +1,7 @@
 import { V1 } from "./V1";
 import { ApiConfig, RequestParams } from "./http-client";
-import * as env from 'env-var';
 
-const domain: string = env.get('API_DOMAIN').required().asString()
+const domain: string = import.meta.env.VITE_API_DOMAIN
 
 const url = "http://"+domain;
 
