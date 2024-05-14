@@ -1,6 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+  .shadow-custom {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8); /* Adjust the opacity for darkness */
+  }
+}
+
+* {
+  font-family: var(--font-geist-sans);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(181, 181, 181);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
 
 @layer base {
   :root {
@@ -10,6 +37,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
+
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
@@ -100,4 +128,9 @@
   filter: blur(100px) saturate(150%);
   /* top: 80px;  */
   opacity: 0.25;
+}
+body,
+html,
+#root {
+  min-height: 100vh;
 }
