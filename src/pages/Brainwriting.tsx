@@ -155,7 +155,7 @@ const Brainwriting = () => {
           <TabsContent value="Idea Submission">
             {canSubmit ? (
               <div className="flex items-center justify-center">
-                <Card className="w-[1400px]">
+                <Card className="w-full">
                   <CardHeader>
                     <CardTitle className=" text-center">
                       Express you thoughts
@@ -211,7 +211,9 @@ const Brainwriting = () => {
                   {Array.from({ length: round }, (_, index) => index).map(
                     (i) => {
                       const idea = ideas.get(
-                        ideaMatrix[i][(userList.indexOf(userId) + round) % userList.length]
+                        ideaMatrix[i][
+                          (userList.indexOf(userId) + round) % userList.length
+                        ]
                       );
                       return (
                         <CarouselItem className="h-full" key={idea?.idea_id}>

@@ -297,7 +297,7 @@ const ProjectDetails: React.FC = ({}) => {
       }
     };
     fetchSessions();
-  }, [projectId]);
+  }, []);
 
   const sessionDialogRef = useRef<HTMLDivElement | null>(null);
   const closeDialog = useRef<HTMLDivElement | null>(null);

@@ -15,7 +15,7 @@ const Session = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchSessions = async () => {
+    const fetchSession = async () => {
       try {
         if (session_id != null) {
           setLoading(true); // Start loading
@@ -40,7 +40,7 @@ const Session = () => {
       }
     };
 
-    fetchSessions();
+    fetchSession();
   }, []);
 
   if (loading) {

@@ -8,6 +8,9 @@ import { useToast } from "@/components/ui/use-toast.ts";
 import { useToastStore } from "@/store/toastStore.ts";
 import { useWsStore } from "@/store/wsStore.ts";
 import { useUserStore } from "@/store/userStore.ts";
+import { useChatStore } from "@/store/chatStore.ts";
+import { useCommentStore } from "@/store/commentStore.ts";
+import { useFinalDecisionStore } from "@/store/finalDecisionStore.ts";
 
 interface SessionProps {
   session: SessionResponse;
@@ -28,8 +31,34 @@ const OpenSession = (props: SessionProps) => {
 
     return () => {
       useWsStore.getState().ws?.disconnect();
+      useWsStore.setState((state) => {
+        state.ws = null;
+      });
       useUserStore.setState((state) => {
         state.userList = [];
+      });
+      useSessionStore.setState((state) => {
+        state.started = false;
+        state.currentStep = 0;
+        state.loaded = false;
+      });
+      useChatStore.setState((state) => {
+        state.chatBotMessages = [];
+        state.sessionMessages = [];
+      });
+      useCommentStore.setState((state) => {
+        state.comments = new Map();
+      });
+      useFinalDecisionStore.setState((state) => {
+        state.finalDecisions = new Map();
+      });
+      useIdeaStore.setState((state) => {
+        state.ideaMatrix = [];
+        state.combinedIdeas = new Map();
+        state.expendedIdeas = [];
+        state.refinedIdeas = [];
+        state.roundIdeas = [];
+        state.selected = [];
       });
     };
   }, []);

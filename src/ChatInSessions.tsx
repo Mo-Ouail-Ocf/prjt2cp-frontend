@@ -8,14 +8,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import brainstorming from "./assets/brainstrom.png";
+import brainwriting from "./assets/brainwrite.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { UserResponse } from "./apiClient/data-contracts";
 import { useUserStore } from "./store/userStore";
-import { useSessionStore } from "./store/sessionStore";
 import { useChatStore } from "./store/chatStore";
 import { useWsStore } from "./store/wsStore";
 import v1Client from "./apiClient";
 /* this the well positioned 2 chats and buttons to use within our ideation sessions*/
-
+import { useSessionStore } from "./store/sessionStore";
 const handleBotMessage = async (msg: string) => {
   const userId = useSessionStore.getState().userId;
   useChatStore.setState((state) => {
@@ -69,9 +89,45 @@ const SessionChat = () => {
   return (
     <div className="">
       <div className="fixed bottom-4 right-4">
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-          Help
-        </button>
+        <Dialog>
+          <DialogTrigger>
+            <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Help
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <p></p>
+            </DialogHeader>
+            <ScrollArea className="h-[400px] w-[450px] rounded-md border">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-center">
+                    <span>Brainstorming</span>
+                    <img src={brainstorming} className="w-12 ml-2" />
+                  </CardTitle>
+                  <CardDescription className=" text-center">
+                    Brainstorming is a creative ideation technique that involves
+                    group collaboration to generate a large number of ideas that
+                    can later be refined and evaluated.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <h2 className="text-center text-xl font-bold">
+                    Key aspects:
+                  </h2>
+                  <ul className="list-disc">
+                    <li>Participants share ideas freely in a group setting.</li>
+                    <li>All ideas are accepted without criticism.</li>
+                    <li>Users can build on each other’s ideas.</li>
+                    <li>Moderators guide the session to ensure focus.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
+        {/* test which step */}
         <div className="fixed bottom-4 left-4 flex flex-row-reverse">
           <TooltipProvider>
             <Tooltip>

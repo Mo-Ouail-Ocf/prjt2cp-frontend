@@ -59,6 +59,21 @@ const Projects: React.FC = () => {
   } = useRessourceStore((state) => state);
 
   //CREATE PROJECT
+
+  // ressource
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  const [selectedResource, setSelectedResource] =
+    useState<ResourceOption | null>(null);
+
+  const [newProjectData, setNewProjectData] = useState<ProjectCreate>({
+    title: "",
+    description: "",
+    status: "active", // You may change this default status as needed
+    resource_id: 0, // Example resource_id; replace with actual logic to determine resource ID
+  });
+  const { toast } = useToast();
+  const dialogRef = useRef<HTMLDivElement | null>(null);
   const handleCreateProject = async () => {
     if (
       !newProjectData.title ||
@@ -92,21 +107,6 @@ const Projects: React.FC = () => {
       resource_id: 0,
     });
   };
-  // ressource
-  const [selectedType, setSelectedType] = useState<string | null>(null);
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
-  const [selectedResource, setSelectedResource] =
-    useState<ResourceOption | null>(null);
-
-  const [newProjectData, setNewProjectData] = useState<ProjectCreate>({
-    title: "",
-    description: "",
-    status: "active", // You may change this default status as needed
-    resource_id: 0, // Example resource_id; replace with actual logic to determine resource ID
-  });
-  const { toast } = useToast();
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-
   useEffect(() => {
     const fetchProjectsAndRessources = async () => {
       await getProjects();
