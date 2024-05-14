@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { ResourceCreate } from "@/apiClient/data-contracts";
 import { Button } from "@/components/ui/button";
 import Fuse from "fuse.js";
-
 import {
   DropdownMenu,
   DropdownMenuContent,

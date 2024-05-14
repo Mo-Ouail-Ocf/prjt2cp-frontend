@@ -3,11 +3,7 @@ import AccorDion from "@/components/AccorDion";
 import styled from "styled-components";
 
 const HelpCenter = () => {
-  return (
-    <div >
-      <AccorDion  />
-    </div>
-  );
+  return <div>h</div>;
 };
 
 export default HelpCenter;

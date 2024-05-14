@@ -68,7 +68,7 @@ const Session = () => {
           <OpenSession metadata={session} project={project} />
         ) : //@ts-ignore
         session.session_status == "closed" ? (
-          <ClosedSession />
+          <ClosedSession session_id={parseInt(session_id)} />
         ) : (
           <Unauthorized />
         ) // static // unauthorized
