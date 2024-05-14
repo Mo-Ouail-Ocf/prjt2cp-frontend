@@ -12,7 +12,7 @@ const Card = React.forwardRef<
       "shadow-pink-offset box-border",
       className
     )}
-    {...props}
+    {...props} 
   />
 ))
 Card.displayName = "Card"

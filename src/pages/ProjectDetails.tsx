@@ -569,7 +569,7 @@ const ProjectDetails: React.FC = ({}) => {
                 <DialogTrigger>
                   <Button>New ideation session</Button>
                 </DialogTrigger>
-                <DialogContent className="w-[490px]">
+                <DialogContent className="w-[490px] justify-center items-center p-0  ">
                   <Tabs defaultValue="brainstorming" className="w-[400px]">
                     <TabsList className="grid w-full grid-cols-2">
                       <TabsTrigger value="brainstorming">
@@ -579,7 +579,7 @@ const ProjectDetails: React.FC = ({}) => {
                         Brainwriting
                       </TabsTrigger>
                     </TabsList>
-                    <TabsContent value="brainstorming">
+                    <TabsContent value="brainstorming" className="mt-5">
                       <Card>
                         <CardHeader>
                           <CardTitle className="flex items-center justify-center">
@@ -634,7 +634,7 @@ const ProjectDetails: React.FC = ({}) => {
                         </CardFooter>
                       </Card>
                     </TabsContent>
-                    <TabsContent value="brainwriting">
+                    <TabsContent value="brainwriting" className="mt-5">
                       <Card>
                         <CardHeader>
                           <CardTitle className="flex items-center justify-center">

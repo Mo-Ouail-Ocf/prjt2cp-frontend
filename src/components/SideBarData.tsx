@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import ProjectTypes from "../pages/ProjectTypes";
 import Project from "../pages/Project";
 import HelpCenter from "../pages/HelpCenter";
+import AccorDion from "./AccorDion";    
 export const SideBarData =[
     {
         title:"Home",
@@ -39,7 +40,7 @@ export const SideBarData =[
         title : "Help Center",
         path:"/help-center",
         icons:<MdIcons.MdHelpCenter/>,
-        element : <HelpCenter/>
+        element : <AccorDion/>
     }
 
 ]

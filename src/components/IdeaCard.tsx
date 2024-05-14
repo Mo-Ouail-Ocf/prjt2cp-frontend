@@ -284,6 +284,7 @@ const IdeaCard = (props: IdeaCardProps) => {
       </Card>
 
       <DialogContent>
+        {/* <ScrollArea className="rounded-md p-2"> */}
         <DialogHeader>
           <DialogTitle>
             {users.get(idea?.submitter_id)?.name}'s Idea
@@ -328,6 +329,7 @@ const IdeaCard = (props: IdeaCardProps) => {
             <Button type="submit">Comment</Button>
           </form>
         </DialogFooter>
+        {/* </ScrollArea> */}
       </DialogContent>
     </Dialog>
   );
