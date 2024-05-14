@@ -1,10 +1,10 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import v1Client from "@/apiClient";
-import { ProjectDisplay, ProjectCreate } from "@/apiClient/data-contracts";
 import { SessionResponse } from "@/apiClient/data-contracts";
-import { UserResponse } from "@/apiClient/data-contracts";
 import { Button } from "@/components/ui/button";
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 import {
   Dialog,
   DialogContent,
@@ -64,40 +64,78 @@ interface SessionCreate {
   round_time: number;
   nb_rounds: number;
 }
+//////zustand
+import { useProjectSessionStore } from "@/stores/projectSessionStore";
+import { useUserStore } from "@/stores/userStore";
+import { log } from "console";
+
+type State = {
+  newSession: SessionCreate;
+};
+
+const useNewSessionStore = create<State>()(
+  immer((set) => ({
+    newSession: {
+      title: "",
+      description: null,
+      ideation_technique: "",
+      objectives: null,
+      round_time: 0,
+      nb_rounds: 1,
+    },
+  }))
+);
+/////////////
 const ProjectDetails: React.FC = ({}) => {
   const { toast } = useToast();
   const { projectId } = useParams();
-
+  const newSession = useNewSessionStore((state) => state.newSession);
   ////
-  const [openSessions, setOpenSessions] = useState<SessionResponse[]>([]);
+  /* const [openSessions, setOpenSessions] = useState<SessionResponse[]>([]);
   const [closedSessions, setClosedSessions] = useState<SessionResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [mailError, setMailError] = useState<string | null>(null);
   const [project, setProject] = useState<ProjectDisplay | null>(null);
-  const [user, setUser] = useState<UserResponse>();
+  const [user, setUser] = useState<UserResponse>(); */
   //email
+
+  //Zustand :
+
+  const {
+    project,
+    openSessions,
+    closedSessions,
+    loadProject,
+    successLoadProject,
+    errorLoadProject,
+    loadEdit,
+    errorEdit,
+    successEdit,
+    loadCreateSession,
+    successCreateSession,
+    errorCreateSession,
+    loadInvite,
+    successInvite,
+    errorInvite,
+    responseInvite,
+    getProject,
+    editProject,
+    createSession,
+    inviteUser,
+    closedSessionsDetails,
+  } = useProjectSessionStore((state) => state);
+
+  const user = useUserStore((state) => state.user);
+  const getUser = useUserStore((state) => state.getUser);
   const [email, setEmail] = useState("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // session creation
+
   const [ideationTech, setIdeationTech] = useState<string>("");
   const sessionRef = useRef<HTMLDivElement | null>(null);
-  const [newSession, setNewSession] = useState<SessionCreate>({
-    title: "",
-    description: null,
-    ideation_technique: "",
-    objectives: null,
-    round_time: 0,
-    nb_rounds: 0,
-  });
-  /*  const updateSessionTitle = (newTitle: string) => {
-    setSession({ ...session, sessionTitle: newTitle });
-  }; */
   const handleCreateSession = async () => {
-    if (ideationTech === "brain_storming") {
-      setNewSession({ ...newSession, nb_rounds: 1 });
-    }
     if (
       newSession.title == "" ||
       newSession.round_time == 0 ||
@@ -109,48 +147,27 @@ const ProjectDetails: React.FC = ({}) => {
         description: `Please enter session details`,
         action: <ToastAction altText="close">Close</ToastAction>,
       });
-      setNewSession({
-        title: "",
-        description: null,
-        ideation_technique: "",
-        objectives: null,
-        round_time: 0,
-        nb_rounds: 1,
-      });
+      // useNewSessionStore.setState((state) => {
+      //   state.newSession = useNewSessionStore.getInitialState().newSession;
+      // });
       return;
     }
-    try {
-      //@ts-ignore
-      console.log(newSession);
-      newSession.ideation_technique = ideationTech;
-      setNewSession(newSession);
-      console.log(newSession);
 
-      const response =
-        await v1Client.createASessionV1SessionProjectProjectIdPost(
-          //@ts-ignore
-          parseInt(projectId),
-          newSession
-        );
-      setNewSession({
-        title: "",
-        description: null,
-        ideation_technique: "",
-        objectives: null,
-        round_time: 0,
-        nb_rounds: 1,
-      });
-      console.log(response.data);
-      toast({
-        variant: "default",
-        title: "Success",
-        description: `New session created`,
-        action: <ToastAction altText="close">Close</ToastAction>,
-      });
-      if (sessionRef.current) {
-        sessionRef.current.click();
-      }
-    } catch (error) {}
+    //@ts-ignore
+    await createSession(parseInt(projectId), newSession);
+    useNewSessionStore.setState((state) => {
+      state.newSession = useNewSessionStore.getInitialState().newSession;
+    });
+
+    toast({
+      variant: "default",
+      title: "Success",
+      description: `New session created`,
+      action: <ToastAction altText="close">Close</ToastAction>,
+    });
+    if (sessionRef.current) {
+      sessionRef.current.click();
+    }
   };
 
   //title and description
@@ -173,38 +190,33 @@ const ProjectDetails: React.FC = ({}) => {
       });
       return;
     }
-    try {
-      const updatedProject = {
-        description: description,
-        status: "open",
-        title: title,
-      };
-      const response = await v1Client.updateProjectV1ProjectProjectIdPut(
-        //@ts-ignore
-        parseInt(projectId),
-        updatedProject
-      );
-      //@ts-ignore
-      setProject({ ...project, title: title, description: description });
-      toast({
-        variant: "default",
-        title: "Success",
-        description: `The project has been updated`,
-        action: <ToastAction altText="close">Close</ToastAction>,
-      });
-      setTitle(null);
-      setDescription(null);
-      if (dialogRef.current) {
-        dialogRef.current.click();
-      }
-    } catch (err) {
-      //@ts-ignore
-      if (err.status === 404) {
+
+    const updatedProject = {
+      description: description,
+      status: "open",
+      title: title,
+    };
+    if (projectId) await editProject(parseInt(projectId), updatedProject);
+    //@ts-ignore
+
+    toast({
+      variant: "default",
+      title: "Success",
+      description: `The project has been updated`,
+      action: <ToastAction altText="close">Close</ToastAction>,
+    });
+    setTitle(null);
+    setDescription(null);
+    if (dialogRef.current) {
+      dialogRef.current.click();
+    }
+
+    //@ts-ignore
+    /* if (err.status === 404) {
         setError("project not found");
       } else {
         setError("not authorized");
-      }
-    }
+      } */
   };
 
   const handleInviteUser = async () => {
@@ -230,15 +242,8 @@ const ProjectDetails: React.FC = ({}) => {
         });
         return;
       }
-
-      const response = await v1Client.inviteV1ProjectProjectIdInvitePut(
-        //@ts-ignore
-        parseInt(projectId),
-        data
-      );
-      console.log(response.data);
-      setSuccessMessage(response.data.message);
-      if (response.data.message === "The user is already invited") {
+      if (projectId) await inviteUser(parseInt(projectId), data);
+      if (responseInvite === "The user is already invited") {
         toast({
           variant: "destructive",
           title: "The user is already invited",
@@ -254,12 +259,11 @@ const ProjectDetails: React.FC = ({}) => {
         });
       }
       setEmail("");
-      setMailError(null);
+
       setSuccessMessage("");
     } catch (err) {
       //@ts-ignore
       if (err.status === 404) {
-        setMailError("User or project not found");
         toast({
           variant: "destructive",
           title: "User not found",
@@ -268,15 +272,12 @@ const ProjectDetails: React.FC = ({}) => {
         });
         //@ts-ignore
       } else if (err.status === 401) {
-        setMailError("Unauthorized access");
         toast({
           variant: "destructive",
           title: "Unauthorized",
           description: `Unauthorized to do such action`,
           action: <ToastAction altText="close">Close</ToastAction>,
         });
-      } else {
-        setMailError("Failed to invite user: Unexpected error occurred");
       }
     }
   };
@@ -288,34 +289,13 @@ const ProjectDetails: React.FC = ({}) => {
 
   useEffect(() => {
     const fetchSessions = async () => {
-      try {
-        if (projectId != null) {
-          const [open, closed, details, client] = await Promise.all([
-            v1Client.getOpenSessionsForAProjectV1SessionProjectProjectIdGet(
-              parseInt(projectId)
-            ),
-            v1Client.getClosedSessionsForAProjectV1SessionProjectProjectIdClosedGet(
-              parseInt(projectId)
-            ),
-            v1Client.getDetailsV1ProjectProjectIdGet(parseInt(projectId)),
-            v1Client.currentV1UserCurrentGet(),
-          ]);
-          setOpenSessions(open.data);
-          setClosedSessions(closed.data);
-          setUser(client.data);
-          setProject(details.data);
-
-          setLoading(false);
-        } else {
-          throw new Error("no project id found");
-        }
-      } catch (err) {
-        setError("Failed to fetch sessions");
-        setLoading(false);
-        console.error(err);
+      if (projectId) {
+        await getProject(parseInt(projectId));
+      }
+      if (user === null) {
+        await getUser();
       }
     };
-
     fetchSessions();
   }, [projectId]);
 
@@ -330,12 +310,12 @@ const ProjectDetails: React.FC = ({}) => {
     }
   };
 
-  if (loading) {
+  if (loadProject === true) {
     return <div>Loading sessions...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (errorLoadProject) {
+    return <div>Error: {errorLoadProject}</div>;
   }
 
   interface TableProps {
@@ -442,9 +422,14 @@ const ProjectDetails: React.FC = ({}) => {
                       <div className="space-y-1 space-x-4">
                         <Label>Creation date:</Label>
                         {/*@ts-ignore*/}
-                        <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                          {new Date(project.creation_date).toLocaleDateString()}
-                        </span>
+                        {
+                          <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
+                            {new Date(
+                              //@ts-ignore
+                              project.creation_date
+                            ).toLocaleDateString()}
+                          </span>
+                        }
                       </div>
                       <div className="space-y-1 space-x-4">
                         <Label>Ressource:</Label>
@@ -563,7 +548,12 @@ const ProjectDetails: React.FC = ({}) => {
               </Tabs>
             </DialogContent>
           </Dialog>
-          <Button variant="outline">Visualize project</Button>
+          <Link
+            to={`/visualize/${projectId}`}
+            className="text-purple-700 hover:underline font-semibold"
+          >
+            <Button variant="outline">Visualize project</Button>
+          </Link>
           {/* @ts-ignore */}
           {isAdmin(user.id) && (
             <>
@@ -614,7 +604,11 @@ const ProjectDetails: React.FC = ({}) => {
                         <CardFooter className="flex justify-center">
                           <Button
                             onClick={() => {
-                              setIdeationTech("brain_storming");
+                              useNewSessionStore.setState((state) => {
+                                state.newSession.ideation_technique =
+                                  "brain_storming";
+                                state.newSession.nb_rounds = 1;
+                              });
                               handleClick();
                             }}
                           >
@@ -667,7 +661,10 @@ const ProjectDetails: React.FC = ({}) => {
                         <CardFooter className="flex justify-center">
                           <Button
                             onClick={() => {
-                              setIdeationTech("brain_writing");
+                              useNewSessionStore.setState((state) => {
+                                state.newSession.ideation_technique =
+                                  "brain_writing";
+                              });
                               handleClick();
                             }}
                           >
@@ -709,9 +706,8 @@ const ProjectDetails: React.FC = ({}) => {
                         className="col-span-3"
                         value={newSession?.title}
                         onChange={(e) =>
-                          setNewSession({
-                            ...newSession,
-                            title: e.target.value,
+                          useNewSessionStore.setState((state) => {
+                            state.newSession.title = e.target.value;
                           })
                         }
                       />
@@ -730,9 +726,8 @@ const ProjectDetails: React.FC = ({}) => {
                         //@ts-ignore
                         value={newSession?.description}
                         onChange={(e) =>
-                          setNewSession({
-                            ...newSession,
-                            description: e.target.value,
+                          useNewSessionStore.setState((state) => {
+                            state.newSession.description = e.target.value;
                           })
                         }
                       />
@@ -748,9 +743,8 @@ const ProjectDetails: React.FC = ({}) => {
                         //@ts-ignore
                         value={newSession?.objectives}
                         onChange={(e) =>
-                          setNewSession({
-                            ...newSession,
-                            objectives: e.target.value,
+                          useNewSessionStore.setState((state) => {
+                            state.newSession.objectives = e.target.value;
                           })
                         }
                       />
@@ -767,14 +761,16 @@ const ProjectDetails: React.FC = ({}) => {
                         //@ts-ignore
                         value={newSession?.round_time}
                         onChange={(e) =>
-                          setNewSession({
-                            ...newSession,
-                            round_time: parseInt(e.target.value),
+                          useNewSessionStore.setState((state) => {
+                            state.newSession.round_time = parseInt(
+                              e.target.value
+                            );
                           })
                         }
                       />
                     </div>
-                    {ideationTech === "brain_writing" && (
+                    {useNewSessionStore.getState().newSession
+                      .ideation_technique == "brain_writing" && (
                       <>
                         <div className="grid grid-cols-4 items-center gap-4">
                           <Label
@@ -791,9 +787,10 @@ const ProjectDetails: React.FC = ({}) => {
                             //@ts-ignore
                             value={newSession.nb_rounds}
                             onChange={(e) =>
-                              setNewSession({
-                                ...newSession,
-                                nb_rounds: parseInt(e.target.value),
+                              useNewSessionStore.setState((state) => {
+                                state.newSession.nb_rounds = parseInt(
+                                  e.target.value
+                                );
                               })
                             }
                           />
@@ -802,9 +799,11 @@ const ProjectDetails: React.FC = ({}) => {
                     )}
                   </div>
                   <DialogFooter>
-                    <Button type="submit" onClick={handleCreateSession}>
-                      Create new session
-                    </Button>
+                    <DialogClose asChild>
+                      <Button type="submit" onClick={handleCreateSession}>
+                        Create new session
+                      </Button>
+                    </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

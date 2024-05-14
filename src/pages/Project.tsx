@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import v1Client from "@/apiClient";
 import { Link } from "react-router-dom";
 import { ProjectDisplay, ProjectCreate } from "@/apiClient/data-contracts";
 import { Button } from "@/components/ui/button";
@@ -18,11 +17,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { AppSchemeRessourceSchemeResourceDisplay } from "@/apiClient/data-contracts";
 interface ResourceOption {
   value: number;
   label: string;
 }
+
 import {
   Tooltip,
   TooltipContent,
@@ -30,22 +29,75 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import { useProjectStore } from "@/stores/projectStore";
+import { useRessourceStore } from "@/stores/ressourceStore";
+
 const Projects: React.FC = () => {
+  // zustand :
+  const {
+    ownedProjects,
+    participatedProjects,
+    loadProjects,
+    successLoadProjects,
+    successCreateProjects,
+    errorCreateProjects,
+    errorLoadProjects,
+    loadCreateProjects,
+    getProjects,
+    createProject,
+  } = useProjectStore((state) => state);
+  const {
+    ressources,
+    loadRessources,
+    successLoadRessources,
+    successCreateRessource,
+    errorCreateRessource,
+    errorLoadRessources,
+    loadCreateRessource,
+    getRessources,
+    createRessource,
+  } = useRessourceStore((state) => state);
+
+  //CREATE PROJECT
+  const handleCreateProject = async () => {
+    if (
+      !newProjectData.title ||
+      !newProjectData.description ||
+      newProjectData.resource_id == 0
+    ) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description:
+          "Please provide a title,a description and ressource for the new project.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+      return;
+    }
+    await createProject(newProjectData);
+    if (successCreateProjects)
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "New project created",
+        action: <ToastAction altText="close">Close</ToastAction>,
+      });
+    if (dialogRef.current) {
+      dialogRef.current.click();
+    }
+    setNewProjectData({
+      title: "",
+      description: "",
+      status: "active",
+      resource_id: 0,
+    });
+  };
   // ressource
-  const [resources, setResources] = useState<
-    AppSchemeRessourceSchemeResourceDisplay[]
-  >([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedResource, setSelectedResource] =
     useState<ResourceOption | null>(null);
 
-  const [ownedProjects, setOwnedProjects] = useState<ProjectDisplay[]>([]);
-  const [participatedProjects, setParticipatedProjects] = useState<
-    ProjectDisplay[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [newProjectData, setNewProjectData] = useState<ProjectCreate>({
     title: "",
     description: "",
@@ -54,76 +106,13 @@ const Projects: React.FC = () => {
   });
   const { toast } = useToast();
   const dialogRef = useRef<HTMLDivElement | null>(null);
-  const handleCreateProject = async () => {
-    try {
-      // Make sure newProjectData is valid and complete before making the API call
-      if (
-        !newProjectData.title ||
-        !newProjectData.description ||
-        newProjectData.resource_id == 0
-      ) {
-        toast({
-          variant: "destructive",
-          title: "Validation Error",
-          description:
-            "Please provide a title,a description and ressource for the new project.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        });
-        return;
-      }
-      // Make the API call to create the project
-      const response = await v1Client.createProjectV1ProjectPost(
-        newProjectData
-      );
-      console.log("New project created:", response.data);
-      toast({
-        variant: "default",
-        title: "Success",
-        description: "New project created",
-        action: <ToastAction altText="close">Close</ToastAction>,
-      });
-      if (dialogRef.current) {
-        dialogRef.current.click();
-      }
-      setOwnedProjects((prevProjects) => [...prevProjects, response.data]);
-      // Clear the form data after successful submission
-      setNewProjectData({
-        title: "",
-        description: "",
-        status: "active",
-        resource_id: 0,
-      });
-    } catch (error) {
-      setError("Failed to create project. Please try again.");
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const [owned, participated] = await Promise.all([
-          v1Client.readOwnedProjectsV1ProjectUserOwnedGet(),
-          v1Client.readParticipatedProjectsV1ProjectUserParticipatedGet(),
-        ]);
-        setOwnedProjects(owned.data);
-        setParticipatedProjects(participated.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch projects");
-        setLoading(false);
-        console.error(err);
-      }
+    const fetchProjectsAndRessources = async () => {
+      await getProjects();
+      await getRessources();
     };
-    fetchProjects();
-    v1Client
-      .readResourcesV1RessourceGet()
-      .then((response) => {
-        setResources(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching resources:", error);
-      });
+    fetchProjectsAndRessources();
   }, []);
   const handleTypeChange = (selectedOption: ResourceOption | null) => {
     // @ts-ignore
@@ -148,7 +137,7 @@ const Projects: React.FC = () => {
     setSelectedResource(selectedOption || null);
   };
 
-  const filteredResources = resources.filter((resource) => {
+  const filteredResources = ressources.filter((resource) => {
     if (selectedType === null) return false;
     if (selectedLevel === null && resource.type === selectedType) return true;
     return resource.type === selectedType && resource.level === selectedLevel;
@@ -156,14 +145,14 @@ const Projects: React.FC = () => {
 
   // Prepare options for selects
   const typeOptions = Array.from(
-    new Set(resources.map((resource) => resource.type))
+    new Set(ressources.map((resource) => resource.type))
   ).map((type) => ({
     value: type,
     label: type,
   }));
   const levelOptions = Array.from(
     new Set(
-      resources
+      ressources
         .filter((resource) => resource.type === "module")
         .map((resource) => resource.level || "Unknown")
     )
@@ -176,13 +165,6 @@ const Projects: React.FC = () => {
     label: resource.name,
   }));
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
   interface TableProps {
     projects: ProjectDisplay[];
   }
@@ -302,6 +284,7 @@ const Projects: React.FC = () => {
                   id="new-project-description"
                   placeholder="Enter project description"
                   className="col-span-3"
+                  //@ts-ignore
                   value={newProjectData.description}
                   onChange={(e) =>
                     setNewProjectData({

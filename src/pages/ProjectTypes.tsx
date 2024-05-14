@@ -314,7 +314,7 @@ const ProjectTypes = () => {
             .map((filteredRessource) => (
               <Card
                 key={filteredRessource.resource_id}
-                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2"
+                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
                 onClick={() => {
                   handleProjectCreate(filteredRessource.resource_id);
                 }}
@@ -358,7 +358,7 @@ const ProjectTypes = () => {
                   return (
                     <Card
                       key={filteredRessource.resource_id}
-                      className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2"
+                      className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
                     >
                       <CardHeader className="text-center mb-2">
                         <CardTitle>{filteredRessource.level}</CardTitle>
@@ -370,7 +370,7 @@ const ProjectTypes = () => {
                             {filteredRessources.map((module) => (
                               <li
                                 key={module.resource_id}
-                                className="m-0 p-1 w-full hover:bg-[#3b82f6aa] rounded-lg hover:mt-2 hover:mb-2 hover:text-lg hover:cursor-pointer"
+                                className="m-0 p-1 w-full hover:bg-[#3b82f6] rounded-lg hover:mt-2 hover:mb-2 hover:text-lg hover:cursor-pointer"
                                 onClick={() => {
                                   handleProjectCreate(module.resource_id);
                                 }}
@@ -395,7 +395,7 @@ const ProjectTypes = () => {
             .map((filteredRessource) => (
               <Card
                 key={filteredRessource.resource_id}
-                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2"
+                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
                 onClick={() => {
                   handleProjectCreate(filteredRessource.resource_id);
                 }}

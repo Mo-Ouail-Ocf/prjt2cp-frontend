@@ -12,6 +12,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Sheet,
   SheetClose,
@@ -23,7 +25,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-
+import { useUserStore } from "@/stores/userStore";
 import "./Profile.css";
 import { Avatar, CustomFlowbiteTheme, Flowbite, Label } from "flowbite-react";
 import ProfilePage from "@/pages/ProfilePage";
@@ -43,51 +45,60 @@ const customTheme: CustomFlowbiteTheme = {
     },
   },
 };
+
 const ProfileIcon = ({ onSignOut }: Props) => {
+  /////The Store
+  const {
+    user,
+    loadUser,
+    errorUser,
+    successUser,
+    getUser,
+    modifyUserName,
+    loadUpdate,
+    successUpdate,
+  } = useUserStore((state) => state);
+  //////////////
+
+  //shadcnui
+  const { toast } = useToast();
+  //
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [user, setUser] = useState<UserResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
   const handleClick = () => {
     setShowProfile(true);
   };
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await v1Client.currentV1UserCurrentGet();
-        setUser(response.data);
-      } catch (e) {
-        setError("error while fetching user data");
-        console.log(e);
-      } finally {
-        setShowProfile(true);
-        {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-expect-error
-          showProfile && setName(user?.name);
-        }
-      }
+    const getCurr = async () => {
+      await getUser();
     };
-    getUser();
+    getCurr();
   }, []);
-  const submit = () => {
-    v1Client
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      .nameV1UserNamePut({ name: name })
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((e) => {
-        setError("error while updating user data");
-        console.log(e);
+  const submit = async () => {
+    if (name === null) {
+      toast({
+        variant: "destructive",
+        title: "Empty name",
+        description: "Give new name",
+        action: <ToastAction altText="close">Close</ToastAction>,
       });
+      return;
+    }
+    await modifyUserName(name);
+    if (successUpdate) {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Your username is updated",
+        action: <ToastAction altText="close">Close</ToastAction>,
+      });
+    }
   };
   return (
     <>
-      <Sheet >
-        
+      <Sheet>
         <SheetTrigger>
           {
             <Flowbite theme={{ theme: customTheme }}>
@@ -101,7 +112,7 @@ const ProfileIcon = ({ onSignOut }: Props) => {
             </Flowbite>
           }
         </SheetTrigger>
-        <SheetContent >
+        <SheetContent>
           <SheetHeader>
             <SheetTitle style={{ textAlign: "center", paddingTop: "1rem" }}>
               {user?.name}

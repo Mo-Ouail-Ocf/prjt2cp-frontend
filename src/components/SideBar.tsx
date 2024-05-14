@@ -10,7 +10,7 @@ import { IconContext } from "react-icons";
 import Logos from "../images/logo.svg";
 import ProfileIcon from "./ProfileIcon";
 const Nav = styled.div`
-  background: hsl(var(--primary));
+  background: #3b82f6;
   height: 80px;
   width: 100%;
   top: 0;
