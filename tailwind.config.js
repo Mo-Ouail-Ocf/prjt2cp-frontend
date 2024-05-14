@@ -5,13 +5,13 @@ const flowbite = require("flowbite-react/tailwind");
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-    "./index.html", "./src/**/*.{js,ts,jsx,tsx}"
-  ,
-  flowbite.content(),
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
   prefix: "",
   theme: {
@@ -77,7 +77,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      boxShadow: {
+        "pink-offset": "0px 2px 10px  gray",
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), flowbite.plugin(),],
-}
+  plugins: [require("tailwindcss-animate"), flowbite.plugin()],
+};

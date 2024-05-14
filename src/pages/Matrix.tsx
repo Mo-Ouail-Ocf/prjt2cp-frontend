@@ -43,13 +43,15 @@ const Titre = styled.div`
   justify-content: center;
   align-items: center;
   font-family: "Lato", sans-serif;
-  left: calc(50% - 374px / 2 + 1px);
 `;
 const Nav = styled.div`
   background: #4b0082;
   height: 80px;
   display: flex;
-  justify-content: space-between;
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  justify-content: center;
   align-items: center;
 `;
 interface CommentInterface {
@@ -88,7 +90,7 @@ const Cards = styled.div`
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  // padding: 20px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -116,7 +118,7 @@ const CardComponent: React.FC<Props> = ({ data }) => {
             {row.map((cell, cellIndex) => (
               <Cards key={cellIndex} className={styles.gridcell}>
                 <CardHeader>
-                  <CardTitle>Card Title</CardTitle>
+                  <CardTitle >Card Title</CardTitle>
                   <CardDescription>Card Description</CardDescription>
                 </CardHeader>
                 <CardContent>{cell}</CardContent>
@@ -130,12 +132,13 @@ const CardComponent: React.FC<Props> = ({ data }) => {
 };
 const MatriceBrainwriting = () => {
   const twoDimensionalArray = [
-    ["John", "Doe", "30", "40", "80", "100"],
-    ["Jane", "Doe", "25", "50", "90", "200"],
-    ["Alice", "Smith", "35", "60", "100", "300"],
-    ["Alice", "Smith", "35", "60", "100", "300"],
-    ["Alice", "Smith", "35", "60", "100", "300"],
-    ["Alice", "Smith", "35", "60", "100", "300"],
+    ["John", "Doe", "30", "40", "80", "100", "200"],
+    ["Jane", "Doe", "25", "50", "90", "200", "300"],
+    ["Alice", "Smith", "35", "60", "100", "300", "500"],
+    ["Alice", "Smith", "35", "60", "100", "300", "700"],
+    ["Alice", "Smith", "35", "60", "100", "300", "900"],
+    ["Alice", "Smith", "35", "60", "100", "300", " 333"],
+    ["Alice", "Smith", "35", "60", "100", "300", "542"],
   ];
   //   const twoDimensionalArray = [
   //     ["John", "Doe", "30", "rewferwf"],

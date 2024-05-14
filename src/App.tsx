@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Homepage from "./pages/Homepage";
 import { getAccessToken } from "./apiClient/index.ts";
 import { useState, useEffect } from "react";
@@ -10,24 +11,15 @@ import Login from "./pages/Login";
 import Explication from "./pages/Explication.tsx";
 import ContactUs from "./pages/contact.tsx";
 import {
-  BrowserRouter,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import SideBarLayout from "./components/SideBarLayout.tsx";
+import HeaderBarLayout from "./components/HeaderBar.tsx";
 import Session from "./pages/Session.tsx";
 
 function App() {
-  const metadata = {
-    title: "session title",
-    ideation_technique: "brain_storming",
-    round_time: 5,
-    session_id: 1,
-    session_status: "started",
-    start_time: "",
-    project_id: 1,
-  };
+  
   const user1 = {
     email: "user1_name@esi.dz",
     id: 1,
@@ -59,14 +51,8 @@ function App() {
   colors.set(1, "red");
   colors.set(2, "green");
   colors.set(3, "blue");
-  const props = {
-    isMod: true,
-    metadata: metadata,
-    users: users,
-    colors: colors,
-    handleStart: () => {},
-  };
-  const [loggedIn, setLoggedIn] = useState(false);
+ 
+  const [loggedIn, setLoggedIn] = useState(true);
   useEffect(() => {
     if (getAccessToken() != null) {
       setLoggedIn(true);
@@ -90,7 +76,7 @@ function App() {
             <>
               <Route
                 path="/"
-                element={<SideBarLayout onSignOut={handleSignOut} />}
+                element={<HeaderBarLayout  onSignOut={handleSignOut}/>}
               >
                 <Route>
                   {SideBarData.map((item, index) => {

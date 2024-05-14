@@ -1,17 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "react-router-dom";
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { CiLogout, CiSaveDown1 } from "react-icons/ci";
+
 import {
   Sheet,
   SheetClose,
@@ -49,9 +40,7 @@ const ProfileIcon = ({ onSignOut }: Props) => {
   const [user, setUser] = useState<UserResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
-  const handleClick = () => {
-    setShowProfile(true);
-  };
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -73,11 +62,11 @@ const ProfileIcon = ({ onSignOut }: Props) => {
   }, []);
   const submit = () => {
     v1Client
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
+
       .nameV1UserNamePut({ name: name })
       .then((response) => {
         setUser(response.data);
+        console.log(response.data);
       })
       .catch((e) => {
         setError("error while updating user data");
@@ -86,8 +75,7 @@ const ProfileIcon = ({ onSignOut }: Props) => {
   };
   return (
     <>
-      <Sheet >
-        
+      <Sheet>
         <SheetTrigger>
           {
             <Flowbite theme={{ theme: customTheme }}>
@@ -101,14 +89,22 @@ const ProfileIcon = ({ onSignOut }: Props) => {
             </Flowbite>
           }
         </SheetTrigger>
-        <SheetContent >
+        <SheetContent
+          style={{ zIndex: "1000", width: "320px", padding: "20px" }}
+        >
           <SheetHeader>
-            <SheetTitle style={{ textAlign: "center", paddingTop: "1rem" }}>
-              {user?.name}
+            <SheetTitle
+              style={{
+                fontFamily: "Fontbold",
+                textAlign: "center",
+                paddingTop: "1rem",
+              }}
+            >
+              {user?.name}'s
               {<br />}
-              Profile
+              {<span style={{ fontFamily: "Fontsemi" }}>Profile</span>}
             </SheetTitle>
-            <SheetDescription>
+            <SheetDescription style={{ fontFamily: "Fontregular" }}>
               Make changes to your profile here. Click save when you're done.
             </SheetDescription>
           </SheetHeader>
@@ -117,24 +113,26 @@ const ProfileIcon = ({ onSignOut }: Props) => {
             <Avatar img={user?.pfp} bordered rounded size="xl"></Avatar>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="mail" className="text-right">
-                Mail
+                Mail:
               </Label>
               <span
                 id="name"
                 className="inline-block px-3 py-1 border col-span-3 border-gray-300 rounded bg-white"
+                style={{ fontFamily: "Fontregular" }}
               >
                 {user?.email}
               </span>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="username" className="text-right">
-                Username
+                Username:
               </Label>
               <Input
                 id="username"
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 //@ts-ignore
                 value={name}
+                style={{ fontFamily: "Fontregular" }}
                 placeholder="Enter a new name"
                 defaultValue={user?.name}
                 onChange={(e) => {
@@ -147,23 +145,31 @@ const ProfileIcon = ({ onSignOut }: Props) => {
           <SheetFooter
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              padding: "2rem",
+              marginTop: "2rem",
+              // justifyContent: "space-between",
+              // gap: "1rem",
             }}
           >
-            <SheetClose asChild>
-              <Button type="submit" onClick={submit}>
+            <SheetClose asChild className="m-0">
+              <Button
+                type="submit"
+                className="flex p-0 m-0  w-36 gap-2"
+                onClick={submit}
+              >
+                <CiSaveDown1 />
                 Save changes
               </Button>
             </SheetClose>
-            <SheetClose asChild>
+            <SheetClose asChild className="m-0">
               <Button
                 variant="destructive"
                 onClick={() => {
                   onSignOut();
                   navigate("/");
                 }}
+                className="flex gap-2 p-0 ml-0 w-36"
               >
+                <CiLogout />
                 Sign Out
               </Button>
             </SheetClose>
@@ -173,61 +179,5 @@ const ProfileIcon = ({ onSignOut }: Props) => {
     </>
   );
 };
-const nestedButtonClickHandler = () => {
-  return (
-    <>
-      <AlertDialog>
-        <AlertDialogTrigger>Open</AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Continue</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </>
-  );
-};
-{
-  /*
-     
-       
-      </DropdownHeader>
-      <DropdownItem>
-        {
-          <Sheet>
-            <SheetTrigger>Profile</SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </SheetDescription>
-              </SheetHeader>
-            </SheetContent>
-          </Sheet>
-        }
-      </DropdownItem>
 
-      <DropdownItem>Settings</DropdownItem>
-      <DropdownItem>Teams</DropdownItem>
-      <DropdownDivider />
-      <DropdownItem
-        onClick={() => {
-          onSignOut();
-          navigate("/");
-        }}
-      >
-        Sign Out
-      </DropdownItem>
-    </Dropdown> */
-}
 export default ProfileIcon;

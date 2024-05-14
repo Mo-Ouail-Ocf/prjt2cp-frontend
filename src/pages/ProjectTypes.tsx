@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ChangeEvent, useEffect, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import styled from "styled-components";

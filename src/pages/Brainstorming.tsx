@@ -21,6 +21,7 @@ import {
   IdeaResponse,
   CommentResponse,
 } from "@/apiClient/data-contracts";
+import ideas from "@/components/test";
 
 interface BSProps {
   metadata: SessionResponse; //no
@@ -124,7 +125,7 @@ const Brainstorming = (props: BSProps) => {
                       };
                       return (
                         <CarouselItem className="h-full">
-                          <IdeaCard {...ideaProps} />
+                          <IdeaCard {...ideas} />
                         </CarouselItem>
                       );
                     }

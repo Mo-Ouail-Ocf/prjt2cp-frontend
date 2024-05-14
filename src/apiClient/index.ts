@@ -1,9 +1,10 @@
 import { V1 } from './V1';
 import { ApiConfig, RequestParams } from './http-client';
 
+const backendUrl = "http://localhost:8000"
 
 const authApiConfig: ApiConfig = {
-  baseUrl: 'http://127.0.0.1:8000',
+  baseUrl: backendUrl,
 };
 
 export const v1AuthClient = new V1(authApiConfig);
@@ -55,7 +56,7 @@ export const getAccessToken = (): string | null => {
 
 // API client configuration
 const apiConfig: ApiConfig = {
-  baseUrl: 'http://127.0.0.1:8000', // The base URL for your API
+  baseUrl: backendUrl,
   securityWorker: async () => {
     const token = getAccessToken();
     if (token) {
