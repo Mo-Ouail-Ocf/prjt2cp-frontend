@@ -45,18 +45,18 @@ const Brainstorming: React.FC = () => {
 
   const handleTimerComplete = () => {
     useIdeaStore.setState((state) => {
-      const ideaList = Array.from(ideas.keys()).filter(ideaId => (ideaId != 0));
+      const ideaList = Array.from(ideas.keys()).filter((ideaId) => ideaId != 0);
 
       let rows = Math.sqrt(ideaList.length);
       if (!Number.isInteger(rows)) {
         rows = Math.trunc(rows) + 1;
       }
 
-      for (let i = 0; i < ideaList.length; i+=rows) {
-          const row = ideaList.slice(i, i + rows)
-          console.log(row);
-          
-          state.ideaMatrix.push(row);
+      for (let i = 0; i < ideaList.length; i += rows) {
+        const row = ideaList.slice(i, i + rows);
+        console.log(row);
+
+        state.ideaMatrix.push(row);
       }
     });
     useSessionStore.setState((state) => {
@@ -80,7 +80,7 @@ const Brainstorming: React.FC = () => {
   }
 
   return (
-    <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
+    <div className=" min-h-[100vh] w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />

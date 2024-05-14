@@ -31,7 +31,7 @@ const QueuePage = () => {
   const users = useUserStore((state) => state.users);
 
   return (
-    <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
+    <div className="h-screen w-screen p-4 pr-16 pl-16 ">
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
