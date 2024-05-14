@@ -102,6 +102,8 @@ export interface FinalDecisionResponse {
    * @format date-time
    */
   decision_date: string;
+  /** New Session Id */
+  new_session_id?: number | null;
 }
 
 /** HTTPValidationError */
@@ -124,6 +126,11 @@ export interface IdeaResponse {
   details: string | null;
   /** Parent Idea Id */
   parent_idea_id: number | null;
+  /**
+   * Idea Type
+   * @pattern ^(?:|expended|combined|refined)$
+   */
+  idea_type: string;
   /** Submitter Id */
   submitter_id: number;
   /** Session Id */
@@ -136,7 +143,7 @@ export interface IdeaResponse {
    */
   creation_date: string;
   /** Votes */
-  votes: number | null;
+  votes: number;
   /** Deleted */
   deleted: boolean;
 }
@@ -254,6 +261,33 @@ export interface ResourceCreate {
   description?: string | null;
 }
 
+/** SessionCreate */
+export interface SessionCreate {
+  /** Title */
+  title: string;
+  /** Description */
+  description?: string | null;
+  /**
+   * Ideation Technique
+   * @pattern brain_writing|brain_storming
+   */
+  ideation_technique: string;
+  /** Objectives */
+  objectives?: string | null;
+  /** Round Time */
+  round_time: number;
+  /**
+   * Nb Rounds
+   * @default 1
+   */
+  nb_rounds?: number;
+  /**
+   * Is From Final Decision
+   * @default false
+   */
+  is_from_final_decision?: boolean;
+}
+
 /** SessionExport */
 export interface SessionExport {
   metadata: SessionResponse;
@@ -287,6 +321,8 @@ export interface SessionResponse {
    * @default 1
    */
   nb_rounds?: number;
+  /** Is From Final Decision */
+  is_from_final_decision: boolean;
   /** Session Id */
   session_id: number;
   /**

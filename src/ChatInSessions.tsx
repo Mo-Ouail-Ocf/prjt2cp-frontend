@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ChatArea, { SentMessage, ReceivedMessage } from "./components/Chat";
 import Chatbot from "./assets/chatbot.png";
 import Chat from "./assets/chat.png";
@@ -18,31 +18,32 @@ import v1Client from "./apiClient";
 
 const handleBotMessage = async (msg: string) => {
   const userId = useSessionStore.getState().userId;
-  useChatStore.setState(state => {
-    state.chatBotMessages.push({user_id: userId, msg: msg})
-  })
+  useChatStore.setState((state) => {
+    state.chatBotMessages.push({ user_id: userId, msg: msg });
+  });
 
-  const res = await v1Client.generateIdeasV1BotGenerateIdeasPost({topic: msg})
+  const res = await v1Client.generateIdeasV1BotGenerateIdeasPost({
+    topic: msg,
+  });
   res.data.map((idea: string) => {
     if (idea != "") {
-      useChatStore.setState(state => {
-        state.chatBotMessages.push({user_id: 0, msg: idea})
-      })
+      useChatStore.setState((state) => {
+        state.chatBotMessages.push({ user_id: 0, msg: idea });
+      });
     }
-  })
-
-}
+  });
+};
 
 const SessionChat = () => {
   const [showChat1, setShowChat1] = useState(false);
   const [showChat2, setShowChat2] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
-  const users = useUserStore(state => state.users)
-  const userId = useSessionStore(state => state.userId)
-  const sessionMessages = useChatStore(state => state.sessionMessages)
-  const chatBotMessages = useChatStore(state => state.chatBotMessages)
-  const ws = useWsStore(state => state.ws)
+  const users = useUserStore((state) => state.users);
+  const userId = useSessionStore((state) => state.userId);
+  const sessionMessages = useChatStore((state) => state.sessionMessages);
+  const chatBotMessages = useChatStore((state) => state.chatBotMessages);
+  const ws = useWsStore((state) => state.ws);
 
   useEffect(() => {
     const handleResize = () => {
@@ -119,8 +120,7 @@ const SessionChat = () => {
             name="ChatBot"
             right={20}
             bottom={20}
-            messages={
-              chatBotMessages.map((msg, index) => {
+            messages={chatBotMessages.map((msg, index) => {
               switch (msg.user_id) {
                 case userId: {
                   return (
@@ -141,8 +141,7 @@ const SessionChat = () => {
                   );
                 }
               }
-            })
-            }
+            })}
             send={handleBotMessage}
             close={() => setShowChat1(false)}
           />
@@ -152,8 +151,7 @@ const SessionChat = () => {
         <div className={`fixed top-36`}>
           <ChatArea
             name="Chat"
-            messages={
-              sessionMessages.map((msg, index) => {
+            messages={sessionMessages.map((msg, index) => {
               switch (msg.user_id) {
                 case userId: {
                   return (
@@ -177,7 +175,9 @@ const SessionChat = () => {
             })}
             right={70}
             bottom={70}
-            send={(msg: string) => {ws?.sendMessage(msg)}}
+            send={(msg: string) => {
+              ws?.sendMessage(msg);
+            }}
             close={() => setShowChat2(false)}
           />
         </div>

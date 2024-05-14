@@ -29,13 +29,11 @@ const Session = () => {
               sessionResponse.data.project_id
             );
           setProject(projectResponse.data);
-          setLoading(false);
         } else {
           setError("no project id found");
         }
       } catch (err) {
         setError("Failed to fetch sessions");
-        setLoading(false);
         console.error(err);
       } finally {
         setLoading(false);

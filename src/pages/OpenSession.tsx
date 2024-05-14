@@ -7,7 +7,6 @@ import { useSessionStore } from "@/store/sessionStore.ts";
 import { useToast } from "@/components/ui/use-toast.ts";
 import { useToastStore } from "@/store/toastStore.ts";
 import { useWsStore } from "@/store/wsStore.ts";
-import { useIdeaStore } from "@/store/ideaStore.ts";
 import { useUserStore } from "@/store/userStore.ts";
 
 interface SessionProps {

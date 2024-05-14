@@ -26,6 +26,7 @@ import {
   ProjectInvitationResponse,
   ProjectUpdate,
   ResourceCreate,
+  SessionCreate,
   SessionExport,
   SessionResponse,
   SessionSchema,
@@ -451,6 +452,11 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
        * @default 1
        */
       nb_rounds?: number;
+      /**
+       * Is From Final Decision
+       * @default false
+       */
+      is_from_final_decision?: boolean;
     },
     params: RequestParams = {},
   ) =>
@@ -476,6 +482,30 @@ export class V1<SecurityDataType = unknown> extends HttpClient<SecurityDataType>
       path: `/v1/session/project/${projectId}`,
       method: "GET",
       secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags SESSION
+   * @name CreateSessionFromFinalDecisionV1SessionFromDecisionProjectIdDecisionIdPost
+   * @summary Create Session From Final Decision
+   * @request POST:/v1/session/from_decision/{project_id}/{decision_id}
+   * @secure
+   */
+  createSessionFromFinalDecisionV1SessionFromDecisionProjectIdDecisionIdPost = (
+    decisionId: number,
+    projectId: number,
+    data: SessionCreate,
+    params: RequestParams = {},
+  ) =>
+    this.request<SessionResponse, void | HTTPValidationError>({
+      path: `/v1/session/from_decision/${projectId}/${decisionId}`,
+      method: "POST",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       format: "json",
       ...params,
     });
