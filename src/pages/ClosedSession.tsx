@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { SessionResponse, ProjectDisplay } from "@/apiClient/data-contracts";
 interface ClosedSessionProps {
   session: SessionResponse;
@@ -9,45 +9,40 @@ import Mindmap from "../components/mindmap/Mindmap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // TODO: fix the input & sizing
 import Logo from "@/images/logo.svg";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogFooter,
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogClose,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { useClosedSessionStore } from "@/stores/closedSessionStore";
+import v1Client from "@/apiClient";
+import { useToast } from "@/components/ui/use-toast";
+import IdeaCard from "@/components/IdeaCard";
+import { useSessionStore } from "@/store/sessionStore";
+import { useIdeaStore } from "@/store/ideaStore";
 interface closedSessionProps {
   session_id: number;
 }
 
+function exportData(data: string, fileName: string) {
+  const jsonData = JSON.stringify(data);
+  const blob = new Blob([jsonData], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 const ClosedSession = (props: closedSessionProps) => {
+  const { toast } = useToast();
   const {
     RelatedClosedSessionsDetails,
     closedSession,
@@ -68,6 +63,54 @@ const ClosedSession = (props: closedSessionProps) => {
     };
     fetchSession();
   }, []);
+
+  useEffect(() => {
+    useIdeaStore.setState((state) => {
+      closedSessionDetails?.ideas.map((idea) => {
+        state.ideas.set(idea.idea_id, idea);
+      });
+    });
+  }, [closedSessionDetails]);
+
+  const handelSessoinDrive = () => {
+    v1Client
+      .uploadSessionToDriveV1SessionDriveSessionIdPost(
+        props.session_id,
+        closedSession?.title + ".json"
+      )
+      .then(() => {
+        toast({
+          title: "Session Drive",
+          description: "Session uploaded successfuly",
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: "Session Drive",
+          description: "Coudn't upload session to drive",
+          variant: "destructive",
+        });
+        console.log(err);
+      });
+  };
+
+  const handleSessionDownlaod = async () => {
+    try {
+      const res =
+        await v1Client.downloadSessionAsJsonV1SessionDownloadSessionIdGet(
+          props.session_id
+        );
+      exportData(res.data, ClosedSession.name + ".json");
+    } catch (err) {
+      toast({
+        title: "Session Download",
+        description: "Coudn't download session",
+        variant: "destructive",
+      });
+      console.log(err);
+    }
+  };
+
   if (loadSession) {
     return;
     <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
@@ -157,8 +200,8 @@ const ClosedSession = (props: closedSessionProps) => {
           </DialogContent>
         </Dialog>
         <div className=" space-x-2">
-          <Button>Import session</Button>
-          <Button>Download session</Button>
+          <Button onClick={handelSessoinDrive}>Upload to drive</Button>
+          <Button onClick={handleSessionDownlaod}>Download session</Button>
         </div>
       </div>
       <div className="flex items-center justify-center">
@@ -175,8 +218,28 @@ const ClosedSession = (props: closedSessionProps) => {
               />
             </div>
           </TabsContent>
-          <TabsContent value="matrix" className="grid grid-cols-2 gap-4">
-            hello world
+          <TabsContent value="matrix" className="">
+            <h1>Idea Matrix:</h1>
+            <div
+              className={
+                "w-full grid gap-8 p-8  grid-cols-" +
+                Math.floor(closedSessionDetails?.ideas.length / 2)
+              }
+            >
+              {closedSessionDetails?.ideas.map((idea) => {
+                return (
+                  <div className="backdrop-blur-md">
+                    <IdeaCard
+                      key={idea.idea_id}
+                      ideaId={idea.idea_id}
+                      showMod={false}
+                      showVote={true}
+                      showFD={false}
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </TabsContent>
         </Tabs>
       </div>

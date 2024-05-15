@@ -1,7 +1,9 @@
 import { V1 } from "./V1";
 import { ApiConfig, RequestParams } from "./http-client";
 
-const url = "http://localhost:8000";
+const domain: string = import.meta.env.VITE_API_DOMAIN
+
+const url = "http://"+domain;
 
 const authApiConfig: ApiConfig = {
   baseUrl: url,
