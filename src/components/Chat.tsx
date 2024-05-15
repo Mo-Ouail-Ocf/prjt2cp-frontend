@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UserResponse } from "@/apiClient/data-contracts.ts";
-import { useRef , ReactNode, useEffect, useState } from "react";
+import { useRef, ReactNode, useEffect, useState } from "react";
 
 export interface ChatProps {
   name: string;
@@ -30,7 +30,7 @@ export interface ChatMessageProps {
 const ChatArea = (props: ChatProps) => {
   const [msg, setMsg] = useState("");
 
-  const ref = useRef()
+  const ref = useRef();
 
   const submit = (e: any) => {
     if (msg != "") {
@@ -41,12 +41,18 @@ const ChatArea = (props: ChatProps) => {
   };
 
   useEffect(() => {
-    ref.current?.scrollIntoView()
-  }, [props.messages])
+    ref.current?.scrollIntoView();
+  }, [props.messages]);
 
   return (
     <div
-      className={"absolute right-" + props.right + " bottom-" + props.bottom}
+      className={
+        "absolute right-" +
+        props.right +
+        " bottom-" +
+        props.bottom +
+        " bg-white"
+      }
     >
       <Card className="max-w-sm min-w-96">
         <CardHeader className="p-0 mr-1 flex-row justify-between">
@@ -58,22 +64,20 @@ const ChatArea = (props: ChatProps) => {
         <Separator className="my" />
         <CardContent className="p-1">
           <ScrollArea className="h-96 p-3 pt-0 pb-0">
-            {
-            props.messages.map((message, index) => {
-              if (index == props.messages.length - 1 ) {
+            {props.messages.map((message, index) => {
+              if (index == props.messages.length - 1) {
                 return (
                   <div ref={ref} className="m-0 p-0" key={index}>
                     {message}
                   </div>
-                )
+                );
               }
-                return (
-                  <div className="m-0 p-0" key={index}>
-                    {message}
-                  </div>
-                )
-            })
-            }
+              return (
+                <div className="m-0 p-0" key={index}>
+                  {message}
+                </div>
+              );
+            })}
           </ScrollArea>
         </CardContent>
         <Separator className="my" />

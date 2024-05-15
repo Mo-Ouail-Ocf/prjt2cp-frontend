@@ -356,7 +356,7 @@ const ProjectDetails: React.FC = ({}) => {
                     <TooltipTrigger asChild>
                       <Link
                         to={`/session/${session.session_id}`}
-                        className="text-purple-700 hover:underline font-semibold"
+                        className="text-blue-700 hover:underline font-semibold"
                       >
                         {session.title}
                       </Link>
@@ -558,7 +558,7 @@ const ProjectDetails: React.FC = ({}) => {
           </Dialog>
           <Link
             to={`/visualize/${projectId}`}
-            className="text-purple-700 hover:underline font-semibold"
+            className="text-blue-700 hover:underline font-semibold"
           >
             <Button variant="outline">Visualize project</Button>
           </Link>
@@ -819,15 +819,42 @@ const ProjectDetails: React.FC = ({}) => {
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
-        Open Sessions
-      </h2>
-      <SessionTable sessions={openSessions} />
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
-        Closed Sessions
-      </h2>
+      {openSessions.length == 0 && closedSessions.length == 0 && (
+        <div className=" h-[80vh] flex items-center justify-center">
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No sessions to display
+          </h2>
+        </div>
+      )}
+      {openSessions.length > 0 ? (
+        <>
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            Open Sessions :
+          </h2>
+          <SessionTable sessions={openSessions} />
+        </>
+      ) : (
+        closedSessions.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No open sessions to show
+          </h2>
+        )
+      )}
+      {closedSessions.length > 0 ? (
+        <>
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            Closed Sessions :
+          </h2>
 
-      <SessionTable sessions={closedSessions} />
+          <SessionTable sessions={closedSessions} />
+        </>
+      ) : (
+        openSessions.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No closed sessions to show
+          </h2>
+        )
+      )}
     </div>
   );
 };

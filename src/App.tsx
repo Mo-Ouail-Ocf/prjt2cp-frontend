@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs";
 import Login from "./pages/Login";
 import Explication from "./pages/Explication.tsx";
 import ContactUs from "./pages/contact.tsx";
+import ProjectVisualize from "./pages/ProjectVisualize.tsx";
 import {
   BrowserRouter,
   Route,
@@ -27,7 +28,7 @@ function App() {
         const _ = await getAccessToken();
         setLoggedIn(true);
       } catch {
-        console.log("Not authenticated")
+        console.log("Not authenticated");
       }
     };
     login();
@@ -42,13 +43,13 @@ function App() {
 
   return (
     <>
-     <Router>
+      <Router>
         <Routes>
           {loggedIn ? (
             <>
               <Route
                 path="/"
-                element={<HeaderBarLayout  onSignOut={handleSignOut}/>}
+                element={<HeaderBarLayout onSignOut={handleSignOut} />}
               >
                 <Route>
                   {SideBarData.map((item, index) => {
@@ -63,6 +64,10 @@ function App() {
                   <Route
                     path="/project/:projectId"
                     element={<ProjectDetails />}
+                  />
+                  <Route
+                    path="/visualize/:projectId"
+                    element={<ProjectVisualize />}
                   />
                 </Route>
               </Route>

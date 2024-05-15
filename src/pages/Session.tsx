@@ -44,8 +44,9 @@ const Session = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading</p>;
+    return <p className=" text-2xl text-blue-700">Loading ...</p>;
   }
+
   if (error) {
     return <h1>{error}</h1>;
   }

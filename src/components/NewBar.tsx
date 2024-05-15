@@ -74,7 +74,7 @@ function NewBar({ onSignOut }: Props) {
                 location.pathname === "/project-types" ? "underline 2px" : "", // underline
             }}
           >
-            Project Types
+            Project resspurces
           </Link>
 
           <Link
@@ -104,20 +104,6 @@ function NewBar({ onSignOut }: Props) {
             }}
           >
             Help Center
-          </Link>
-
-          <Link
-            to="/"
-            className="hover:text-primary hover:-mt-2"
-            style={{
-              color: location.pathname === "/contact-us" ? "#3b82f6" : "", // color
-              fontFamily: location.pathname === "/contact-us" ? "Fontsemi" : "", // font
-              marginTop: location.pathname === "/contact-us" ? "-4px" : "", // margin top
-              textDecoration:
-                location.pathname === "/contact-us" ? "underline 2px" : "", // underline
-            }}
-          >
-            Contact Us
           </Link>
         </div>
 
