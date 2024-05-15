@@ -42,6 +42,9 @@ function App() {
 
   return (
     <>
+    <div className="main">
+      <div className="gradient"></div>
+    </div>
      <Router>
         <Routes>
           {loggedIn ? (
@@ -70,12 +73,10 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/" element={<Homepage />}></Route>
-              <Route path="/help" element={<Help />} />{" "}
-              <Route path="/about" element={<AboutUs />} />{" "}
-              <Route path="/login" element={<Login />} />{" "}
-              <Route path="/Explication" element={<Explication />} />{" "}
-              <Route path="/ContactUs" element={<ContactUs />} />{" "}
+              
+              
+              <Route path="/" element={<Login />} />{" "}
+             
             </>
           )}
         </Routes>

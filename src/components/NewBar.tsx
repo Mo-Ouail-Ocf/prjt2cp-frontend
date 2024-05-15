@@ -106,7 +106,7 @@ function NewBar({ onSignOut }: Props) {
             Help Center
           </Link>
 
-          <Link
+          {/* <Link
             to="/"
             className="hover:text-primary hover:-mt-2"
             style={{
@@ -118,7 +118,7 @@ function NewBar({ onSignOut }: Props) {
             }}
           >
             Contact Us
-          </Link>
+          </Link> */}
         </div>
 
         <div className=" pr-9" style={{ justifySelf: "right" }}>

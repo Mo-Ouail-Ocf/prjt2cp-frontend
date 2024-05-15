@@ -22,12 +22,12 @@ export const useUserStore = create<State & Action>()(
     userList: [],
     colors: new Map<number, string>(),
     predefinedColors: [
-      "#cdfc93",
-      "#ffb1b1",
-      "#fff9c4",
-      "#b3e5fc",
-      "#f8bbd0",
-      "#e1bee7",
+      "#3b82f6",
+      "#ef476f",
+      "#ffd166",
+      "#06d6a0",
+      "#073b4c",
+      "#7209b7",
     ],
   }))
 );

@@ -6,6 +6,10 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8); /* Adjust the opacity for darkness */
   }
 }
+
+  
+  
+
 @font-face {
   font-family: "Fontbold";
   src: url("./src/Font/Gilroy-ExtraBold.ttf");
@@ -99,6 +103,89 @@ body,
 html ,
 #root{
   min-height: 100vh;
+ 
 }
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* Apply animation to the click message */
+.click-message.animated {
+  animation: bounce 2s infinite;
+}
+
+.welcome-text {
+  animation: slideIn 1s ease-in-out forwards; /* Apply the animation */
+}
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 120px 24px 160px 24px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.main:before {
+  background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
+  position: absolute;
+  content: "";
+  z-index: -4;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.main:after {
+  content: "";
+  background-image: url("./images/grid.svg");
+  z-index: -3;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.4;
+  filter: invert(1);
+}
+
+.gradient {
+  height: fit-content;
+  z-index: -2;
+  width: 100%;
+  max-width: 640px;
+  background-image: radial-gradient(
+      at 27% 37%,
+      #1d5bbf 0px,
+      transparent 0%
+    ),
+    radial-gradient(at 97% 21%, #6d9eff 0px, transparent 50%),
+    radial-gradient(at 52% 99%, #a3c8ff 0px, transparent 50%),
+    radial-gradient(at 10% 29%, #333333 0px, transparent 50%),
+    radial-gradient(at 97% 96%, #f0f0f0 0px, transparent 50%),
+    radial-gradient(at 33% 50%, #333333 0px, transparent 50%),
+    radial-gradient(at 79% 53%, #f0f0f0 0px, transparent 50%);
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  filter: blur(100px) saturate(150%);
+  top: 60px;
+  opacity: 0.15;
+}
+
 
 

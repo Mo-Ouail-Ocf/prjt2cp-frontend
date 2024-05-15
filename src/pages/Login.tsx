@@ -3,11 +3,11 @@ import LogoB from "../images/logo.svg";
 import React, { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { v1AuthClient } from "../apiClient/index.ts";
+import img from "../images/logo.svg";
+import "./Login logo/Brain.css";
 import { useNavigate } from "react-router-dom";
 
 const login = () => {
-  const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
   const navigate = useNavigate();
 
   const auth = useGoogleLogin({
@@ -15,74 +15,51 @@ const login = () => {
       const authData = {
         grant_type: "authorization_code",
         code: codeResponse.code,
-        redirect_uri: "http://localhost:3000"
-      }
+        redirect_uri: "http://localhost:3000",
+      };
 
-      v1AuthClient.tokenV1AuthTokenPost(authData).then(response => {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
-        navigate("/");
-        navigate(0);
-      }).catch(error => {
-          console.log("Login Failed:", error);
+      v1AuthClient
+        .tokenV1AuthTokenPost(authData)
+        .then((response) => {
+          localStorage.setItem("access_token", response.data.access_token);
+          localStorage.setItem("refresh_token", response.data.refresh_token);
+          navigate("/inbox");
+          navigate(0);
         })
+        .catch((error) => {
+          console.log("Login Failed:", error);
+        });
     },
     onError: (error) => console.log("Login Failed:", error),
     flow: "auth-code",
   });
 
-  const login = () => {
-      const loginData = {
-        username: email.match(/^([^@]*)@/)[1],
-        password: password,
-      }
-
-      v1AuthClient.loginV1AuthLoginPost(loginData).then(response => {
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
-        navigate("/");
-        navigate(0);
-      }).catch(error => {
-          console.log("Login Failed:", error);
-        })
-  }
-
   return (
     <>
-      <div className={styles.complet}>
-        <div className={styles.imagecontainer}>
-          <img className={styles.image} src={LogoB} alt="Logo" />
+      <div className="grid hey w-full h-full grid-cols-3 grid-rows-3 relative min-h-[100vh] ">
+        <div
+          className="  flex justify-center items-center col-start-2 col-end-3 row-start-2 row-end-3 relative cursor-pointer  "
+          onClick={auth}
+        >
+          <img
+            src={img}
+            alt="Logo "
+            className="h-[185px] overflow-hidden w-[350px]"
+          />
+          <div className="Brain absolute top-[30%] left-[50%] translate-x-[-50%] translate-y-[-50%]  "></div>
         </div>
-        <div className={styles.formulaire}>
-          <form action="" onSubmit={e => e.preventDefault()}>
-            <legend className={styles.titre}>Sign in to Tikta</legend>
-            <label htmlFor="email"></label>
-            <input
-              className={styles.email}
-              type="email"
-              id="email"
-              name="email"
-              placeholder="email"
-              value={email}
-              onChange={(e) => {setEmail(e.target.value)}}
-            />
-            <label htmlFor="mdp"></label>
-            <input
-              className={styles.password}
-              type="password"
-              id="password"
-              name="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => {setPassword(e.target.value)}}
-            />
-            <button type="submit" className={styles.login} onClick={login}>Login</button>
-            <button type="button" onClick={auth} className={styles.google}>
-              Google
-            </button>
-          </form>
+        <div className="col-start-2 col-end-3 row-start-3   self-center text-center">
+          <h1 className="welcome-text " style={{ color: "#3b82f6" }}>
+            Welcome to our page! We're delighted to have you here!
+          </h1>
+          <p className="click-message animated m-4" style={{ color: "#3b82f6" }}>
+            Please click on our S-Brain  to log in.
+          </p>
         </div>
       </div>
+
+      {/* LOGO */}
+      {/* </div> */}
     </>
   );
 };

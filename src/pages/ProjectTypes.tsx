@@ -314,7 +314,7 @@ const ProjectTypes = () => {
             .map((filteredRessource) => (
               <Card
                 key={filteredRessource.resource_id}
-                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
+                className="w-full h-full aspect-square cursor-pointer rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
                 onClick={() => {
                   handleProjectCreate(filteredRessource.resource_id);
                 }}
@@ -365,7 +365,7 @@ const ProjectTypes = () => {
                       </CardHeader>
                       <CardContent>
                         <Separator />
-                        <ScrollArea className="h-[200px] rounded-md p-4">
+                        <div className="h-[200px] overflow-hidden hover:overflow-y-auto rounded-md p-4">
                           <ul>
                             {filteredRessources.map((module) => (
                               <li
@@ -379,7 +379,7 @@ const ProjectTypes = () => {
                               </li>
                             ))}
                           </ul>
-                        </ScrollArea>
+                        </div>
                       </CardContent>
                     </Card>
                   );
