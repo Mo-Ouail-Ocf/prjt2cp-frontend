@@ -185,7 +185,8 @@ const AccorDion = () => {
 
             <AccordionItem value="item-4">
               <AccordionTrigger style={{ fontFamily: "Fontsemi" }}>
-              How can I manage access permissions to brainstorming or braiwriting sessions?
+                How can I manage access permissions to brainstorming or
+                braiwriting sessions?
               </AccordionTrigger>
               <AccordionContent
                 style={{
@@ -228,11 +229,11 @@ const AccorDion = () => {
                 communicate with each other in real-time and receive instant
                 support and guidance from the integrated chat bot. To use this
                 feature, simply click on the chat icon in the bottom right
-                corner of the screen. You can then type your message and send it
-                to the chat bot, which will provide you with a response based on
-                your query. This feature is designed to enhance the user
-                experience and provide users with the support they need to
-                succeed on the platform.
+                corner of the screen of your session . You can also type a
+                message (question) and send it to a chat bot, which will provide
+                you with a response based on your query. This feature is
+                designed to enhance the user experience and provide users with
+                the support they need to succeed on the platform.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-6">
@@ -243,11 +244,10 @@ const AccorDion = () => {
                 {
                   <iframe
                     className="rounded-lg m-auto"
-                    width="560"
+                    width="100%"
                     height="315"
-                    src="https://www.youtube.com/embed/rvoUeOgsh3I"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    src="../../public/PRJ2_EQ126_Khouri_Khouani_noticeUtilisation.pdf"
+                    title="Synaps user guie"
                     allowFullScreen
                   ></iframe>
                 }

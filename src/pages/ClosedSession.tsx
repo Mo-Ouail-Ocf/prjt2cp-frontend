@@ -122,9 +122,6 @@ const ClosedSession = (props: closedSessionProps) => {
       <div className="flex flex-row justify-between p-0">
         <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
-          <p className="font-bold text-3xl justify-center items-center flex font-sans pr-2">
-            Tikta
-          </p>
         </div>
         <Dialog>
           <DialogTrigger asChild>
@@ -226,7 +223,7 @@ const ClosedSession = (props: closedSessionProps) => {
             <div
               className={
                 "w-full grid gap-8 p-8  grid-cols-" +
-                Math.floor(closedSessionDetails?.ideas.length / 2)
+                Math.floor(Math.sqrt(closedSessionDetails?.ideas.length))
               }
             >
               {closedSessionDetails?.ideas.map((idea) => {

@@ -356,7 +356,7 @@ const ProjectDetails: React.FC = ({}) => {
                     <TooltipTrigger asChild>
                       <Link
                         to={`/session/${session.session_id}`}
-                        className="text-purple-700 hover:underline font-semibold"
+                        className="text-[#3b82f6] hover:underline font-semibold"
                       >
                         {session.title}
                       </Link>
@@ -387,7 +387,7 @@ const ProjectDetails: React.FC = ({}) => {
   return (
     <div className="p-8">
       <div className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold mb-4">Your Project:</h1>
+        <h1 className="text-2xl font-bold mb-4 bg-gradient-to-l from-blue-600 via-blue-400 to-blue-300 text-transparent bg-clip-text">Your Project:</h1>
         <div className="flex gap-3">
           <Dialog>
             <DialogTrigger asChild>
@@ -497,7 +497,7 @@ const ProjectDetails: React.FC = ({}) => {
                   </Card>
                 </TabsContent>
                 <TabsContent value="utilities">
-                  <ScrollArea className="h-[400px] w-[450px] rounded-md border">
+                  <div className="h-[400px] w-[450px] overflow-hidden hover:overflow-y-auto rounded-md border">
                     <Card>
                       <CardHeader>
                         <CardTitle>Edit project</CardTitle>
@@ -551,14 +551,14 @@ const ProjectDetails: React.FC = ({}) => {
                         <Button onClick={handleInviteUser}>Invite user</Button>
                       </CardFooter>
                     </Card>
-                  </ScrollArea>
+                  </div>
                 </TabsContent>
               </Tabs>
             </DialogContent>
           </Dialog>
           <Link
             to={`/visualize/${projectId}`}
-            className="text-purple-700 hover:underline font-semibold"
+            className="text-[#3b82f6] hover:underline font-semibold"
           >
             <Button variant="outline">Visualize project</Button>
           </Link>
@@ -819,11 +819,11 @@ const ProjectDetails: React.FC = ({}) => {
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200 text-center p-4">
         Open Sessions
       </h2>
       <SessionTable sessions={openSessions} />
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 text-center p-4">
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200 text-center p-4">
         Closed Sessions
       </h2>
 

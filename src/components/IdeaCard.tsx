@@ -13,6 +13,8 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { GiVote } from "react-icons/gi";
+
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -245,7 +247,8 @@ const IdeaCard = (props: IdeaCardProps) => {
           ) : null}
 
           {props.ideaId != 0 && finalDecisions.has(props.ideaId) && (
-            <CiStar className="m-2" />
+            // <CiStar className="m-2 text-yellow-50" />
+            <GiVote className="m-2"/>
           )}
 
           {props.showFD &&

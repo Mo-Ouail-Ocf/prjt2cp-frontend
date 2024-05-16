@@ -196,7 +196,7 @@ const Projects: React.FC = () => {
                     <TooltipTrigger asChild>
                       <Link
                         to={`/project/${project.project_id}`}
-                        className="text-purple-700 hover:underline font-semibold"
+                        className="text-[#3b82f6] hover:underline font-semibold"
                       >
                         {project.title}
                       </Link>
@@ -251,7 +251,7 @@ const Projects: React.FC = () => {
   return (
     <div className="p-8">
       <div className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold mb-4">Your Projects :</h1>
+        <h1 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-400 text-transparent bg-clip-text" style={{fontFamily:"Fontbold"}}>Your Projects :</h1>
         {/* ////////////////////////////////////////////////////////////////////////////////////// */}
         <Dialog>
           <DialogTrigger asChild>

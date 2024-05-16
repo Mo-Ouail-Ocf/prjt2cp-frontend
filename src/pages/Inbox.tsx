@@ -77,7 +77,7 @@ const Inbox: React.FC = () => {
   if (invitations.length === 0) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500">
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
           You have no pending invitations
         </h1>
       </div>
@@ -86,7 +86,7 @@ const Inbox: React.FC = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <h1 className="col-span-2 text-2xl font-bold text-center my-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 ">
+      <h1 className="col-span-2 text-2xl font-bold text-center my-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200">
         Pending Invitations
       </h1>
 

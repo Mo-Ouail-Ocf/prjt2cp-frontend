@@ -158,7 +158,7 @@ const ProjectTypes = () => {
           toast({
             variant: "default",
             title: "Success",
-            description: "New resource created",
+            description: "New resource created , PLEASE refresh !",
             action: <ToastAction altText="close">Close</ToastAction>,
           });
 
@@ -226,7 +226,7 @@ const ProjectTypes = () => {
               value={searchTerm}
               placeholder="Search for a resource"
             />
-            <div className="max-h-32 w-full border overflow-scroll">
+            <div className="max-h-32 w-full border  overflow-hidden hover:overflow-y-auto rounded-md bg-white">
               <ul className="w-full text-center">
                 {searchResults.map((result) => (
                   <li
@@ -306,9 +306,9 @@ const ProjectTypes = () => {
         </div>
       ) : null}
 
-      <div className="p-16">
+      <div className="p-6">
         <h1 className="text-center font-bold text-xl">Clubs</h1>
-        <div className="grid gap-8 p-8 grid-cols-4 max-lg:grid-cols-3">
+        <div className="grid gap-8 p-6 grid-cols-4 max-lg:grid-cols-3">
           {resources
             .filter((ressource) => ressource.type === "club")
             .map((filteredRessource) => (
@@ -395,18 +395,16 @@ const ProjectTypes = () => {
             .map((filteredRessource) => (
               <Card
                 key={filteredRessource.resource_id}
-                className="w-full h-full aspect-square rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
+                className="w-full h-full aspect-square cursor-pointer rounded-md text-center p-4 hover:-mt-2 backdrop-blur-lg"
                 onClick={() => {
                   handleProjectCreate(filteredRessource.resource_id);
                 }}
               >
-                <CardHeader className="">
-                  <CardTitle className="mb-4">
-                    {filteredRessource.name}
-                  </CardTitle>
+                <CardHeader className="mb-2">
+                  <CardTitle className="  ">{filteredRessource.name}</CardTitle>
                 </CardHeader>
                 <CardContent className="">
-                  <CardDescription className="p-2 m-1 flex-col flex flex-grow relative ">
+                  <CardDescription className="p-2 m-1 flex-col flex rounded-md flex-grow relative ">
                     {filteredRessource.description}
                   </CardDescription>
                 </CardContent>
