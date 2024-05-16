@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import styled from "styled-components";
 import { SessionResponse, ProjectDisplay } from "@/apiClient/data-contracts";
 interface ClosedSessionProps {
   session: SessionResponse;
@@ -23,7 +24,6 @@ import { useClosedSessionStore } from "@/stores/closedSessionStore";
 import v1Client from "@/apiClient";
 import { useToast } from "@/components/ui/use-toast";
 import IdeaCard from "@/components/IdeaCard";
-import { useSessionStore } from "@/store/sessionStore";
 import { useIdeaStore } from "@/store/ideaStore";
 interface closedSessionProps {
   session_id: number;
@@ -40,6 +40,14 @@ function exportData(data: string, fileName: string) {
   a.click();
   document.body.removeChild(a);
 }
+
+const LigneWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(var(--num-cols, 1), 1fr);
+  gap: 20px;
+  height: 100%;
+  box-sizing: border-box;
+`;
 
 const ClosedSession = (props: closedSessionProps) => {
   const { toast } = useToast();
@@ -112,17 +120,16 @@ const ClosedSession = (props: closedSessionProps) => {
   };
 
   if (loadSession) {
-    return;
-    <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
-      Loading the session ...
-    </h2>;
+    return (
+      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+        Loading the session ...
+      </h2>
+    );
   }
   return (
-    <div className="p-4 pr-16 pl-16 flex flex-col justify-around">
+    <div className="p-4 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
-        <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
-          <img src={Logo} className="h-16 p-2" />
-        </div>
+        <img src={Logo} className="h-16 p-2" />
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline">{closedSession.title}</Button>
@@ -220,11 +227,12 @@ const ClosedSession = (props: closedSessionProps) => {
           </TabsContent>
           <TabsContent value="matrix" className="">
             <h1>Idea Matrix:</h1>
-            <div
-              className={
-                "w-full grid gap-8 p-8  grid-cols-" +
-                Math.floor(Math.sqrt(closedSessionDetails?.ideas.length))
-              }
+            <LigneWrap
+              style={{
+                "--num-cols": Math.floor(
+                  Math.sqrt(closedSessionDetails?.ideas.length)
+                ),
+              }}
             >
               {closedSessionDetails?.ideas.map((idea) => {
                 return (
@@ -239,7 +247,7 @@ const ClosedSession = (props: closedSessionProps) => {
                   </div>
                 );
               })}
-            </div>
+            </LigneWrap>
           </TabsContent>
         </Tabs>
       </div>

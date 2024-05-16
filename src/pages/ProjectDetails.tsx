@@ -1,7 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
-import v1Client from "@/apiClient";
-import { SessionResponse } from "@/apiClient/data-contracts";
 import { Button } from "@/components/ui/button";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -40,16 +38,13 @@ import {
 } from "@/components/ui/tooltip";
 import { CardDescription } from "@/components/ui/card";
 import {
-  DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
 import brainstorming from "../assets/brainstrom.png";
 import brainwriting from "../assets/brainwrite.png";
 import {
   ProjectInvitationCreate,
-  ProjectInvitationResponse,
 } from "@/apiClient/data-contracts";
 // brain_writing , brain_storming
 interface SessionCreate {
@@ -67,14 +62,13 @@ interface SessionCreate {
 //////zustand
 import { useProjectSessionStore } from "@/stores/projectSessionStore";
 import { useUserStore } from "@/stores/userStore";
-import { log } from "console";
 
 type State = {
   newSession: SessionCreate;
 };
 
 const useNewSessionStore = create<State>()(
-  immer((set) => ({
+  immer((_set) => ({
     newSession: {
       title: "",
       description: null,
@@ -107,7 +101,6 @@ const ProjectDetails: React.FC = ({}) => {
     openSessions,
     closedSessions,
     loadProject,
-    successLoadProject,
     errorLoadProject,
     loadEdit,
     errorEdit,
@@ -819,15 +812,42 @@ const ProjectDetails: React.FC = ({}) => {
           )}
         </div>
       </div>
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200 text-center p-4">
-        Open Sessions
-      </h2>
-      <SessionTable sessions={openSessions} />
-      <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200 text-center p-4">
-        Closed Sessions
-      </h2>
+      {openSessions.length == 0 && closedSessions.length == 0 && (
+        <div className=" h-[80vh] flex items-center justify-center">
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No sessions to display
+          </h2>
+        </div>
+      )}
+      {openSessions.length > 0 ? (
+        <>
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            Open Sessions :
+          </h2>
+          <SessionTable sessions={openSessions} />
+        </>
+      ) : (
+        closedSessions.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No open sessions to show
+          </h2>
+        )
+      )}
+      {closedSessions.length > 0 ? (
+        <>
+          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            Closed Sessions :
+          </h2>
 
-      <SessionTable sessions={closedSessions} />
+          <SessionTable sessions={closedSessions} />
+        </>
+      ) : (
+        openSessions.length != 0 && (
+          <h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
+            No closed sessions to show
+          </h2>
+        )
+      )}
     </div>
   );
 };

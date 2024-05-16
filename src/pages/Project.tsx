@@ -407,7 +407,7 @@ const Projects: React.FC = () => {
       {participatedProjects.length > 0 ? (
         <>
           <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 text-center p-4">
-            Owned Projects
+            Participated Projects
           </h2>
           <Table projects={participatedProjects} />
         </>

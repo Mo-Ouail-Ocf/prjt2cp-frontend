@@ -384,7 +384,7 @@ const SessionChat = () => {
         </div>
       </div>
       {showChat1 && (
-        <div className={`fixed top-36`}>
+        <div className={`fixed top-36 z-40`}>
           <ChatArea
             name="ChatBot"
             right={20}
@@ -417,7 +417,7 @@ const SessionChat = () => {
         </div>
       )}
       {showChat2 && (
-        <div className={`fixed top-36`}>
+        <div className={`fixed top-36 z-40`}>
           <ChatArea
             name="Chat"
             messages={sessionMessages.map((msg, index) => {

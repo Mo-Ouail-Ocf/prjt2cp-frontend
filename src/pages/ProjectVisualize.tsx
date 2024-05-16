@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 //@ts-ignore
 import Mindmap from "../components/mindmap/Mindmap";
 import Logo from "@/images/logo.svg";
@@ -6,14 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import {
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogFooter,
   Dialog,
   DialogTrigger,
   DialogContent,
-  DialogClose,
+  DialogClose
 } from "@/components/ui/dialog";
 
 import { Label } from "@/components/ui/label";
@@ -60,9 +57,7 @@ const ProjectVisualize = () => {
     return (
       <div className="p-4 pr-16 pl-16 flex flex-col justify-around">
         <div className="flex flex-row justify-between p-0">
-          <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
-            <img src={Logo} className="h-16 p-2" />
-          </div>
+          <img src={Logo} className="h-16 p-2" />
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">{project?.title}</Button>
@@ -128,10 +123,6 @@ const ProjectVisualize = () => {
               </DialogFooter>
             </DialogContent>
           </Dialog>
-          <div className=" space-x-2">
-            <Button>Import session</Button>
-            <Button>Download session</Button>
-          </div>
         </div>
         {!loadNodes && (
           <div className=" w-6">

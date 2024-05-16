@@ -128,9 +128,7 @@ const Brainwriting = () => {
   return (
     <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
-        <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
-          <img src={Logo} className="h-16 p-2" />
-        </div>
+        <img src={Logo} className="h-16 p-2" />
         <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">
           {session?.title}
         </p>

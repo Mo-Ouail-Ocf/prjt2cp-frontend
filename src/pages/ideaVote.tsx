@@ -49,9 +49,7 @@ const IdeaVote = () => {
   return (
     <div className="w-screen p-4 pr-16 pl-16 flex flex-col justify-around">
       <div className="flex flex-row justify-between p-0">
-        <div className="flex flex-row bg-zinc-200 rounded-lg items-center p-2 h-16">
           <img src={Logo} className="h-16 p-2" />
-        </div>
         <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">
           {session?.title}
         </p>
@@ -92,7 +90,7 @@ const IdeaVote = () => {
       <div className="p-8 mb-4 pt-2">
         <h1>Expended Ideas: </h1>
         <br />
-        <div className={"grid gap-5 grid-cols-" + ideaMatrix[0].length}>
+        <LigneWrap style={gridStyle}>
           {expendedIdeas.map((ideaId) => {
             return (
               <IdeaCard
@@ -103,11 +101,11 @@ const IdeaVote = () => {
               />
             );
           })}
-        </div>
+        </LigneWrap>
       </div>
       <div className="p-8 mt-4 pt-2">
         <h1>Combined Ideas: </h1>
-        <div className={"grid gap-5 grid-cols-" + ideaMatrix[0].length}>
+        <LigneWrap style={gridStyle}>
           {Array.from(combinedIdeas.keys()).map((ideaId) => {
             return (
               <IdeaCard
@@ -118,7 +116,7 @@ const IdeaVote = () => {
               />
             );
           })}
-        </div>
+        </LigneWrap>
       </div>
     </div>
   );

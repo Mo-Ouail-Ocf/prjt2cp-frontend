@@ -11,6 +11,8 @@ import ReactFlow, {
   Controls,
   Background,
 } from "reactflow";
+import { Button } from "@/components/ui/button";
+
 import TextUpdaterNode from "./TextUpdaterNode";
 import DownloadButton from "./DownloadButton"; // Assuming both are in the same folder
 import "reactflow/dist/style.css";
@@ -68,9 +70,9 @@ const LayoutFlow = ({ initialNodes, initialEdges }) => {
         fitView
       >
         <Panel position="top-right">
-          <button onClick={() => onLayout("TB")} ref={ref}>
+          <Button onClick={() => onLayout("TB")} ref={ref}>
             vertical layout
-          </button>
+          </Button>
         </Panel>
         <Controls />
         <MiniMap />

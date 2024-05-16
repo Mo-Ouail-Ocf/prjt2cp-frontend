@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import v1Client from "@/apiClient";
 import { useToast } from "@/components/ui/use-toast"; // Ensure you have the correct path
-import { Button } from "@/components/ui/button";
 
 interface PendingInvitationInfo {
   project_id: number;
@@ -37,10 +36,9 @@ const Inbox: React.FC = () => {
 
   const handleInvitation = async (projectId: number, accept: boolean) => {
     try {
-      const response =
-        await v1Client.handleInvitationV1ProjectProjectIdInvitePost(projectId, {
-          status: accept,
-        });
+      await v1Client.handleInvitationV1ProjectProjectIdInvitePost(projectId, {
+        status: accept,
+      });
       // Show success toast
       toast({
         title: `Invitation ${accept ? "accepted" : "declined"}.`,
@@ -77,7 +75,7 @@ const Inbox: React.FC = () => {
   if (invitations.length === 0) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 ">
           You have no pending invitations
         </h1>
       </div>
@@ -86,7 +84,7 @@ const Inbox: React.FC = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <h1 className="col-span-2 text-2xl font-bold text-center my-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200">
+      <h1 className="col-span-2 text-2xl font-bold text-center my-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600  ">
         Pending Invitations
       </h1>
 
