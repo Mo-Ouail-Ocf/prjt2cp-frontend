@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Accordion,
   AccordionContent,
@@ -8,6 +7,7 @@ import {
 import styled from "styled-components";
 import img from "../images/competencia.png";
 import img2 from "../images/Isolation_Mode.svg";
+import userGuide from "../assets/PRJ2_EQ126_Khouri_Khouani_noticeUtilisation.pdf"
 import { GiBrain } from "react-icons/gi";
 
 const MainContent = styled.div`
@@ -246,7 +246,7 @@ const AccorDion = () => {
                     className="rounded-lg m-auto"
                     width="100%"
                     height="315"
-                    src="../../public/PRJ2_EQ126_Khouri_Khouani_noticeUtilisation.pdf"
+                    src={userGuide}
                     title="Synaps user guie"
                     allowFullScreen
                   ></iframe>

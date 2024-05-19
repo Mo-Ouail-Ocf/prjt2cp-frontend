@@ -12,7 +12,7 @@ const login = () => {
       const authData = {
         grant_type: "authorization_code",
         code: codeResponse.code,
-        redirect_uri: "http://localhost:3000",
+        redirect_uri: document.location.origin,
       };
 
       v1AuthClient

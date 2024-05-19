@@ -74,7 +74,7 @@ function NewBar({ onSignOut }: Props) {
                 location.pathname === "/project-types" ? "underline 2px" : "", // underline
             }}
           >
-            Project resspurces
+            Project resources
           </Link>
 
           <Link
