@@ -21,13 +21,8 @@ const ProjectVisualize = () => {
   const { projectId } = useParams();
   const {
     project,
-    openSessions,
-    closedSessions,
     loadProject,
-    successLoadProject,
-    errorLoadProject,
     getProject,
-    closedSessionsDetails,
     buildNodesAndEdges,
     initialEdges,
     initialNodes,

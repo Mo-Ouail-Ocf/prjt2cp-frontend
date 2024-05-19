@@ -55,7 +55,7 @@ const Brainwriting = () => {
   const [ideaContent, setIdeaContent] = useState("");
   const [details, setDetails] = useState("");
 
-  const ref = useRef();
+  const ref = useRef<Countdown | null>(null);
 
   const canSubmit = useBWStore((state) => state.canSubmit);
   const endTime = useBWStore((state) => state.endTime);
@@ -216,6 +216,7 @@ const Brainwriting = () => {
                             ideaId={idea == undefined ? 0 : idea.idea_id}
                             showMod={false}
                             showVote={false}
+                            showFD={false}
                           />
                         </CarouselItem>
                       );

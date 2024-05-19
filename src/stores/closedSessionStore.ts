@@ -1,7 +1,7 @@
 import v1Client from "@/apiClient";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import ReactFlow, { Node, Edge } from "reactflow";
+import { Node, Edge } from "reactflow";
 import { SessionExport, SessionResponse } from "@/apiClient/data-contracts";
 
 type State = {

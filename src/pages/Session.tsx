@@ -55,7 +55,7 @@ const Session = () => {
       {session?.session_status == "open" ? (
         <OpenSession session={session} project={project as ProjectDisplay} />
       ) : session?.session_status == "closed" ? (
-        <ClosedSession session_id={parseInt(session_id)} />
+        <ClosedSession session_id={parseInt(session_id as string)} />
       ) : (
         <Unauthorized />
       )}

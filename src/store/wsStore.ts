@@ -13,7 +13,7 @@ type Action = {
 
 
 export const useWsStore = create<State & Action>()(immer(
-    (set) => ({
+    (_set) => ({
         ws: null,
     })
 ))

@@ -44,7 +44,7 @@ import {
 import brainstorming from "../assets/brainstrom.png";
 import brainwriting from "../assets/brainwrite.png";
 import {
-  ProjectInvitationCreate,
+  ProjectInvitationCreate, SessionResponse,
 } from "@/apiClient/data-contracts";
 // brain_writing , brain_storming
 interface SessionCreate {
@@ -102,32 +102,22 @@ const ProjectDetails: React.FC = ({}) => {
     closedSessions,
     loadProject,
     errorLoadProject,
-    loadEdit,
-    errorEdit,
-    successEdit,
-    loadCreateSession,
-    successCreateSession,
-    errorCreateSession,
-    loadInvite,
-    successInvite,
-    errorInvite,
     responseInvite,
     getProject,
     editProject,
     createSession,
     inviteUser,
-    closedSessionsDetails,
   } = useProjectSessionStore((state) => state);
 
   const user = useUserStore((state) => state.user);
   const getUser = useUserStore((state) => state.getUser);
   const [email, setEmail] = useState("");
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [_successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // session creation
 
-  const [ideationTech, setIdeationTech] = useState<string>("");
-  const sessionRef = useRef<HTMLDivElement | null>(null);
+  const [ideationTech, _setIdeationTech] = useState<string>("");
+  const sessionRef = useRef<HTMLButtonElement | null>(null);
   const handleCreateSession = async () => {
     if (
       newSession.title == "" ||
@@ -166,7 +156,7 @@ const ProjectDetails: React.FC = ({}) => {
   //title and description
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const dialogRef = useRef<HTMLButtonElement | null>(null);
   const handleEditProject = async () => {
     //@ts-ignore
     if (
@@ -292,8 +282,8 @@ const ProjectDetails: React.FC = ({}) => {
     fetchSessions();
   }, []);
 
-  const sessionDialogRef = useRef<HTMLDivElement | null>(null);
-  const closeDialog = useRef<HTMLDivElement | null>(null);
+  const sessionDialogRef = useRef<HTMLButtonElement | null>(null);
+  const closeDialog = useRef<HTMLButtonElement | null>(null);
   const handleClick = () => {
     if (sessionDialogRef.current) {
       sessionDialogRef.current.click();
@@ -470,7 +460,7 @@ const ProjectDetails: React.FC = ({}) => {
                                 <TableCell className="rounded-full overflow-hidden w-8 h-8">
                                   {/*@ts-ignore*/}
                                   <img
-                                    src={participant.user.image}
+                                    src={participant.user.image as string}
                                     alt="User"
                                     className="h-10 w-10 rounded-full border-2 border-white bg-white"
                                   />
@@ -503,7 +493,7 @@ const ProjectDetails: React.FC = ({}) => {
                             id="current"
                             placeholder="Enter the new tilte"
                             defaultValue={project?.title}
-                            value={title}
+                            value={title || ""}
                             onChange={(e) => setTitle(e.target.value)}
                           />
                         </div>
@@ -513,8 +503,8 @@ const ProjectDetails: React.FC = ({}) => {
                           <Input
                             id="new"
                             placeholder="Enter the new description"
-                            defaultValue={project?.description}
-                            value={description}
+                            defaultValue={project?.description || ""}
+                            value={description || ""}
                             onChange={(e) => setDescription(e.target.value)}
                           />
                         </div>

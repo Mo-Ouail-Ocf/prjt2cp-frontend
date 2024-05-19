@@ -17,11 +17,8 @@ import { Button } from "@/components/ui/button";
 import { useUserStore } from "@/stores/userStore";
 import "./Profile.css";
 import { Avatar, CustomFlowbiteTheme, Flowbite, Label } from "flowbite-react";
-import ProfilePage from "@/pages/ProfilePage";
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import { UserResponse } from "@/apiClient/data-contracts";
-import v1Client from "@/apiClient";
 import { ToastAction } from "./ui/toast";
 import { useToast } from "./ui/use-toast";
 interface Props {
@@ -41,12 +38,8 @@ const ProfileIcon = ({ onSignOut }: Props) => {
   /////The Store
   const {
     user,
-    loadUser,
-    errorUser,
-    successUser,
     getUser,
     modifyUserName,
-    loadUpdate,
     successUpdate,
   } = useUserStore((state) => state);
   //////////////
@@ -55,8 +48,6 @@ const ProfileIcon = ({ onSignOut }: Props) => {
   const { toast } = useToast();
   //
   const navigate = useNavigate();
-  const [showProfile, setShowProfile] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,6 +57,9 @@ const ProfileIcon = ({ onSignOut }: Props) => {
     getCurr();
   }, []);
   const submit = async () => {
+    if (name == null) {
+      return
+    }
      
     await modifyUserName(name);
     if (successUpdate) {

@@ -26,7 +26,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { IoIosExpand } from "react-icons/io";
 import { CiEdit } from "react-icons/ci";
 import { CgComment } from "react-icons/cg";
-import { CiStar } from "react-icons/ci";
 import SingleActionMenu from "./SingleActionMenu";
 import { useEffect, useState } from "react";
 import { useWsStore } from "@/store/wsStore";
@@ -46,7 +45,7 @@ const IdeaCard = (props: IdeaCardProps) => {
   const ws = useWsStore((state) => state.ws);
   const idea = useIdeaStore((state) => state.ideas).get(props.ideaId);
   const [bgColor, setBgColor] = useState(
-    useUserStore((state) => state.colors).get(idea?.submitter_id)
+    useUserStore((state) => state.colors).get(idea?.submitter_id as number)
   );
   const users = useUserStore((state) => state.users);
   const comments = useCommentStore((state) => state.comments).get(props.ideaId);
@@ -290,7 +289,7 @@ const IdeaCard = (props: IdeaCardProps) => {
         {/* <ScrollArea className="rounded-md p-2"> */}
         <DialogHeader>
           <DialogTitle>
-            {users.get(idea?.submitter_id)?.name}'s Idea
+            {users.get(idea?.submitter_id as number)?.name}'s Idea
           </DialogTitle>
           <p className="hyphens-auto">{idea?.content}</p>
           <DialogDescription className="hyphens-auto">

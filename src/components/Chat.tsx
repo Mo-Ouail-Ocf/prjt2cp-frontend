@@ -30,7 +30,7 @@ export interface ChatMessageProps {
 const ChatArea = (props: ChatProps) => {
   const [msg, setMsg] = useState("");
 
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const submit = (e: any) => {
     if (msg != "") {

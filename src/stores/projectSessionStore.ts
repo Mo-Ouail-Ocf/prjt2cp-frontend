@@ -1,18 +1,13 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import {
-  ProjectDisplay,
-  ProjectCreate,
-  ProjectUpdate,
+  ProjectDisplay, ProjectUpdate,
   ProjectInvitationCreate,
   SessionResponse,
-  SessionExport,
+  SessionExport
 } from "@/apiClient/data-contracts";
-import ReactFlow, { Node, Edge } from "reactflow";
+import { Node, Edge } from "reactflow";
 import v1Client from "@/apiClient";
-import OpenSession from "@/pages/OpenSession";
-import { get } from "https";
-import ClosedSession from "@/pages/ClosedSession";
 interface SessionCreate {
   title: string;
   description: string | null;

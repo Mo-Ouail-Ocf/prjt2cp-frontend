@@ -1,14 +1,9 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { SessionResponse, ProjectDisplay } from "@/apiClient/data-contracts";
-interface ClosedSessionProps {
-  session: SessionResponse;
-  project: ProjectDisplay;
-}
 
+//@ts-ignore
 import Mindmap from "../components/mindmap/Mindmap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// TODO: fix the input & sizing
 import Logo from "@/images/logo.svg";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -52,12 +47,9 @@ const LigneWrap = styled.div`
 const ClosedSession = (props: closedSessionProps) => {
   const { toast } = useToast();
   const {
-    RelatedClosedSessionsDetails,
     closedSession,
     closedSessionDetails,
     loadSession,
-    successLoadSession,
-    errorLoadSession,
     getSession,
     initialEdges,
     initialNodes,
@@ -84,7 +76,9 @@ const ClosedSession = (props: closedSessionProps) => {
     v1Client
       .uploadSessionToDriveV1SessionDriveSessionIdPost(
         props.session_id,
-        closedSession?.title + ".json"
+        {
+          file_name: closedSession?.title + ".json"
+        }
       )
       .then(() => {
         toast({
@@ -132,7 +126,7 @@ const ClosedSession = (props: closedSessionProps) => {
         <img src={Logo} className="h-16 p-2" />
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">{closedSession.title}</Button>
+            <Button variant="outline">{closedSession?.title}</Button>
           </DialogTrigger>
           <DialogContent>
             <Card>
@@ -146,14 +140,14 @@ const ClosedSession = (props: closedSessionProps) => {
                     id="name"
                     className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100"
                   >
-                    {closedSession.title}
+                    {closedSession?.title}
                   </span>
                 </div>
                 <div className="space-y-1 space-x-4">
                   <Label htmlFor="username">Description:</Label>
-                  {closedSession.description ? (
+                  {closedSession?.description ? (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {closedSession.description}
+                      {closedSession?.description}
                     </span>
                   ) : (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
@@ -165,28 +159,28 @@ const ClosedSession = (props: closedSessionProps) => {
                   <Label>Ideation technique:</Label>
                   {/*@ts-ignore*/}
                   <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                    {closedSession.ideation_technique}
+                    {closedSession?.ideation_technique}
                   </span>
                 </div>
                 <div className="space-y-1 space-x-4">
                   <Label>Round time:</Label>
                   <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                    {closedSession.round_time} minutes
+                    {closedSession?.round_time} minutes
                   </span>
                 </div>
-                {closedSession.ideation_technique === "brain_writing" && (
+                {closedSession?.ideation_technique === "brain_writing" && (
                   <div className="space-y-1 space-x-4">
                     <Label>Number of rounds:</Label>
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {closedSession.round_time} rounds
+                      {closedSession?.round_time} rounds
                     </span>
                   </div>
                 )}
                 <div className="space-y-1 space-x-4">
                   <Label>Objective</Label>
-                  {closedSession.objectives ? (
+                  {closedSession?.objectives ? (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                      {closedSession.objectives}
+                      {closedSession?.objectives}
                     </span>
                   ) : (
                     <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
@@ -230,9 +224,9 @@ const ClosedSession = (props: closedSessionProps) => {
             <LigneWrap
               style={{
                 "--num-cols": Math.floor(
-                  Math.sqrt(closedSessionDetails?.ideas.length)
+                  Math.sqrt(closedSessionDetails?.ideas.length || 0)
                 ),
-              }}
+              } as React.CSSProperties}
             >
               {closedSessionDetails?.ideas.map((idea) => {
                 return (

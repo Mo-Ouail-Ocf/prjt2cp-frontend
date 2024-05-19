@@ -9,27 +9,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 import brainstorming from "./assets/brainstrom.png";
 import brainwriting from "./assets/brainwrite.png";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
+  DialogContent, DialogHeader, DialogTrigger
 } from "@/components/ui/dialog";
 import {
   Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
+  CardContent, CardHeader,
   CardTitle,
-  CardDescription,
+  CardDescription
 } from "@/components/ui/card";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserResponse } from "./apiClient/data-contracts";
 import { useUserStore } from "./store/userStore";
 import { useChatStore } from "./store/chatStore";

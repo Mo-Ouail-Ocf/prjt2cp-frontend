@@ -38,24 +38,13 @@ const Projects: React.FC = () => {
     ownedProjects,
     participatedProjects,
     loadProjects,
-    successLoadProjects,
     successCreateProjects,
-    errorCreateProjects,
-    errorLoadProjects,
-    loadCreateProjects,
     getProjects,
     createProject,
   } = useProjectStore((state) => state);
   const {
     ressources,
-    loadRessources,
-    successLoadRessources,
-    successCreateRessource,
-    errorCreateRessource,
-    errorLoadRessources,
-    loadCreateRessource,
     getRessources,
-    createRessource,
   } = useRessourceStore((state) => state);
 
   //CREATE PROJECT
@@ -102,8 +91,7 @@ const Projects: React.FC = () => {
     }
     setNewProjectData({
       title: "",
-      description: "",
-      status: "active",
+      description: "", status: "active",
       resource_id: 0,
     });
   };

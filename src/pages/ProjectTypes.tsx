@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import v1Client from "@/apiClient";
 import { Input } from "@/components/ui/input";
 import Fuse, { FuseResult } from "fuse.js";
@@ -281,7 +280,7 @@ const ProjectTypes = () => {
                     id="new-resource-description"
                     placeholder="Enter resource description"
                     className="col-span-3"
-                    value={resourceCreateData.description}
+                    value={resourceCreateData.description || ""}
                     onChange={(e) =>
                       useResourceStore.setState((state) => {
                         state.resourceCreateData.description = e.target.value;
@@ -346,7 +345,7 @@ const ProjectTypes = () => {
             const typesSet = new Set(); // Création d'un ensemble pour stocker les types de ressources uniques
             return resources
               .filter((resource) => resource.type == "module")
-              .filter((ressource) => /^\d/.test(ressource.level)) // Filtrer les ressources par niveau
+              .filter((ressource) => /^\d/.test(ressource.level as string)) // Filtrer les ressources par niveau
               .map((filteredRessource) => {
                 if (!typesSet.has(filteredRessource.level)) {
                   // Vérifier la non-duplication
@@ -446,7 +445,7 @@ const ProjectTypes = () => {
                 id="new-project-description"
                 placeholder="Enter project description"
                 className="col-span-3"
-                value={projectCreateData.description}
+                value={projectCreateData.description || ""}
                 onChange={(e) =>
                   useResourceStore.setState((state) => {
                     state.projectCreateData.description = e.target.value;

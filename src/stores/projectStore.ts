@@ -22,7 +22,7 @@ type Action = {
 };
 
 export const useProjectStore = create<State & Action>()(
-  immer((set, get) => ({
+  immer((set, _get) => ({
     ownedProjects: [],
     participatedProjects: [],
     //load
