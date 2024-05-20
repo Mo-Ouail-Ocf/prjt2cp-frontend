@@ -66,17 +66,17 @@ const Brainstorming: React.FC = () => {
   switch (userList.length) {
     case 6:
     case 5:
-      gridLayout = " grid-cols-3 gap-16";
+      gridLayout = " grid-cols-3 gap-8";
       break;
     default:
-      gridLayout = " grid-cols-2 gap-16";
+      gridLayout = " grid-cols-2 gap-8";
       break;
   }
 
   return (
     <div className="h-screen w-screen p-4 pr-16 pl-16 flex flex-col justify-between">
       <div className="flex flex-row justify-between p-0">
-          <img src={Logo} className="h-16 p-2" />
+        <img src={Logo} className="h-16 p-2" />
         <p className="bg-zinc-200 p-4 rounded-lg font-semibold text-xl content-center">
           {session?.title}
         </p>
@@ -89,7 +89,7 @@ const Brainstorming: React.FC = () => {
         </p>
       </div>
 
-      <div className={"w-full h-full p-8 grid " + gridLayout}>
+      <div className={"w-full h-full overflow-x-scroll p-8 grid " + gridLayout}>
         {userList.map((userId) => {
           const user = users.get(userId) as UserResponse;
           const userIdeas = Array.from(ideas.values()).filter(
@@ -97,36 +97,33 @@ const Brainstorming: React.FC = () => {
           );
 
           return (
-              <Carousel className="w-full h-full">
-                <CarouselPrevious className="-left-4" />
-                <CarouselContent className="w-full h-full">
-                  {userIdeas.length > 0 ? (
-                    userIdeas.map((idea) => (
-                      <CarouselItem
-                        className="h-full w-full"
-                        key={idea.idea_id}
-                      >
-                        <IdeaCard
-                          ideaId={idea.idea_id}
-                          showMod={false}
-                          showVote={false}
-                          showFD={false}
-                        />
-                      </CarouselItem>
-                    ))
-                  ) : (
-                    <CarouselItem className="h-full w-full">
+            <Carousel className="w-full h-full">
+              <CarouselPrevious className="-left-4 z-10" />
+              <CarouselContent className="w-full h-full">
+                {userIdeas.length > 0 ? (
+                  userIdeas.map((idea) => (
+                    <CarouselItem className="h-full w-full" key={idea.idea_id}>
                       <IdeaCard
-                        ideaId={0}
+                        ideaId={idea.idea_id}
                         showMod={false}
                         showVote={false}
                         showFD={false}
                       />
                     </CarouselItem>
-                  )}
-                </CarouselContent>
-                <CarouselNext className="-right-4" />
-              </Carousel>
+                  ))
+                ) : (
+                  <CarouselItem className="h-full w-full">
+                    <IdeaCard
+                      ideaId={0}
+                      showMod={false}
+                      showVote={false}
+                      showFD={false}
+                    />
+                  </CarouselItem>
+                )}
+              </CarouselContent>
+              <CarouselNext className="-right-4" />
+            </Carousel>
           );
         })}
       </div>

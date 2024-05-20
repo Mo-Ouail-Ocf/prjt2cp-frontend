@@ -7,7 +7,7 @@ import {
 import styled from "styled-components";
 import img from "../images/competencia.png";
 import img2 from "../images/Isolation_Mode.svg";
-import userGuide from "../assets/PRJ2_EQ126_Khouri_Khouani_noticeUtilisation.pdf"
+import userGuide from "../assets/user_guide.pdf";
 import { GiBrain } from "react-icons/gi";
 
 const MainContent = styled.div`
