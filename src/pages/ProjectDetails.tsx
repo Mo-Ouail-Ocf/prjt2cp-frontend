@@ -37,14 +37,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CardDescription } from "@/components/ui/card";
-import {
-  DialogHeader,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import brainstorming from "../assets/brainstrom.png";
 import brainwriting from "../assets/brainwrite.png";
 import {
-  ProjectInvitationCreate, SessionResponse,
+  ProjectInvitationCreate,
+  SessionResponse,
 } from "@/apiClient/data-contracts";
 // brain_writing , brain_storming
 interface SessionCreate {
@@ -370,175 +368,189 @@ const ProjectDetails: React.FC = ({}) => {
   return (
     <div className="p-8">
       <div className="flex items-center justify-between p-4">
-        <h1 className="text-2xl font-bold mb-4 bg-gradient-to-l from-blue-600 via-blue-400 to-blue-300 text-transparent bg-clip-text">Your Project:</h1>
+        <h1 className="text-2xl font-bold mb-4 bg-gradient-to-l from-blue-600 via-blue-400 to-blue-300 text-transparent bg-clip-text">
+          Your Project:
+        </h1>
         <div className="flex gap-3">
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline">Edit project</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogClose asChild className="hidden">
-                {/* @ts-ignore */}
-                <Button type="button" variant="secondary" ref={dialogRef}>
-                  Close
-                </Button>
-              </DialogClose>
-              <Tabs defaultValue="details" className="w-[450px]">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="details">Project details</TabsTrigger>
-                  <TabsTrigger value="members">Project members</TabsTrigger>
-                  <TabsTrigger value="utilities">Project utilities</TabsTrigger>
-                </TabsList>
-                <TabsContent value="details">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Project details</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="space-y-1 space-x-4">
-                        <Label htmlFor="name">Title : </Label>
-                        <span
-                          id="name"
-                          className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100"
-                        >
-                          {project?.title}
-                        </span>
-                      </div>
-                      <div className="space-y-1 space-x-4">
-                        <Label htmlFor="username">Description:</Label>
-                        <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                          {project?.description}
-                        </span>
-                      </div>
-                      <div className="space-y-1 space-x-4">
-                        <Label>Creation date:</Label>
-                        {/*@ts-ignore*/}
-                        {
-                          <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                            {new Date(
-                              //@ts-ignore
-                              project.creation_date
-                            ).toLocaleDateString()}
+          {project?.owner_id === user?.id && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline">Edit project</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogClose asChild className="hidden">
+                  {/* @ts-ignore */}
+                  <Button type="button" variant="secondary" ref={dialogRef}>
+                    Close
+                  </Button>
+                </DialogClose>
+                <Tabs defaultValue="details" className="w-[450px]">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="details">Project details</TabsTrigger>
+                    <TabsTrigger value="members">Project members</TabsTrigger>
+                    <TabsTrigger value="utilities">
+                      Project utilities
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="details">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Project details</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <div className="space-y-1 space-x-4">
+                          <Label htmlFor="name">Title : </Label>
+                          <span
+                            id="name"
+                            className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100"
+                          >
+                            {project?.title}
                           </span>
-                        }
-                      </div>
-                      <div className="space-y-1 space-x-4">
-                        <Label>Ressource:</Label>
-                        <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                          {project?.resource?.name}
-                        </span>
-                      </div>
-                      <div className="space-y-1 space-x-4">
-                        <Label>Ressource description:</Label>
-                        <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
-                          {project?.resource?.description}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="members">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Project members</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <ScrollArea className="h-72 w-[400px] rounded-md border">
-                        <Table>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead>Picture</TableHead>
-                              <TableHead>Email</TableHead>
-                              <TableHead>Name</TableHead>
-                              <TableHead>Invitation Status</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {/*@ts-ignore*/}
-                            {project.participants.map((participant, index) => (
-                              <TableRow key={index}>
-                                <TableCell className="rounded-full overflow-hidden w-8 h-8">
-                                  {/*@ts-ignore*/}
-                                  <img
-                                    src={participant.user.image as string}
-                                    alt="User"
-                                    className="h-10 w-10 rounded-full border-2 border-white bg-white"
-                                  />
-                                </TableCell>
-                                <TableCell>{participant.user.email}</TableCell>
-                                <TableCell>{participant.user.name}</TableCell>
-                                <TableCell>
-                                  {participant.invitation_status}
-                                </TableCell>
+                        </div>
+                        <div className="space-y-1 space-x-4">
+                          <Label htmlFor="username">Description:</Label>
+                          <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
+                            {project?.description}
+                          </span>
+                        </div>
+                        <div className="space-y-1 space-x-4">
+                          <Label>Creation date:</Label>
+                          {/*@ts-ignore*/}
+                          {
+                            <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
+                              {new Date(
+                                //@ts-ignore
+                                project.creation_date
+                              ).toLocaleDateString()}
+                            </span>
+                          }
+                        </div>
+                        <div className="space-y-1 space-x-4">
+                          <Label>Ressource:</Label>
+                          <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
+                            {project?.resource?.name}
+                          </span>
+                        </div>
+                        <div className="space-y-1 space-x-4">
+                          <Label>Ressource description:</Label>
+                          <span className="inline-block px-3 py-1 border border-gray-300 rounded bg-gray-100">
+                            {project?.resource?.description}
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="members">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Project members</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <ScrollArea className="h-72 w-[400px] rounded-md border">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead>Picture</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Name</TableHead>
+                                <TableHead>Invitation Status</TableHead>
                               </TableRow>
-                            ))}
-                          </TableBody>
-                        </Table>
-                        <ScrollBar orientation="horizontal" />
-                      </ScrollArea>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="utilities">
-                  <div className="h-[400px] w-[450px] overflow-hidden hover:overflow-y-auto rounded-md border">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Edit project</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-2">
-                        <div className="space-y-1">
-                          <Label htmlFor="current">Title</Label>
-                          {/* @ts-ignore */}
-                          <Input
-                            id="current"
-                            placeholder="Enter the new tilte"
-                            defaultValue={project?.title}
-                            value={title || ""}
-                            onChange={(e) => setTitle(e.target.value)}
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label htmlFor="new">Description</Label>
-                          {/* @ts-ignore */}
-                          <Input
-                            id="new"
-                            placeholder="Enter the new description"
-                            defaultValue={project?.description || ""}
-                            value={description || ""}
-                            onChange={(e) => setDescription(e.target.value)}
-                          />
-                        </div>
+                            </TableHeader>
+                            <TableBody>
+                              {/*@ts-ignore*/}
+                              {project.participants.map(
+                                (participant, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell className="rounded-full overflow-hidden w-8 h-8">
+                                      {/*@ts-ignore*/}
+                                      <img
+                                        src={participant.user.image as string}
+                                        alt="User"
+                                        className="h-10 w-10 rounded-full border-2 border-white bg-white"
+                                      />
+                                    </TableCell>
+                                    <TableCell>
+                                      {participant.user.email}
+                                    </TableCell>
+                                    <TableCell>
+                                      {participant.user.name}
+                                    </TableCell>
+                                    <TableCell>
+                                      {participant.invitation_status}
+                                    </TableCell>
+                                  </TableRow>
+                                )
+                              )}
+                            </TableBody>
+                          </Table>
+                          <ScrollBar orientation="horizontal" />
+                        </ScrollArea>
                       </CardContent>
-                      <CardFooter>
-                        <Button onClick={handleEditProject}>
-                          Save modifications
-                        </Button>
-                      </CardFooter>
                     </Card>
-                    <br />
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Invite user</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-2">
-                        <Label htmlFor="mail">User email</Label>
-                        <Input
-                          id="nail"
-                          type="email"
-                          value={email}
-                          placeholder="Enter user email"
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </CardContent>
-                      <CardFooter>
-                        <Button onClick={handleInviteUser}>Invite user</Button>
-                      </CardFooter>
-                    </Card>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </DialogContent>
-          </Dialog>
+                  </TabsContent>
+                  <TabsContent value="utilities">
+                    <div className="h-[400px] w-[450px] overflow-hidden hover:overflow-y-auto rounded-md border">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Edit project</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <div className="space-y-1">
+                            <Label htmlFor="current">Title</Label>
+                            {/* @ts-ignore */}
+                            <Input
+                              id="current"
+                              placeholder="Enter the new tilte"
+                              defaultValue={project?.title}
+                              value={title || ""}
+                              onChange={(e) => setTitle(e.target.value)}
+                            />
+                          </div>
+                          <div className="space-y-1">
+                            <Label htmlFor="new">Description</Label>
+                            {/* @ts-ignore */}
+                            <Input
+                              id="new"
+                              placeholder="Enter the new description"
+                              defaultValue={project?.description || ""}
+                              value={description || ""}
+                              onChange={(e) => setDescription(e.target.value)}
+                            />
+                          </div>
+                        </CardContent>
+                        <CardFooter>
+                          <Button onClick={handleEditProject}>
+                            Save modifications
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                      <br />
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Invite user</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                          <Label htmlFor="mail">User email</Label>
+                          <Input
+                            id="nail"
+                            type="email"
+                            value={email}
+                            placeholder="Enter user email"
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </CardContent>
+                        <CardFooter>
+                          <Button onClick={handleInviteUser}>
+                            Invite user
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </DialogContent>
+            </Dialog>
+          )}
           <Link
             to={`/visualize/${projectId}`}
             className="text-[#3b82f6] hover:underline font-semibold"
